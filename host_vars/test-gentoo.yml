@@ -1,0 +1,20 @@
+---
+
+partitions:
+  - name: uefi
+    disk: /dev/sda
+    fs: fat32
+    end: 512MiB
+    flags:
+      - boot
+  - name: primary
+    disk: /dev/sda
+    fs: ext4
+    end: 100%
+    flags:
+      - lvm
+#  - name: secondary
+#    disk: /dev/sdb
+#    type: ext4
+#    set:
+#      lvm: on

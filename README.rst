@@ -1,0 +1,4 @@
+Setup
+=====
+
+Automatic system setup.

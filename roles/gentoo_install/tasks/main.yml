@@ -1,0 +1,14 @@
+---
+
+- name: Make partition tables
+  command: "parted -s {{ item }} mklabel gpt"
+  with_items: "{{ partitions | map(attribute='disk') | list | unique }}"
+
+- name: Create partitions
+  partition:
+    name: "{{ item.name }}"
+    disk: "{{ item.disk }}"
+    fs: "{{ item.fs }}"
+    end: "{{ item.end }}"
+    flags: "{{ item.flags | default(omit) }}"
+  with_items: "{{ partitions }}"

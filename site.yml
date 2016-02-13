@@ -1,0 +1,10 @@
+# Apply common configuration to all hosts
+- hosts: all
+  remote_user: root
+  roles:
+    - common
+
+- hosts: gentoo
+  remote_user: root
+  roles:
+    - { role: gentoo_install, when: install is defined }
