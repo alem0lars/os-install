@@ -1,20 +1,32 @@
 ---
 
+# Type can be one of:
+# - physical: a normal partition.
+# - lvg: a volume group.
+# - lvol: a logical volume.
 partitions:
   - name: uefi
+    type: physical
     disk: /dev/sda
     fs: fat32
     end: 512MiB
     flags:
       - boot
   - name: primary
+    type: physical
     disk: /dev/sda
     fs: ext4
     end: 100%
     flags:
       - lvm
-#  - name: secondary
-#    disk: /dev/sdb
-#    type: ext4
-#    set:
-#      lvm: on
+  - name: secondary
+    type: physical
+    disk: /dev/sdb
+    fs: ext4
+    end: 100%
+    encrypted: true
+    flags:
+      - lvm
+  - name: vg-swap
+    pv_name: primary
+    type: logical

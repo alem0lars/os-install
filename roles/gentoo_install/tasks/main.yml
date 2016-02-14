@@ -11,4 +11,28 @@
     fs: "{{ item.fs }}"
     end: "{{ item.end }}"
     flags: "{{ item.flags | default(omit) }}"
+    encryption: "{{ item.encryption | default(omit) }}" # TODO: Implement (device will point to the encrypted and raw_device always to the original)
+  when: "{{ item.type == 'physical' }}"
+  with_items: "{{ partitions }}"
+  register: partitions
+
+- set_fact:
+    partitions: "{{ partitions.results | map(attribute='ansible_facts') | list }}"
+
+- name: Create LVM Volume Groups
+  lvg:
+    vg: "vg-{{ item.name }}"
+    pvs: "{{ partitions[item.pv_name].device }}"
+  when: "{{ item.type == 'lvg' }}"
+  fail_when: "{{ 'lvm' not in partitions[item.pv].flags }}"
+  with_items: "{{ partitions }}"
+
+# TODO: Logical volumes
+
+- name: Update crypttab
+  crypttab:
+    name: "{{ item.device }}"
+    state: present
+    password: -
+  when: "{{ 'encryption' in item }}"
   with_items: "{{ partitions }}"

@@ -20,7 +20,9 @@ EXAMPLES = '''
     flags:
       - boot
 
-# Create partitions defined in the variable `partitions`
+# Create partitions defined in the variable `partitions` and
+# define the fact `partitions` shadowing that variable and adding some
+# informations.
 - name: Create partitions
   partition:
     name: "{{ item.name }}"
@@ -29,12 +31,15 @@ EXAMPLES = '''
     end: "{{ item.end }}"
     flags: "{{ item.flags | default(omit) }}"
   with_items: "{{ partitions }}"
+  register: partitions
+- set_fact:
+    partitions: "{{ partitions.results | map(attribute='ansible_facts') | list }}"
 '''
 
 # ------------------------------------------------------------------------------
 # IMPORTS ----------------------------------------------------------------------
 
-import os, re
+import collections, os, re
 
 # ------------------------------------------------------------------------------
 # GLOBALS ----------------------------------------------------------------------
@@ -57,7 +62,7 @@ def list_get(l, idx, default=None):
 # ------------------------------------------------------------------------------
 # LOGIC ------------------------------------------------------------------------
 
-class StorageSize(object):
+class StorageSize(collections.Mapping):
     def __init__(self, value, unit):
         self.value = value
         self.unit = unit
@@ -74,6 +79,18 @@ class StorageSize(object):
         else:
             fail('Invalid size: {}'.format(size))
 
+    def to_dict(self):
+        return {'value': self.value, 'unit': self.unit}
+
+    def __getitem__(self, key):
+        return self.to_dict()[key]
+
+    def __iter__(self):
+        return iter(self.to_dict())
+
+    def __len__(self):
+        return len(self.to_dict())
+
     def __repr__(self):
         return 'StorageSize(value={}, unit={})'.format(self.value, self.unit)
 
@@ -89,6 +106,7 @@ class PartitionManager(object):
         self._end = StorageSize.fromstr(end)
         prev_partitions = self.ls()
         self._number = len(prev_partitions) + 1
+        self._device = '{disk}{number}'.format(disk=self._disk, number=self._number)
         if len(prev_partitions) == 0:
             self._start = StorageSize(1, 'MiB') # Initial padding.
         else:
@@ -135,6 +153,18 @@ class PartitionManager(object):
             '{command}'.format(command=command),
             check_rc=True)
 
+    def to_dict(self):
+        return dict(
+            name=self._name,
+            fs=self._fs,
+            start=self._start,
+            end=self._end,
+            disk=self._disk,
+            number=self._number,
+            device=self._device,
+            flags=self._flags,
+        )
+
 # ------------------------------------------------------------------------------
 # MAIN FUNCTION ----------------------------------------------------------------
 
@@ -157,12 +187,15 @@ def main():
     fail = lambda msg: module.fail_json(msg=msg)
     run_command = lambda *args, **kwargs: module.run_command(*args, **kwargs)
 
-    partition_manager = PartitionManager(
-            module.params['name'], module.params['disk'], module.params['fs'],
-            module.params['end'], module.params['flags'])
-    partition_manager.create()
+    pm = PartitionManager(module.params['name'], module.params['disk'],
+                          module.params['fs'], module.params['end'],
+                          module.params['flags'])
+    pm.create()
 
-    module.exit_json(changed=True, result={},
+    facts = dict(module.params)
+    facts.update(pm.to_dict())
+
+    module.exit_json(changed=True, ansible_facts=facts,
                      msg='Partition successfully created')
 
 # ------------------------------------------------------------------------------
