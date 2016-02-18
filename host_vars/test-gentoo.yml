@@ -5,6 +5,7 @@
 # - lvg: a volume group.
 # - lvol: a logical volume.
 partitions:
+  # Physical.
   - name: uefi
     type: physical
     disk: /dev/sda
@@ -17,6 +18,7 @@ partitions:
     disk: /dev/sda
     fs: ext4
     end: 100%
+    encryption: foo
     flags:
       - lvm
   - name: secondary
@@ -24,9 +26,30 @@ partitions:
     disk: /dev/sdb
     fs: ext4
     end: 100%
-    encrypted: true
+    encryption: bar
     flags:
       - lvm
-  - name: vg-swap
+  # Volume Groups.
+  - name: vg-primary
     pv_name: primary
-    type: logical
+    type: lvm-vg
+  - name: vg-secondary
+    pv_name: secondary
+    type: lvg
+  # Logical Volumes.
+  - name: lv-swap
+    vg_name: vg-primary
+    size: 4g
+    type: lvm-lv
+  - name: lv-root
+    vg_name: vg-primary
+    size: 100%FREE
+    type: lvm-lv
+  - name: lv-vm
+    vg_name: vg-secondary
+    size: 12g
+    type: lvm-lv
+  - name: lv-data
+    vg_name: vg-secondary
+    size: 100%FREE
+    type: lvm-lv

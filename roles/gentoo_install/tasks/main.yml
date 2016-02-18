@@ -1,38 +1,57 @@
 ---
 
+- name: Unmount pre-existing partitions and mapped devices
+  unmount:
+    encryption: true
+
 - name: Make partition tables
   command: "parted -s {{ item }} mklabel gpt"
-  with_items: "{{ partitions | map(attribute='disk') | list | unique }}"
+  with_items: "{{ partitions | selectattr('disk', 'defined') | map(attribute='disk') | list | unique}}"
 
 - name: Create partitions
-  partition:
+  create_partition:
     name: "{{ item.name }}"
     disk: "{{ item.disk }}"
     fs: "{{ item.fs }}"
     end: "{{ item.end }}"
     flags: "{{ item.flags | default(omit) }}"
-    encryption: "{{ item.encryption | default(omit) }}" # TODO: Implement (device will point to the encrypted and raw_device always to the original)
+    encryption: "{{ item.encryption | default(omit) }}"
   when: "{{ item.type == 'physical' }}"
   with_items: "{{ partitions }}"
-  register: partitions
-
+  register: _output
 - set_fact:
-    partitions: "{{ partitions.results | map(attribute='ansible_facts') | list }}"
+    _output: "{{ _output.results | map(attribute='result') | select('defined') | list }}"
+
+- name: Update partitions variable to reflect changes
+  update_variable:
+    subject: "{{ partitions }}"
+    with: "{{ _output }}"
+    matching: name
+  register: _output
+- set_fact:
+    partitions: "{{ _output.result }}"
 
 - name: Create LVM Volume Groups
   lvg:
-    vg: "vg-{{ item.name }}"
-    pvs: "{{ partitions[item.pv_name].device }}"
-  when: "{{ item.type == 'lvg' }}"
-  fail_when: "{{ 'lvm' not in partitions[item.pv].flags }}"
+    vg: "{{ item.name }}"
+    pvs: "{{ partitions | selectattr('name', 'isequal', item.pv_name) | first | attr('device') }}"
+  when: "{{ item.type == 'lvm-vg' }}"
+  failed_when: "{{ 'lvm' not in partitions | selectattr('name', 'isequal', item.pv_name) | first | attr('flags') }}" # Check `pv_name` points a valid partition.
   with_items: "{{ partitions }}"
 
-# TODO: Logical volumes
+- name: Create LVM Logical Volumes
+  lvol:
+    lv: "{{ item.name }}"
+    vg: "{{ item.vg_name }}"
+    size: "{{ item.size }}"
+  when: "{{ item.type == 'lvm-lv' }}"
+  failed_when: "{{ partitions[item.vg_name].type != 'lvm-vg' }}" # Check `vg_name` points to a valid LVM Volume Group.
+  with_items: "{{ partitions }}"
 
 - name: Update crypttab
   crypttab:
     name: "{{ item.device }}"
     state: present
-    password: -
+    password: "-"
   when: "{{ 'encryption' in item }}"
   with_items: "{{ partitions }}"
