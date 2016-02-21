@@ -26,6 +26,7 @@ def main():
 
     if module.params['lvm']:
         module.run_command('vgchange -a n', check_rc=True)
+        unmounted.append({'type': 'lvm'})
 
     if module.params['encryption']:
         _, out, _ = module.run_command('dmsetup info -c -o name', check_rc=True)
