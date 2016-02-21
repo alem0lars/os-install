@@ -138,6 +138,7 @@ class PartitionManager(object):
         self._raw_device = '{disk}{number}'.format(
                            disk=self._disk, number=self._number)
         self._device = self._raw_device
+        self._raw_name = self._name
         if len(prev_partitions) == 0:
             # Set initial padding of `1 MiB`.
             self._start = StorageSize(1, 'MiB', self._fail_handler)
@@ -188,6 +189,8 @@ class PartitionManager(object):
             self._run_crypt_cmd('luksOpen {device} {name} --key-file {key_file}'.format(
                                 device=self._raw_device, name=enc_name,
                                 key_file=pwd_file.name))
+            self._name   = enc_name
+            self._device = "/dev/mapper/{}".format(self._name)
 
             unlink(pwd_file.name)
             log('Encrypt operation completed.')
@@ -207,6 +210,7 @@ class PartitionManager(object):
 
     def to_dict(self):
         return dict(
+            raw_name=self._raw_name,
             name=self._name,
             fs=self._fs,
             start=self._start,

@@ -3,10 +3,15 @@
 - name: Unmount pre-existing partitions and mapped devices
   unmount:
     encryption: true
+    lvm:        true
 
 - name: Make partition tables
   command: "parted -s {{ item }} mklabel gpt"
-  with_items: "{{ partitions | selectattr('disk', 'defined') | map(attribute='disk') | list | unique}}"
+  with_items: "{{ partitions
+                | selectattr('disk', 'defined')
+                | map(attribute='disk')
+                | list
+                | unique}}"
 
 - name: Create partitions
   create_partition:
@@ -20,23 +25,24 @@
   with_items: "{{ partitions }}"
   register: _output
 - set_fact:
-    _output: "{{ _output.results | map(attribute='result') | select('defined') | list }}"
-
-- name: Update partitions variable to reflect changes
-  update_variable:
-    subject: "{{ partitions }}"
-    with: "{{ _output }}"
-    matching: name
-  register: _output
-- set_fact:
-    partitions: "{{ _output.result }}"
+    partitions: "{{ _output.results
+                  | map(attribute='result')
+                  | select('defined')
+                  | map_merge(partitions, 'match_key', 'raw_name', 'name') }}"
 
 - name: Create LVM Volume Groups
   lvg:
     vg: "{{ item.name }}"
-    pvs: "{{ partitions | selectattr('name', 'isequal', item.pv_name) | first | attr('device') }}"
+    pvs: "{{ ( partitions
+             | selectattr('name', 'equalto', item.pv_name)
+             | first
+             ).device }}"
   when: "{{ item.type == 'lvm-vg' }}"
-  failed_when: "{{ 'lvm' not in partitions | selectattr('name', 'isequal', item.pv_name) | first | attr('flags') }}" # Check `pv_name` points a valid partition.
+  failed_when: "{{ 'lvm' not in
+                 ( partitions
+                 | selectattr('name', 'equalto', item.pv_name)
+                 | first
+                 ).flags }}" # Check `pv_name` points a valid partition.
   with_items: "{{ partitions }}"
 
 - name: Create LVM Logical Volumes
@@ -45,11 +51,15 @@
     vg: "{{ item.vg_name }}"
     size: "{{ item.size }}"
   when: "{{ item.type == 'lvm-lv' }}"
-  failed_when: "{{ partitions[item.vg_name].type != 'lvm-vg' }}" # Check `vg_name` points to a valid LVM Volume Group.
+  failed_when: "{{ ( partitions
+                   | selectattr('name', 'equalto', item.vg_name)
+                   | first
+                   ).type != 'lvm-vg' }}" # Check `vg_name` points to a valid LVM VG.
   with_items: "{{ partitions }}"
 
 - name: Update crypttab
   crypttab:
+    backing_device: "{{ item.raw_device }}"
     name: "{{ item.device }}"
     state: present
     password: "-"

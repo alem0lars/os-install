@@ -19,12 +19,16 @@ TODO
 def main():
     module = AnsibleModule(argument_spec={
             'encryption': dict(type='bool', default=True),
+            'lvm':        dict(type='bool', default=True),
         })
 
     unmounted = [] # Informations about unmounted volumes.
 
+    if module.params['lvm']:
+        module.run_command('vgchange -a n', check_rc=True)
+
     if module.params['encryption']:
-        rc, out, err = module.run_command('dmsetup info -c -o name', check_rc=True)
+        _, out, _ = module.run_command('dmsetup info -c -o name', check_rc=True)
         lines = filter(None, out.split('\n'))
         if len(lines) > 1: # There is at least one device.
             enc_names = map(str.strip, lines[1:])

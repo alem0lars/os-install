@@ -35,7 +35,7 @@ partitions:
     type: lvm-vg
   - name: vg-secondary
     pv_name: secondary
-    type: lvg
+    type: lvm-vg
   # Logical Volumes.
   - name: lv-swap
     vg_name: vg-primary
