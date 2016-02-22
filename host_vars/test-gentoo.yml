@@ -1,14 +1,21 @@
 ---
 
-# Type can be one of:
-# - physical: a normal partition.
-# - lvg: a volume group.
-# - lvol: a logical volume.
+mount_efivars: true
+
+# - `type` can be one of:
+#   - `physical`: a normal partition.
+#   - `lvg`: a volume group.
+#   - `lvol`: a logical volume.
+#   - `tmp`: a temporary filesystem.
 partitions:
   # Physical.
   - name: uefi
     type: physical
     disk: /dev/sda
+    mount:
+      path: /boot
+      backup: true
+      check: 2
     fs: fat32
     end: 512MiB
     flags:
@@ -39,17 +46,41 @@ partitions:
   # Logical Volumes.
   - name: lv-swap
     vg_name: vg-primary
+    fs:   swap
     size: 4g
     type: lvm-lv
   - name: lv-root
     vg_name: vg-primary
+    mount:
+      path: /
+      backup: false
+      check: 1
+    fs: ext4
     size: 100%FREE
     type: lvm-lv
   - name: lv-vm
     vg_name: vg-secondary
+    mount:
+      path: /vm
+      backup: false
+      check: 1
+    fs: ext4
     size: 12g
     type: lvm-lv
   - name: lv-data
     vg_name: vg-secondary
+    mount:
+      path: /data
+      backup: false
+      check: 1
+    fs: ext4
     size: 100%FREE
     type: lvm-lv
+  # Temporary filesystems.
+  - fs: tmpfs
+    mount:
+      path: /tmp
+      opts: defaults,noatime,nosuid,size=6G
+      backup: false
+      check: false
+    type: tmp

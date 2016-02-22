@@ -8,18 +8,30 @@ from ansible.errors import AnsibleFilterError
 # ------------------------------------------------------------------------------
 # MATCHERS ---------------------------------------------------------------------
 
-MATCHERS = {}
+def match_key(subject_item, other_item, *key):
+    if len(key) == 1:
+        subject_key = other_key = key[0]
+    elif len(key) == 2:
+        subject_key, other_key = key
+    else:
+        raise AnsibleFilterError('Too many keys to be matched ({} > 2)'.format(
+            key))
 
-def match_key(subject_item, other_item, *key_name):
-    subject_key_name, other_key_name = key_name
-    return (subject_key_name in subject_item
-        and other_key_name in other_item
-        and subject_item[subject_key_name] == other_item[other_key_name])
+    return (subject_key in subject_item
+        and other_key in other_item
+        and subject_item[subject_key] == other_item[other_key])
 
-MATCHERS['match_key'] = match_key
+MATCHERS = {
+    'match_key': match_key,
+}
 
 # ------------------------------------------------------------------------------
 # FILTERS ----------------------------------------------------------------------
+
+def add_item(subject, key, value, condition=True):
+    if condition:
+        subject[key] = value
+    return subject
 
 def map_merge(subject, other, match_fn, *args):
     '''Given two lists of dictionaries, merge the dictionaries.
@@ -67,4 +79,5 @@ class FilterModule(object):
     def filters(self):
         return {
             'map_merge': map_merge,
+            'add_item': add_item,
         }

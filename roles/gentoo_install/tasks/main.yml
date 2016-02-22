@@ -11,20 +11,22 @@
                 | selectattr('disk', 'defined')
                 | map(attribute='disk')
                 | list
-                | unique}}"
+                | unique }}"
 
 - name: Create partitions
   create_partition:
-    name: "{{ item.name }}"
-    disk: "{{ item.disk }}"
-    fs: "{{ item.fs }}"
-    end: "{{ item.end }}"
-    flags: "{{ item.flags | default(omit) }}"
+    name:       "{{ item.name }}"
+    disk:       "{{ item.disk }}"
+    fs:         "{{ item.fs }}"
+    end:        "{{ item.end }}"
+    flags:      "{{ item.flags | default(omit) }}"
     encryption: "{{ item.encryption | default(omit) }}"
   when: "{{ item.type == 'physical' }}"
   with_items: "{{ partitions }}"
   register: _output
-- set_fact:
+
+- name: Add physical partitions infos to partitions variable
+  set_fact:
     partitions: "{{ _output.results
                   | map(attribute='result')
                   | select('defined')
@@ -32,7 +34,7 @@
 
 - name: Create LVM Volume Groups
   lvg:
-    vg: "{{ item.name }}"
+    vg:  "{{ item.name }}"
     pvs: "{{ ( partitions
              | selectattr('name', 'equalto', item.pv_name)
              | first
@@ -47,8 +49,8 @@
 
 - name: Create LVM Logical Volumes
   lvol:
-    lv: "{{ item.name }}"
-    vg: "{{ item.vg_name }}"
+    lv:   "{{ item.name }}"
+    vg:   "{{ item.vg_name }}"
     size: "{{ item.size }}"
   when: "{{ item.type == 'lvm-lv' }}"
   failed_when: "{{ ( partitions
@@ -57,8 +59,72 @@
                    ).type != 'lvm-vg' }}" # Check `vg_name` points to a valid LVM VG.
   with_items: "{{ partitions }}"
 
+- name: Add LVM Logical Volumes infos to partitions variable (1/2)
+  set_fact:
+    item: "{{ item
+            | add_item(
+                'device',
+                ['/dev', item.vg_name, item.name] | join('/')) }}"
+  when: "{{ item.type == 'lvm-lv' }}"
+  with_items: "{{ partitions }}"
+  register: _output
+
+- name: Add LVM Logical Volumes infos to partitions variable (2/2)
+  set_fact:
+    partitions: "{{ _output.results
+                  | selectattr('ansible_facts', 'defined')
+                  | map(attribute='ansible_facts.item')
+                  | list
+                  | map_merge(partitions, 'match_key', 'name') }}"
+
+- name: Format swap
+  command: "mkswap {{ item.device }}"
+  when: "{{ 'fs' in item and item.fs == 'swap' }}"
+  with_items: "{{ partitions }}"
+
+- name: Format other partitions
+  filesystem:
+    fstype: "{{ item.fs }}"
+    dev: "{{ item.device }}"
+  when: "{{ 'fs' in item
+        and item.type != 'tmp'
+        and item.fs != 'swap'
+        and (not 'lvm' in item.flags if 'flags' in item else true) }}"
+  with_items: "{{ partitions }}"
+
+- name: Prepare mountpoint
+  file:
+    path: /mnt/gentoo
+    state: directory
+
+- name: Mount partitions
+  mount:
+    fstab: /tmp/etc/fstab # Will move later to final destination.
+    src:    "{{ item.device }}"
+    name:   "{{ item | mount_path(root_dir='/mnt/gentoo') }}"
+    fs:     "{{ item | mount_fs() }}"
+    opts:   "{{ item | mount_opts() }}"
+    dump:   "{{ item | mount_backup() }}"
+    passno: "{{ item | mount_check() }}"
+    state: present
+  when: "{{ 'mount' in item }}"
+  with_items: "{{ partitions | sorted_by_path() }}"
+
+- name: Mount EFI variables
+  mount:
+    fstab: /tmp/etc/fstab
+    src: efivars
+    name: /sys/firmware/efi/efivars
+    fs: efivarfs
+    opts: defaults
+    dump: 0
+    passno: 0
+  when: "{{ mount_efivars }}"
+
 - name: Update crypttab
   crypttab:
+    fstab: /tmp/etc/crypttab # Will move later to final destination.
+    path: /mnt/gentoo/etc/crypttab
     backing_device: "{{ item.raw_device }}"
     name: "{{ item.device }}"
     state: present
