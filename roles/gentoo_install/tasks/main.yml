@@ -1,3 +1,4 @@
 ---
 
-- include: storage.yml
+# - include: storage.yml
+- include: stage.yml

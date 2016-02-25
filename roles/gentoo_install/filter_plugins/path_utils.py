@@ -16,7 +16,7 @@ def sorted_by_path(subject, attribute=None):
                 return max_size
         else: # By default, consider the subject as a list of strings (paths).
             path = elem
-        return len(list(filter(None, path.split('/'))))
+        return len([component for component in path.split('/') if component])
     return sorted(subject, key=sort_fn)
 
 # ------------------------------------------------------------------------------
@@ -26,6 +26,4 @@ class FilterModule(object):
     '''Ansible jinja2 filters for working with paths.'''
 
     def filters(self):
-        return {
-            'sorted_by_path': sorted_by_path,
-        }
+        return {'sorted_by_path': sorted_by_path}

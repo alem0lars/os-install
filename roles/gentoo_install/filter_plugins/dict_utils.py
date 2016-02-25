@@ -65,7 +65,7 @@ def map_merge(subject, other, match_fn, *args):
 
     # Add items that never matched, without modifying them.
     for item in subject + other:
-        if len(list(filter(lambda m: item is m, matched))) == 0:
+        if len([m for m in matched if item is m]) == 0:
             # This item never matched.
             result.append(item)
 
@@ -78,7 +78,4 @@ class FilterModule(object):
     '''Ansible jinja2 filters for performing advanced dict-based merges.'''
 
     def filters(self):
-        return {
-            'map_merge': map_merge,
-            'add_item': add_item,
-        }
+        return {'map_merge': map_merge, 'add_item': add_item}

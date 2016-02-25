@@ -1,6 +1,9 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+# ------------------------------------------------------------------------------
+# MODULE INFORMATIONS ----------------------------------------------------------
+
 DOCUMENTATION = '''
 ---
 module: unmount
@@ -36,7 +39,7 @@ def main():
 
     if module.params['encryption']:
         _, out, _ = module.run_command('dmsetup info -c -o name', check_rc=True)
-        lines = filter(None, out.split('\n'))
+        lines = [line for line in out.split('\n') if line]
         if len(lines) > 1: # There is at least one device.
             enc_names = map(str.strip, lines[1:])
             for enc_name in enc_names:

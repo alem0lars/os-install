@@ -1,0 +1,37 @@
+- name: Select the Gentoo mirror
+  select_mirror:
+    geo_loc: true
+  register: _output
+- set_fact:
+    mirror_url: "{{ _output.result }}"
+
+- name: Select the Stage
+  select_stage:
+    arch:     "{{ stage.arch }}"
+    hardened: "{{ stage.hardened }}"
+    multilib: "{{ stage.multilib }}"
+  register: _output
+- set_fact:
+    stage_path: "{{ _output.result }}"
+
+- name: Download the Stage archive
+  get_url:
+    dest: /mnt/gentoo/stage.tar.bz2
+    url:  "{{ '%s/releases/%s/autobuilds/%s' |
+              format(mirror_url, stage.arch, stage_path) }}"
+
+- name: Extract the Stage archive
+  command: tar xvjpf /mnt/gentoo/stage.tar.bz2 --xattrs
+  args:
+    chdir: /mnt/gentoo
+
+  #- name: Cleanup the Stage archive
+  #  file:
+  #    path:  /mnt/gentoo/stage.tar.bz2
+  #    state: absent
+
+- name: Generate (copy) fstab and crypttab
+  command: cp /etc/{fstab,crypttab} /mnt/gentoo/tmp
+
+- name: Generate (copy) resolv.conf
+  command: cp -L /etc/resolv.conf /mnt/gentoo/etc

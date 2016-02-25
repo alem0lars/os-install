@@ -1,5 +1,10 @@
 ---
 
+stage:
+  arch: amd64
+  multilib: true
+  hardened: false
+
 mount_efivars: true
 
 # - `type` can be one of:

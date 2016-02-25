@@ -52,7 +52,7 @@ def mount_opts(item):
     if item.get('mount', {}).get('opts'):
         if isinstance(item['mount']['opts'], list):
             opts_value = ','.join(item['mount']['opts'])
-        elif isinstance(item['mount']['opts'], basestring):
+        elif isinstance(item['mount']['opts'], str):
             opts_value = item['mount']['opts']
         else:
             raise AnsibleFilterError('Cannot handle mount options')
@@ -108,12 +108,10 @@ class FilterModule(object):
     '''Ansible jinja2 filters for mounting devices.'''
 
     def filters(self):
-        return {
-            'mount_device': mount_device,
-            'mount_path':   mount_path,
-            'mount_fs':     mount_fs,
-            'mount_opts':   mount_opts,
-            'mount_backup': mount_backup,
-            'mount_check':  mount_check,
-            'mount_state':  mount_state,
-        }
+        return {'mount_device': mount_device,
+                'mount_path':   mount_path,
+                'mount_fs':     mount_fs,
+                'mount_opts':   mount_opts,
+                'mount_backup': mount_backup,
+                'mount_check':  mount_check,
+                'mount_state':  mount_state}

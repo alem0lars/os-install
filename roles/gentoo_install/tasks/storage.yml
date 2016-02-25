@@ -143,3 +143,18 @@
     password: "-"
   when: "{{ 'encryption' in item }}"
   with_items: "{{ partitions }}"
+
+- name: Bind proc to chroot
+  command: mount -t proc proc /mnt/gentoo/proc
+
+- name: Bind /dev to chroot (1/2)
+  command: mount --rbind /dev /mnt/gentoo/dev
+
+- name: Bind /dev to chroot (2/2)
+  command: mount --make-rslave /dev /mnt/gentoo/dev
+
+- name: Bind /sys to chroot (1/2)
+  command: mount --rbind /sys /mnt/gentoo/sys
+
+- name: Bind /sys to chroot (2/2)
+  command: mount --make-rslave /sys /mnt/gentoo/sys

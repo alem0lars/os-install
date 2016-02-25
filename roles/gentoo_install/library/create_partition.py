@@ -147,7 +147,7 @@ class PartitionManager(object):
 
     def ls(self):
         _, out, err = self._run_parted_cmd('print')
-        lines = filter(None, out.split('\n'))
+        lines = [line for line in out.split('\n') if line]
         columns = ['Number', 'Start', 'End', 'Size', 'File system', 'Name', 'Flags']
         header = '^{columns}$'.format(columns=r'\s+'.join(columns))
         idxs = [idx for idx, line in enumerate(lines) if match_regexp(header, line)]
@@ -155,7 +155,7 @@ class PartitionManager(object):
             self._fail_handler(msg='Internal error: cannot parse parted print output')
         partitions = []
         for line in lines[idxs[0] + 1:]:
-            tokens = filter(None, split_regexp(r'\s+', line))
+            tokens = [token for token in split_regexp(r'\s+', line) if token]
             partitions.append(dict(
                 number=list_get(tokens, 0),
                 start=StorageSize.from_str(list_get(tokens, 1), self._fail_handler),
