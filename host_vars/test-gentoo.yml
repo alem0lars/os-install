@@ -77,8 +77,7 @@ partitions:
     size: 100%FREE
     type: lvm-lv
   # Temporary filesystems.
-  - fs: tmpfs
-    mount:
+  - mount:
       path: /tmp
       opts: defaults,noatime,nosuid,size=6G
       backup: false

@@ -1,9 +1,22 @@
-#!/usr/bin/python
 # -*- coding: utf-8 -*-
+
+# ------------------------------------------------------------------------------
+# PLUGIN -----------------------------------------------------------------------
+
+from sys import maxsize as max_size
+
 # FILTERS ----------------------------------------------------------------------
 
-def sorted_by_path(subject):
-    sort_fn = lambda path: len(list(filter(None, path.split('/'))))
+def sorted_by_path(subject, attribute=None):
+    def sort_fn(elem):
+        if attribute is not None:
+            if attribute in elem:
+                path = elem[attribute]
+            else:
+                return max_size
+        else: # By default, consider the subject as a list of strings (paths).
+            path = elem
+        return len(list(filter(None, path.split('/'))))
     return sorted(subject, key=sort_fn)
 
 # ------------------------------------------------------------------------------

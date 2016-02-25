@@ -24,6 +24,12 @@ def main():
 
     unmounted = [] # Informations about unmounted volumes.
 
+    # Unmount all (mounted) partitions. Partitions that can't be unmounted are
+    # those in use, so the command should work correctly (i.e. unmount only
+    # partitions we regarding the current setup).
+    module.run_command('umount -a')
+    unmounted.append({'type': 'active mountpoints'})
+
     if module.params['lvm']:
         module.run_command('vgchange -a n', check_rc=True)
         unmounted.append({'type': 'lvm'})
@@ -47,3 +53,6 @@ from ansible.module_utils.basic import *
 
 if __name__ == '__main__':
     main()
+
+# ------------------------------------------------------------------------------
+# vim: set filetype=python :
