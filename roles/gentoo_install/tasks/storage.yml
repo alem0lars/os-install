@@ -35,16 +35,16 @@
 - name: Create LVM Volume Groups
   lvg:
     vg:  "{{ item.name }}"
-    pvs: "{{ ( partitions
-             | selectattr('name', 'equalto', item.pv_name)
-             | first
+    pvs: "{{ ( partitions |
+               selectattr('name', 'equalto', item.pv_name) |
+               first
              ).device }}"
   when: "{{ item.type == 'lvm-vg' }}"
   failed_when: "{{ 'lvm' not in
                  ( partitions |
                    selectattr('name', 'equalto', item.pv_name) |
                    first
-                 ).flags }}" # Check `pv_name` points a valid partition.
+                 ).flags }}"
   with_items: "{{ partitions }}"
 
 - name: Create LVM Logical Volumes
@@ -56,15 +56,14 @@
   failed_when: "{{ ( partitions |
                      selectattr('name', 'equalto', item.vg_name) |
                      first
-                   ).type != 'lvm-vg' }}" # Check `vg_name` points to a valid LVM VG.
+                   ).type != 'lvm-vg' }}"
   with_items: "{{ partitions }}"
 
 - name: Add LVM Logical Volumes infos to partitions variable (1/2)
   set_fact:
     item: "{{ item |
-              add_item(
-                'device', ['/dev', item.vg_name, item.name] |
-                join('/')) }}"
+              add_item('device',
+                       ['/dev', item.vg_name, item.name] | join('/')) }}"
   when: "{{ item.type == 'lvm-lv' }}"
   with_items: "{{ partitions }}"
   register: _output
@@ -143,18 +142,3 @@
     password: "-"
   when: "{{ 'encryption' in item }}"
   with_items: "{{ partitions }}"
-
-- name: Bind proc to chroot
-  command: mount -t proc proc /mnt/gentoo/proc
-
-- name: Bind /dev to chroot (1/2)
-  command: mount --rbind /dev /mnt/gentoo/dev
-
-- name: Bind /dev to chroot (2/2)
-  command: mount --make-rslave /dev /mnt/gentoo/dev
-
-- name: Bind /sys to chroot (1/2)
-  command: mount --rbind /sys /mnt/gentoo/sys
-
-- name: Bind /sys to chroot (2/2)
-  command: mount --make-rslave /sys /mnt/gentoo/sys

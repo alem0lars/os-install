@@ -4,6 +4,11 @@
 # IMPORTS ----------------------------------------------------------------------
 
 from ansible.errors import AnsibleFilterError
+from sys import version_info as py_version_info
+
+PY3K = py_version_info >= (3, 0)
+if PY3K:
+    basestring = str
 
 # ------------------------------------------------------------------------------
 # FILTERS ----------------------------------------------------------------------
@@ -50,9 +55,10 @@ def mount_opts(item):
     opts_value = None
 
     if item.get('mount', {}).get('opts'):
+        print(item['mount'])
         if isinstance(item['mount']['opts'], list):
             opts_value = ','.join(item['mount']['opts'])
-        elif isinstance(item['mount']['opts'], str):
+        elif isinstance(item['mount']['opts'], basestring):
             opts_value = item['mount']['opts']
         else:
             raise AnsibleFilterError('Cannot handle mount options')

@@ -1,0 +1,31 @@
+- name: Generate (copy) fstab in the chroot environment
+  command: cp /etc/fstab /mnt/gentoo/etc/fstab
+
+- name: Generate (copy) crypttab in the chroot environment
+  command: cp /etc/crypttab /mnt/gentoo/etc/crypttab
+
+- name: Generate (copy) resolv.conf in the chroot environment
+  command: cp -L /etc/resolv.conf /mnt/gentoo/etc
+
+- name: Bind proc in the chroot environment
+  mount:
+    src:    /proc
+    name:   /mnt/gentoo/proc
+    fstype: proc
+    state:  mounted
+
+- name: Bind /dev in the chroot environment
+  mount:
+    src:    /dev
+    name:   /mnt/gentoo/dev
+    fstype: devtmpfs
+    opts:   rbind,make-rslave
+    state:  mounted
+
+- name: Bind /sys in the chroot environment
+  mount:
+    src:    /sys
+    name:   /mnt/gentoo/sys
+    fstype: sysfs
+    opts:   rbind,make-rslave
+    state:  mounted

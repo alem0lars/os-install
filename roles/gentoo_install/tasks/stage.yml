@@ -25,13 +25,8 @@
   args:
     chdir: /mnt/gentoo
 
-  #- name: Cleanup the Stage archive
-  #  file:
-  #    path:  /mnt/gentoo/stage.tar.bz2
-  #    state: absent
-
-- name: Generate (copy) fstab and crypttab
-  command: cp /etc/{fstab,crypttab} /mnt/gentoo/tmp
-
-- name: Generate (copy) resolv.conf
-  command: cp -L /etc/resolv.conf /mnt/gentoo/etc
+# TODO: Uncomment
+#- name: Cleanup the Stage archive
+#  file:
+#    path:  /mnt/gentoo/stage.tar.bz2
+#    state: absent
