@@ -2,6 +2,7 @@
 
 - name: Unmount pre-existing partitions and mapped devices
   unmount:
+    basic:      /mnt/gentoo
     encryption: true
     lvm:        true
 

@@ -36,6 +36,9 @@ def main():
     fail_handler = lambda msg: module.fail_json(msg=msg)
     cmd_runner   = lambda *args, **kwargs: module.run_command(*args, **kwargs)
 
+    configurator = KernelConfigurator(module.params['kernel_dir'],
+                                      cmd_runner, fail_handler)
+
 class KernelConfigurator(object):
     def __init__(self, kernel_dir, cmd_runner, fail_handler):
         self._kernel_dir = kernel_dir

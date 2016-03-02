@@ -1,5 +1,5 @@
-#- name: Install kernel sources
-#  command: "{{ kernel.name | emerge() | chrooted() }}"
+- name: Install kernel sources
+  command: "{{ kernel.name | emerge() | chrooted() }}"
 
 - name: Configure kernel (use default configuration) (1/2)
   command: "{{ 'defconfig' | make_kernel() | chrooted() }}"
