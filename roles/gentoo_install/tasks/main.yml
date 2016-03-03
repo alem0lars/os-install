@@ -1,8 +1,8 @@
 ---
 
 # TODO: Uncomment
-- include: storage.yml
-- include: stage.yml
-- include: prepare_chroot.yml
-- include: portage.yml
+#- include: storage.yml
+#- include: stage.yml
+#- include: prepare_chroot.yml
+#- include: portage.yml
 - include: kernel.yml

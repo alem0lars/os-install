@@ -1,5 +1,5 @@
-- name: Install kernel sources
-  command: "{{ kernel.name | emerge() | chrooted() }}"
+#- name: Install kernel sources
+#  command: "{{ kernel.name | emerge() | chrooted() }}"
 
 - name: Configure kernel (use default configuration) (1/2)
   command: "{{ 'defconfig' | make_kernel() | chrooted() }}"
@@ -14,19 +14,19 @@
 - name: Configure kernel (add custom entries) (2/2)
   kernel_config:
     kernel_dir: /mnt/gentoo/usr/src/linux
-    option:     "{{ item.name }}"
-    as_module:  "{{ item.as_module | default(false) }}"
-    value:      "{{ item.value }}"
+    option:     "{{ item.option }}"
+    value:      "{{ item.value | default(omit) }}"
+    as_module:  "{{ item.as_module | default(omit) }}"
     kind:       "{{ item.kind | default(omit) }}"
-    after:      "{{ item.enable_after | default(omit) }}"
+    after:      "{{ item.after | default(omit) }}"
   with_items: "{{ kernel.config.entries }}"
   when: "{{ 'entries' in kernel.config }}"
 
-- name: Compile kernel (1/3)
-  command: "{{ kernel.make_opts | default('') | make_kernel() | chrooted() }}"
-
-- name: Compile kernel (install modules) (2/3)
-  command: "{{ 'modules install' | make_kernel() | chrooted() }}"
-
-- name: Compile kernel (generate image) (3/3)
-  command: "{{ 'install' | make_kernel() | chrooted() }}"
+#- name: Compile kernel (1/3)
+#  command: "{{ kernel.make_opts | default('') | make_kernel() | chrooted() }}"
+#
+#- name: Compile kernel (install modules) (2/3)
+#  command: "{{ 'modules install' | make_kernel() | chrooted() }}"
+#
+#- name: Compile kernel (generate image) (3/3)
+#  command: "{{ 'install' | make_kernel() | chrooted() }}"

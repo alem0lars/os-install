@@ -3,22 +3,35 @@ class BaseObject(object):
 
     '''Base class for all classes that use AnsibleModule.
     '''
-    def __init__(self, module, *params):
+    def __init__(self, module, params=None):
         syslog.openlog('ansible-{module}-{name}'.format(
             module=os.path.basename(__file__), name=self.__class__.__name__))
         self._module = module
-        self._parse_params(*params)
+        self._command_prefix = None
+        if params:
+            self._parse_params(params)
 
-    def run_command(self, *args, **kwargs):
+    @property
+    def command_prefix(self):
+        return self._command_prefix
+
+    @command_prefix.setter
+    def command_prefix(self, value):
+        self._command_prefix = value
+
+    def run_command(self, command=None, **kwargs):
         if not 'check_rc' in kwargs:
             kwargs['check_rc'] = True
-        if len(args) < 1:
+        if command is None and self.command_prefix is None:
             self.fail('Invalid command')
-        self.log('Performing command `{}`'.format(args[0]))
-        rc, out, err = self._module.run_command(*args, **kwargs)
+        if self.command_prefix:
+            command = '{prefix} {command}'.format(
+                prefix=self.command_prefix, command=command or '')
+        self.log('Performing command `{}`'.format(command))
+        rc, out, err = self._module.run_command(command, **kwargs)
         if rc != 0:
             self.log('Command `{}` returned invalid status code: `{}`'.format(
-                args[0], rc), level=syslog.LOG_WARNING)
+                command, rc), level=syslog.LOG_WARNING)
         return {'rc': rc, 'out': out, 'err': err}
 
     def log(self, msg, level=syslog.LOG_DEBUG):
@@ -32,7 +45,7 @@ class BaseObject(object):
     def exit(self, changed=True, msg='', result=None):
         self._module.exit_json(changed=changed, msg=msg, result=result)
 
-    def _parse_params(self, *params):
+    def _parse_params(self, params):
         for param in params:
             if param in self._module.params:
                 setattr(self, param, self._module.params[param])

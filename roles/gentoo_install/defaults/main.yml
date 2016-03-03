@@ -2,4 +2,11 @@
 
 kernel:
   name: gentoo-sources
-  config: {}
+  config:
+    entries:
+      # Options specific to `gentoo-sources`.
+      - option: GENTOO_LINUX_INIT_SCRIPT
+        after:  GENTOO_LINUX
+        value:  False
+      - option: GENTOO_LINUX_INIT_SYSTEMD
+        after:  GENTOO_LINUX_UDEV
