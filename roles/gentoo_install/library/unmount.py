@@ -4,13 +4,7 @@
 # ------------------------------------------------------------------------------
 # IMPORTS ----------------------------------------------------------------------
 
-from syslog  import (LOG_DEBUG, LOG_WARNING,
-                     openlog  as open_log,
-                     syslog   as sys_log)
-from os      import  name     as os_name
-from os.path import (isfile   as is_file,
-                     basename as base_name)
-from re      import  match    as match_regexp
+import re
 
 # ------------------------------------------------------------------------------
 # MODULE INFORMATIONS ----------------------------------------------------------
@@ -32,14 +26,16 @@ EXAMPLES = '''
 '''
 
 # ------------------------------------------------------------------------------
-# COMMONS ----------------------------------------------------------------------
+# COMMONS (generated) ----------------------------------------------------------
 
 class BaseObject(object):
+    import syslog, os
+
     '''Base class for all classes that use AnsibleModule.
     '''
     def __init__(self, module, *params):
-        open_log('ansible-{module}-{name}'.format(module=base_name(__file__),
-                                                  name=self.__class__.__name__))
+        syslog.openlog('ansible-{module}-{name}'.format(
+            module=os.path.basename(__file__), name=self.__class__.__name__))
         self._module = module
         self._parse_params(*params)
 
@@ -52,13 +48,13 @@ class BaseObject(object):
         rc, out, err = self._module.run_command(*args, **kwargs)
         if rc != 0:
             self.log('Command `{}` returned invalid status code: `{}`'.format(
-                args[0], rc), level=LOG_WARNING)
+                args[0], rc), level=syslog.LOG_WARNING)
         return {'rc': rc, 'out': out, 'err': err}
 
-    def log(self, msg, level=LOG_DEBUG):
+    def log(self, msg, level=syslog.LOG_DEBUG):
         '''Log to the system logging facility of the target system.'''
-        if os_name == 'posix': # syslog is unsupported on Windows.
-            sys_log(level, str(msg))
+        if os.name == 'posix': # syslog is unsupported on Windows.
+            syslog.syslog(level, str(msg))
 
     def fail(self, msg):
         self._module.fail_json(msg=msg)
@@ -92,7 +88,7 @@ class BasicUnmounter(BaseObject):
         out = self.run_command('mount')['out']
 
         for line in out.split('\n'):
-            md = match_regexp(r'.+on\s+(\S+).+', line)
+            md = re.match(r'.+on\s+(\S+).+', line)
             if md:
                 mount_point = md.group(1)
                 if self.basic and mount_point.startswith(self.basic):

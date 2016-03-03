@@ -11,16 +11,16 @@
     dest: /mnt/gentoo/usr/src/linux/.config
   when: "{{ 'path' in kernel.config }}"
 
-#- name: Configure kernel (add custom entries) (2/2)
-#  kernel_config:
-#    kernel_dir: /mnt/gentoo/usr/src/linux
-#    option:     "{{ item.name }}"
-#    as_module:  "{{ item.as_module | default(false) }}"
-#    value:      "{{ item.value }}"
-#    kind:       "{{ item.kind | default(omit) }}"
-#    after:      "{{ item.enable_after | default(omit) }}"
-#  with_items: "{{ kernel.config.entries }}"
-#  when: "{{ 'entries' in kernel.config }}"
+- name: Configure kernel (add custom entries) (2/2)
+  kernel_config:
+    kernel_dir: /mnt/gentoo/usr/src/linux
+    option:     "{{ item.name }}"
+    as_module:  "{{ item.as_module | default(false) }}"
+    value:      "{{ item.value }}"
+    kind:       "{{ item.kind | default(omit) }}"
+    after:      "{{ item.enable_after | default(omit) }}"
+  with_items: "{{ kernel.config.entries }}"
+  when: "{{ 'entries' in kernel.config }}"
 
 - name: Compile kernel (1/3)
   command: "{{ kernel.make_opts | default('') | make_kernel() | chrooted() }}"

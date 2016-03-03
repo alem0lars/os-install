@@ -4,13 +4,7 @@
 # ------------------------------------------------------------------------------
 # IMPORTS ----------------------------------------------------------------------
 
-from collections import Mapping
-from distutils.spawn import find_executable
-from os import environ, unlink, name as os_name
-from os.path import basename as base_name
-from re import match as match_regexp, split as split_regexp
-from syslog import LOG_DEBUG, openlog as open_log, syslog as sys_log
-from tempfile import NamedTemporaryFile
+import collections, os, re, syslog, tempfile
 
 # ------------------------------------------------------------------------------
 # MODULE INFORMATIONS ----------------------------------------------------------
@@ -53,12 +47,12 @@ EXAMPLES = '''
 # ------------------------------------------------------------------------------
 # LOGGING ----------------------------------------------------------------------
 
-open_log('ansible-{name}'.format(name=base_name(__file__)))
+syslog.openlog('ansible-{name}'.format(name=os.path.basename(__file__)))
 
-def log(msg, level=LOG_DEBUG):
+def log(msg, level=syslog.LOG_DEBUG):
     """Log to the system logging facility of the target system."""
-    if os_name == 'posix': # syslog is unsupported on Windows.
-        sys_log(level, msg)
+    if os.name == 'posix': # syslog is unsupported on Windows.
+        syslog.syslog(level, msg)
 
 # ------------------------------------------------------------------------------
 # GLOBALS ----------------------------------------------------------------------
@@ -81,7 +75,7 @@ def list_get(l, idx, default=None):
 # ------------------------------------------------------------------------------
 # DATA STRUCTURES --------------------------------------------------------------
 
-class StorageSize(Mapping):
+class StorageSize(collections.Mapping):
     def __init__(self, value, unit, fail_handler):
         self._fail_handler = fail_handler
         self.value = value
@@ -89,7 +83,7 @@ class StorageSize(Mapping):
 
     @classmethod
     def from_str(cls, size, fail_handler):
-        md = match_regexp(r'([.\d]+)\s*([^\s]+)', size)
+        md = re.match(r'([.\d]+)\s*([^\s]+)', size)
         if md:
             value = md.group(1)
             unit = md.group(2)
@@ -150,12 +144,12 @@ class PartitionManager(object):
         lines = [line for line in out.split('\n') if line]
         columns = ['Number', 'Start', 'End', 'Size', 'File system', 'Name', 'Flags']
         header = '^{columns}$'.format(columns=r'\s+'.join(columns))
-        idxs = [idx for idx, line in enumerate(lines) if match_regexp(header, line)]
+        idxs = [idx for idx, line in enumerate(lines) if re.match(header, line)]
         if len(idxs) != 1:
             self._fail_handler(msg='Internal error: cannot parse parted print output')
         partitions = []
         for line in lines[idxs[0] + 1:]:
-            tokens = [token for token in split_regexp(r'\s+', line) if token]
+            tokens = [token for token in re.split(r'\s+', line) if token]
             partitions.append(dict(
                 number=list_get(tokens, 0),
                 start=StorageSize.from_str(list_get(tokens, 1), self._fail_handler),
@@ -177,7 +171,7 @@ class PartitionManager(object):
                 number=self._number, flag=flag))
         # Encrypt.
         if self._enc_pwd:
-            pwd_file = NamedTemporaryFile(delete=False)
+            pwd_file = tempfile.NamedTemporaryFile(delete=False)
             pwd_file.write(self._enc_pwd)
             pwd_file.close()
             enc_name = 'luks-{name}'.format(name=self._name)
@@ -192,7 +186,7 @@ class PartitionManager(object):
             self._name   = enc_name
             self._device = "/dev/mapper/{}".format(self._name)
 
-            unlink(pwd_file.name)
+            os.unlink(pwd_file.name)
             log('Encrypt operation completed.')
 
     def _run_crypt_cmd(self, cmd):

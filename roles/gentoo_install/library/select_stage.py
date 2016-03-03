@@ -4,10 +4,9 @@
 # ------------------------------------------------------------------------------
 # IMPORTS ----------------------------------------------------------------------
 
-from sys import version_info as py_version_info
-from re import match as match_regexp
+import sys, re
 
-PY3K = py_version_info >= (3, 0)
+PY3K = sys.version_info >= (3, 0)
 
 if PY3K:
     from urllib.request import urlopen as url_open
@@ -78,7 +77,7 @@ def main():
              if line and not line.startswith('#')]
 
     # Find a Stage path matching with provided parameters.
-    stage_paths = [path for path in paths if match_regexp(regexp, path)]
+    stage_paths = [path for path in paths if re.match(regexp, path)]
 
     if len(stage_paths) != 1:
         module.fail_json(msg='Cannot find a matching Stage')

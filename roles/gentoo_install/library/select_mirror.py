@@ -4,12 +4,9 @@
 # ------------------------------------------------------------------------------
 # IMPORTS ----------------------------------------------------------------------
 
-from xml.etree import ElementTree as ET
-from sys import version_info as py_version_info
-from copy import deepcopy as deep_copy
-from json import loads as parse_json
+import copy, json, sys, xml.etree.ElementTree
 
-PY3K = py_version_info >= (3, 0)
+PY3K = sys.version_info >= (3, 0)
 
 if PY3K:
     from urllib.request import urlopen as url_open
@@ -65,7 +62,7 @@ class CountryInfo(object):
             url += '/{ip}'.format(ip=ip)
 
         try:
-            info = parse_json(url_open(url).read())
+            info = json.loads(url_open(url).read())
         except:
             fail_handler(msg='Failed to parse country from IP')
 
@@ -77,7 +74,7 @@ class CountryInfo(object):
         url = 'https://restcountries.eu/rest/v1/alpha/{code}'.format(code=code)
 
         try:
-            info = parse_json(url_open(url).read())
+            info = json.loads(url_open(url).read())
         except:
             fail_handler(msg='Failed to parse read informations')
 
@@ -91,7 +88,7 @@ class MirrorInfo(object):
         self._reset(initial)
 
     def _reset(self, initial={}):
-        self._info = deep_copy(initial)
+        self._info = copy.deepcopy(initial)
 
     @classmethod
     def parse_from_url(cls, url):
@@ -100,7 +97,7 @@ class MirrorInfo(object):
     @classmethod
     def parse(cls, text):
         info = {}
-        for mirror_group in ET.XML(text):
+        for mirror_group in xml.etree.ElementTree.XML(text):
             for mirror in mirror_group:
                 name = ''
                 for e in mirror:
