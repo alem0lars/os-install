@@ -1,11 +1,12 @@
 ---
 
-stage:
+sys:
   arch: amd64
   multilib: true
   hardened: false
 
-mount_efivars: true
+boot:
+  efi: true
 
 # - `type` can be one of:
 #   - `physical`: a normal partition.

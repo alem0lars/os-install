@@ -2,7 +2,7 @@
 
 galaxy_info:
   author: Alessandro Molari
-  description: Automatic installation of a Gentoo system (with systemd)
+  description: Customizable automatic installation of Gentoo system
   license: Apache
   min_ansible_version: 2.0
   platforms:

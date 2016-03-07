@@ -7,9 +7,9 @@
 
 - name: Select the Stage
   select_stage:
-    arch:     "{{ stage.arch }}"
-    hardened: "{{ stage.hardened }}"
-    multilib: "{{ stage.multilib }}"
+    arch:     "{{ sys.arch }}"
+    hardened: "{{ sys.hardened }}"
+    multilib: "{{ sys.multilib }}"
   register: _output
 - set_fact:
     stage_path: "{{ _output.result }}"
@@ -25,8 +25,7 @@
   args:
     chdir: /mnt/gentoo
 
-# TODO: Uncomment
-#- name: Cleanup the Stage archive
-#  file:
-#    path:  /mnt/gentoo/stage.tar.bz2
-#    state: absent
+- name: Cleanup the Stage archive
+  file:
+    path:  /mnt/gentoo/stage.tar.bz2
+    state: absent

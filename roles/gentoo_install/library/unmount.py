@@ -26,16 +26,20 @@ EXAMPLES = '''
 '''
 
 # ------------------------------------------------------------------------------
-# COMMONS (generated) ----------------------------------------------------------
+# COMMONS (generated) <BaseObject, chrooted> -----------------------------------
 
 class BaseObject(object):
     import syslog, os
 
     '''Base class for all classes that use AnsibleModule.
+    Dependencies:
+    - `chrooted` function.
     '''
     def __init__(self, module, params=None):
         syslog.openlog('ansible-{module}-{name}'.format(
             module=os.path.basename(__file__), name=self.__class__.__name__))
+        self.work_dir = None
+        self.chroot = None
         self._module = module
         self._command_prefix = None
         if params:
@@ -57,6 +61,11 @@ class BaseObject(object):
         if self.command_prefix:
             command = '{prefix} {command}'.format(
                 prefix=self.command_prefix, command=command or '')
+        if self.work_dir and not self.chroot:
+            command = 'cd {work_dir}; {command}'.format(
+                work_dir=self.work_dir, command=command)
+        if self.chroot:
+            command = chrooted(command, self.chroot, work_dir=self.work_dir)
         self.log('Performing command `{}`'.format(command))
         rc, out, err = self._module.run_command(command, **kwargs)
         if rc != 0:
@@ -65,10 +74,7 @@ class BaseObject(object):
         return {'rc': rc, 'out': out, 'err': err}
 
     def log(self, msg, level=syslog.LOG_DEBUG):
-        '''Log to the system logging facility of the target system.'''
-        if os.name == 'posix': # syslog is unsupported on Windows.
-            syslog.syslog(level, str(msg))
-
+        '''Log to the system logging facility of the target system.''' if os.name == 'posix': # syslog is unsupported on Windows. syslog.syslog(level, str(msg)) 
     def fail(self, msg):
         self._module.fail_json(msg=msg)
 
@@ -82,6 +88,15 @@ class BaseObject(object):
             else:
                 setattr(self, param, None)
 
+def chrooted(command, path, profile='/etc/profile', work_dir=None):
+    prefix = "chroot {path} bash -c 'source {profile}; ".format(
+        path=path, profile=profile)
+    if work_dir:
+        prefix += 'cd {work_dir}; '.format(work_dir=work_dir)
+    prefix += command
+    prefix += "'"
+    return prefix
+
 # ------------------------------------------------------------------------------
 # UNMOUNT POLICIES -------------------------------------------------------------
 
@@ -92,7 +107,7 @@ class BasicUnmounter(BaseObject):
     work correctly (i.e. unmount only partitions of the current setup).
     '''
     def __init__(self, module):
-        super(BasicUnmounter, self).__init__(module, 'basic')
+        super(BasicUnmounter, self).__init__(module, params=['basic'])
 
     def run(self):
         result = []
@@ -100,7 +115,7 @@ class BasicUnmounter(BaseObject):
 
         out = self.run_command('mount')['out']
 
-        for line in out.split('\n'):
+        for line in out.split(' '):
             md = re.match(r'.+on\s+(\S+).+', line)
             if md:
                 mount_point = md.group(1)
@@ -138,7 +153,7 @@ class EncryptionUnmounter(BaseObject):
         result = []
 
         out = self.run_command('dmsetup info -c -o name')['out']
-        lines = [line for line in out.split('\n') if line]
+        lines = [line for line in out.split(' ') if line]
         if len(lines) > 1: # There is at least one device.
             enc_names = map(str.strip, lines[1:])
             for enc_name in enc_names:

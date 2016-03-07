@@ -1,12 +1,21 @@
 ---
 
+selinux: false
+systemd: true
+desktop: None
+
 kernel:
   name: gentoo-sources
   config:
-    entries:
-      # Options specific to `gentoo-sources`.
+    entries: {}
+    default_entries:
       - option: GENTOO_LINUX_INIT_SCRIPT
         after:  GENTOO_LINUX
         value:  False
+        enabled: "{{ systemd }}"
       - option: GENTOO_LINUX_INIT_SYSTEMD
         after:  GENTOO_LINUX_UDEV
+        enabled: "{{ systemd }}"
+      - option: FANOTIFY_ACCESS_PERMISSIONS
+        value:  True
+        enabled: "{{ systemd }}"

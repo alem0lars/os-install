@@ -4,15 +4,19 @@
 # ------------------------------------------------------------------------------
 # IMPORTS ----------------------------------------------------------------------
 
-import os
+from sys import version_info as py_version_info
+
+PY3K = py_version_info >= (3, 0)
+if PY3K:
+    basestring = str
 
 # ------------------------------------------------------------------------------
 # MODULE INFORMATIONS ----------------------------------------------------------
 
 DOCUMENTATION = '''
 ---
-module: kernel_config
-short_description: Configure the Linux kernel with provided options
+module: eselect
+short_description: Perform `eselect` commands
 author:
     - "Alessandro Molari"
 '''
@@ -97,103 +101,63 @@ def chrooted(command, path, profile='/etc/profile', work_dir=None):
     return prefix
 
 # ------------------------------------------------------------------------------
-# CONFIGURATOR -----------------------------------------------------------------
+# ESelect ----------------------------------------------------------------------
 
-class KernelOptionConfigurator(BaseObject):
-    '''Manipulate options in a kernel config file.
-    '''
-    def __init__(self, module):
-        super(KernelOptionConfigurator, self).__init__(module,
-            params=['as_module', 'value', 'kind', 'after'])
-        self.kernel_option = KernelOption(module)
+class ESelectExecutor(BaseObject):
+
+    def __init__(self, module, subject, value):
+        super(ESelectExecutor, self).__init__(module, params=['action'])
+        self.command_prefix = 'eselect'
+        self.subject = subject
+        self.value   = value
 
     def run(self):
-        if self.value == True:
-            self.kernel_option.enable()
-        elif self.value == False:
-            self.kernel_option.disable()
-        elif self.value in ['undef', 'undefined']:
-            self.kernel_option.undefine()
+        if self.action == 'set':
+            self.set()
         else:
-            self.kernel_option.set_value()
+            self.fail('Invalid action: {}'.format(action=self.action))
 
-        if self.as_module:
-            self.kernel_option.as_module()
+    @classmethod
+    def create(cls, module):
+        executors = []
+        for subject, value in module.params['values']:
+            if subject == 'profile':
+                executor = ESelectProfileExecutor(module, subject, value)
+            else:
+                executor = GenericProfileExecutor(module, subject, value)
+            executors.append(executor)
+        return executors
 
-class KernelOption(BaseObject):
-    '''Represent a kernel option and the related operations.
-    '''
+class ESelectProfileExecutor(ESelectExecutor):
+    def __init__(self, module, subject, value):
+        super(ESelectProfileExecutor, self).__init__(module, subject, value)
+
+    def set(self):
+        profile_id = None # TODO
+        self.run_command('profile set {id}'.format(id=profile_id))
+
+class GenericProfileExecutor(ESelectExecutor):
     def __init__(self, module):
-        super(KernelOption, self).__init__(module,
-            params=['kernel_dir', 'option', 'value', 'kind', 'after'])
-        self.command_prefix = '{cmd} --file {kernel_dir}'.format(
-            cmd=os.path.join(self.kernel_dir, 'scripts', 'config'),
-            kernel_dir=os.path.join(self.kernel_dir, '.config'))
+        super(GenericProfileExecutor, self).__init__(module, subject, value)
 
-    def enable(self):
-        '''Enable a kernel option.
-        '''
-        self.run_command('--enable {option}'.format(option=self.option))
-        if self.after:
-            self.run_command('--enable-after {after} {option}'.format(
-                             after=self.after, option=self.option))
-
-    def disable(self):
-        '''Disable a kernel option.
-        '''
-        self.run_command('--disable {option}'.format(option=self.option))
-        if self.after:
-            self.run_command('--disable-after {after} {option}'.format(
-                             after=self.after, option=self.option))
-
-    def as_module(self):
-        '''Turn a option into a module.
-        '''
-        self.run_command('--module {option}'.format(option=self.option))
-        if self.after:
-            self.run_command('--module-after {after} {option}'.format(
-                             after=self.after, option=self.option))
-
-    def undefine(self):
-        self.run_command('--undefine {option}'.format(option=self.option))
-
-    def set_value(self):
-        '''Set option to the provided value.
-        Kind indicates:
-        - `value`: `value` is a value.
-        - `string`: `value` is a string.
-        - `undefined`: the option should be unset.
-        '''
-        if self.value is None:
-            self.fail('Invalid `value`: it cannot be `None`')
-        if self.kind in ['str', 'string']:
-            self.run_command('--set-str {option} {value}'.format(
-                option=self.option, value=self.value))
-        elif self.kind == 'value':
-            self.run_command('--set-val {option} {value}'.format(
-                option=self.option, value=self.value))
-        else:
-            self.fail('Invalid `kind`: it cannot be `None`')
+    def set(self):
+        self.run_command('{subject} set {value}'.format(
+            subject=self.subject, value=self.value))
 
 # ------------------------------------------------------------------------------
 # MAIN FUNCTION ----------------------------------------------------------------
 
 def main():
-    module = AnsibleModule(argument_spec=dict(
-        kernel_dir=dict(type='str', default='/usr/src/linux'),
-        option=dict(type='str', required=True),
-        value=dict(default=True),
-        as_module=dict(type='bool', default=False),
-        kind=dict(type='str', default=None),
-        after=dict(type='str', default=None)))
+    module = AnsibleModule(argument_spec={
+            'action': dict(choices=['set'], required=True),
+            'values': dict(type='dict', default={})
+        })
 
-    configurator = KernelOptionConfigurator(module)
+    executors = ESelectExecutor.create(module)
 
-    configurator.run()
+    messages = [executor.run() for executor in executors]
 
-    module.exit_json(changed=True,
-                     msg='Kernel option {name} successfully configured'.format(
-                         name=module.params['option']))
+    module.exit_json(changed=True, messages=messages)
 
 # ------------------------------------------------------------------------------
 # ENTRY POINT ------------------------------------------------------------------

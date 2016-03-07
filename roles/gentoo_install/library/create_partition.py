@@ -4,7 +4,11 @@
 # ------------------------------------------------------------------------------
 # IMPORTS ----------------------------------------------------------------------
 
-import collections, os, re, syslog, tempfile
+import collections
+import os
+import re
+import syslog
+import tempfile
 
 # ------------------------------------------------------------------------------
 # MODULE INFORMATIONS ----------------------------------------------------------
@@ -50,7 +54,7 @@ EXAMPLES = '''
 syslog.openlog('ansible-{name}'.format(name=os.path.basename(__file__)))
 
 def log(msg, level=syslog.LOG_DEBUG):
-    """Log to the system logging facility of the target system."""
+    '''Log to the system logging facility of the target system.'''
     if os.name == 'posix': # syslog is unsupported on Windows.
         syslog.syslog(level, msg)
 
@@ -64,9 +68,9 @@ AVAILABLE_UNITS = ['s', 'B', 'kB', 'MB', 'GB', 'TB', 'compact', 'cyl', 'chs',
 # UTILITIES --------------------------------------------------------------------
 
 def list_get(l, idx, default=None):
-    """Save version of `l[idx]`.
+    '''Save version of `l[idx]`.
     If the index `idx` is outside bounds, `default` is returned instead.
-    """
+    '''
     try:
         return l[idx]
     except IndexError:
@@ -187,7 +191,7 @@ class PartitionManager(object):
             self._device = "/dev/mapper/{}".format(self._name)
 
             os.unlink(pwd_file.name)
-            log('Encrypt operation completed.')
+            log('Encrypt operation completed')
 
     def _run_crypt_cmd(self, cmd):
         cmd = 'cryptsetup -q {cmd}'.format(cmd=cmd)
@@ -196,7 +200,7 @@ class PartitionManager(object):
         return rc, out, err
 
     def _run_parted_cmd(self, cmd):
-        log('Running parted command `{cmd}` on disk `{disk}`.'.format(
+        log('Running parted command `{cmd}` on disk `{disk}`'.format(
             cmd=cmd, disk=self._disk))
         return self._cmd_runner('parted -s -a opt {disk} {cmd}'.format(
                                 disk=self._disk, cmd=cmd),
