@@ -1,5 +1,4 @@
 #!/usr/bin/python
-# -*- coding: utf-8 -*-
 
 # ------------------------------------------------------------------------------
 # IMPORTS ----------------------------------------------------------------------
@@ -26,7 +25,7 @@ EXAMPLES = '''
 '''
 
 # ------------------------------------------------------------------------------
-# COMMONS (generated) <BaseObject, chrooted> -----------------------------------
+# COMMONS (copy&paste) ---------------------------------------------------------
 
 class BaseObject(object):
     import syslog, os
@@ -71,7 +70,11 @@ class BaseObject(object):
         if rc != 0:
             self.log('Command `{}` returned invalid status code: `{}`'.format(
                 command, rc), level=syslog.LOG_WARNING)
-        return {'rc': rc, 'out': out, 'err': err}
+        return {'rc': rc,
+                'out': out,
+                'out_lines': [line for line in out.split('\n') if line],
+                'err': err,
+                'err_lines': [line for line in out.split('\n') if line]}
 
     def log(self, msg, level=syslog.LOG_DEBUG):
         '''Log to the system logging facility of the target system.'''
@@ -116,9 +119,9 @@ class BasicUnmounter(BaseObject):
         result = []
         mount_points = []
 
-        out = self.run_command('mount')['out']
+        lines = self.run_command('mount')['out_lines']
 
-        for line in out.split(' '):
+        for line in lines:
             md = re.match(r'.+on\s+(\S+).+', line)
             if md:
                 mount_point = md.group(1)
@@ -155,8 +158,7 @@ class EncryptionUnmounter(BaseObject):
     def run(self):
         result = []
 
-        out = self.run_command('dmsetup info -c -o name')['out']
-        lines = [line for line in out.split(' ') if line]
+        lines = self.run_command('dmsetup info -c -o name')['out_lines']
         if len(lines) > 1: # There is at least one device.
             enc_names = map(str.strip, lines[1:])
             for enc_name in enc_names:

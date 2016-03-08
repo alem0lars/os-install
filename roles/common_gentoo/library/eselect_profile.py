@@ -2,12 +2,21 @@
 # -*- coding: utf-8 -*-
 
 # ------------------------------------------------------------------------------
+# IMPORTS ----------------------------------------------------------------------
+
+import re, sys
+
+PY3K = sys.version_info >= (3, 0)
+if PY3K:
+    basestring = str
+
+# ------------------------------------------------------------------------------
 # MODULE INFORMATIONS ----------------------------------------------------------
 
 DOCUMENTATION = '''
 ---
-module: make
-short_description: Perform make
+module: eselect
+short_description: Perform `eselect` commands
 author:
     - "Alessandro Molari"
 '''
@@ -17,7 +26,7 @@ TODO
 '''
 
 # ------------------------------------------------------------------------------
-# COMMONS (generated) <BaseObject, chrooted> -----------------------------------
+# COMMONS (copy&paste) ---------------------------------------------------------
 
 class BaseObject(object):
     import syslog, os
@@ -62,7 +71,11 @@ class BaseObject(object):
         if rc != 0:
             self.log('Command `{}` returned invalid status code: `{}`'.format(
                 command, rc), level=syslog.LOG_WARNING)
-        return {'rc': rc, 'out': out, 'err': err}
+        return {'rc': rc,
+                'out': out,
+                'out_lines': [line for line in out.split('\n') if line],
+                'err': err,
+                'err_lines': [line for line in out.split('\n') if line]}
 
     def log(self, msg, level=syslog.LOG_DEBUG):
         '''Log to the system logging facility of the target system.'''
@@ -92,43 +105,81 @@ def chrooted(command, path, profile='/etc/profile', work_dir=None):
     return prefix
 
 # ------------------------------------------------------------------------------
-# EXECUTOR ---------------------------------------------------------------------
+# ESelectProfileExecutor -------------------------------------------------------
 
-class MakeExecutor(BaseObject):
-    '''Execute `make`.
-    '''
-    def __init__(self, module):
-        super(MakeExecutor, self).__init__(module,
-            params=['task', 'opts', 'work_dir', 'chroot'])
+class ESelectProfileExecutor(BaseObject):
+    def __init__(self, module, subject, value):
+        super(BaseObject, self).__init__(module,
+            params=['hardened', 'systemd', 'multilib', 'arch', 'selinux',
+                    'desktop', 'developer', 'chroot'])
+        self.command_prefix = 'eselect profile'
 
-        self.command_prefix = 'make'
+    def set(self):
+        '''Set the profile'''
+        profile_regexp = []
+        profile_regexp.append(self.hardened or 'default')
+        profile_regexp.append('linux')
+        profile_regexp.append(self.arch)
+        profile_regexp.append('[^/]+')
+        if not self.multilib:
+            profile_regexp.append('no-multilib')
+            if self.hardened and self.selinux:
+                profile_regexp.append('selinux')
+        elif self.selinux:
+            profile_regexp.append('selinux')
+        elif self.developer:
+            profile_regexp.append('developer')
+        elif self.desktop:
+            profile_regexp.append(self.desktop)
+            if self.systemd:
+                profile_regexp.append('systemd')
+        elif self.systemd:
+            profile_regexp.append('systemd')
+        profile_regexp = '/'.join(profile_regexp)
 
-    def run(self):
-        command = ''
+        profile_id = None
+        for profile in self.list():
+            if re.match(profile_regexp, profile['name']):
+                profile_id = profile['id']
 
-        if self.task:
-            command += self.task
+        if profile_id is None:
+            self.fail('Cannot find a valid profile')
 
-        if self.opts:
-            command += ' {opts}'.format(opts=self.opts)
+        self.run_command('set {id}'.format(id=profile_id))
 
-        self.run_command(command)
+    def list(self):
+        result = []
+
+        profiles = self.run_command('list')['out_lines']
+        profiles = map(lambda x: re.split(r'\s+', x), profiles)
+        for prof in profiles:
+            id_regexp = r'\[(\d+)\]'
+            result.append({'id':   int(re.match(id_regexp, prof[0]).group(1)),
+                           'name': prof[1]})
+
+        return result
 
 # ------------------------------------------------------------------------------
 # MAIN FUNCTION ----------------------------------------------------------------
 
 def main():
     module = AnsibleModule(argument_spec=dict(
-        task=dict(type='str', default=None),
-        opts=dict(type='str', default=None),
-        work_dir=dict(type='str', default=None),
+        arch=dict(choices=['alpha', 'amd64', 'arm', 'hppa', 'ia64', 'mips',
+                           'ppc', 's390', 'sh', 'sparc', 'x86'],
+                  required=True),
+        hardened=dict(type='bool', default=False),
+        multilib=dict(type='bool', default=True),
+        systemd=dict(type='bool', default=True),
+        selinux=dict(type='bool', default=False),
+        developer=dict(type='str', default=False),
+        desktop=dict(choices=['gnome', 'kde', 'plasma'], default=None),
         chroot=dict(type='str', default=None)))
 
-    make = MakeExecutor(module)
+    executors = ESelectExecutor.create(module)
 
-    make.run()
+    messages = [executor.run() for executor in executors]
 
-    module.exit_json(changed=True, msg='Make command successfully executed')
+    module.exit_json(changed=True, messages=messages)
 
 # ------------------------------------------------------------------------------
 # ENTRY POINT ------------------------------------------------------------------

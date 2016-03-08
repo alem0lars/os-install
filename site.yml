@@ -2,12 +2,20 @@
 - hosts: all
   remote_user: root
   roles:
-    - common
+    - role: common
+      tags:
+        - always
 
+# Configure `gentoo` hosts
 - hosts: gentoo
   remote_user: root
   roles:
-    - common_linux
-    - common_gentoo
+    - role: common_linux
+      tags:
+        - always
+    - role: common_gentoo
+      tags:
+        - always
     - role: install_gentoo
-      when: install is defined
+      tags:
+        - install

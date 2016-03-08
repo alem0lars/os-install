@@ -44,7 +44,11 @@ class BaseObject(object):
         if rc != 0:
             self.log('Command `{}` returned invalid status code: `{}`'.format(
                 command, rc), level=syslog.LOG_WARNING)
-        return {'rc': rc, 'out': out, 'err': err}
+        return {'rc': rc,
+                'out': out,
+                'out_lines': [line for line in out.split('\n') if line],
+                'err': err,
+                'err_lines': [line for line in out.split('\n') if line]}
 
     def log(self, msg, level=syslog.LOG_DEBUG):
         '''Log to the system logging facility of the target system.'''

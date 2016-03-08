@@ -2,20 +2,8 @@
 
 # TODO: Uncomment
 - include: storage.yml
-  tags:
-    - install
 - include: stage.yml
-  tags:
-    - install
 - include: prepare_chroot.yml
-  tags:
-    - install
 - include: portage.yml
-  tags:
-    - install
 - include: kernel.yml
-  tags:
-    - install
 - include: boot.yml
-  tags:
-    - install

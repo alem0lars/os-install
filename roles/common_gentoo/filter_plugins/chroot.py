@@ -6,7 +6,7 @@
 from ansible.errors import AnsibleFilterError
 
 # ------------------------------------------------------------------------------
-# COMMONS (generated) <chrooted> -----------------------------------------------
+# COMMONS (copy&paste) ---------------------------------------------------------
 
 def chrooted(command, path, profile='/etc/profile', work_dir=None):
     prefix = "chroot {path} bash -c 'source {profile}; ".format(

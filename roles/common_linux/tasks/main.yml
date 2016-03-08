@@ -1,4 +1,6 @@
 ---
 
 - name: Deploy user's authorized key to the target system
-  authorized_key: user={{ ansible_user_id }} key="{{ lookup('file', pubkey) }}"
+  authorized_key:
+    user: "{{ ansible_user_id        }}"
+    key:  "{{ lookup('file', pubkey) }}"
