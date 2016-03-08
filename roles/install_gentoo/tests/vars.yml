@@ -2,11 +2,12 @@
 
 sys:
   arch: amd64
-  multilib: true
-  hardened: false
+  multilib: True
+  hardened: False
 
 boot:
-  efi: true
+  uefi: True
+  kind: systemd
 
 # - `type` can be one of:
 #   - `physical`: a normal partition.

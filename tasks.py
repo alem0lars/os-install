@@ -72,14 +72,34 @@ def bundle_commons():
                 file.write(file_content)
 
 @invoke.task(bundle_commons,
-             help={'verbosity': 'The verbosity level (0 to 3)'})
-def test_gentoo_install(verbosity=0):
-    '''Test the role: `gentoo_install`.
+             help={'role': 'The role name',
+                   'verbosity': 'The verbosity level'})
+def test(role, ask_pass=False, verbosity=0):
+    '''Test a role
     '''
-    command = ['ansible-playbook']
-    command.append('-i inventories/test site.yml')
+    tests_dir = 'roles/{name}/tests'.format(name=role)
+    if not os.path.isdir(tests_dir):
+        print('Invalid role name')
+        return -1
+
+    command = []
+    # 1. Command name
+    command.append('ansible-playbook')
+    # 2. Inventory
+    command.append('-i {tests_dir}/inventory'.format(tests_dir=tests_dir))
+    # 3. Entry point
+    command.append('site.yml')
+    # 4. Tags
+    with open('{tests_dir}/tags'.format(tests_dir=tests_dir), 'r') as f:
+        tags = ','.join(map(lambda line: line.strip(), f.readlines()))
+    command.append('-t {tags}'.format(tags=tags))
+    # 5. Verbosity level
     if verbosity > 0:
         command.append('-' + ('v' * verbosity))
-    command.append('-e install=true')
+    # 6. Ask password
+    if ask_pass:
+        command.append('--ask-pass')
+    command = ' '.join(command)
 
-    invoke.run(' '.join(command), pty=True)
+    print('Running command: `{}`'.format(command))
+    invoke.run(command, pty=True)

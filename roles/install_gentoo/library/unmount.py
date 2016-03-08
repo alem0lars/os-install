@@ -74,7 +74,10 @@ class BaseObject(object):
         return {'rc': rc, 'out': out, 'err': err}
 
     def log(self, msg, level=syslog.LOG_DEBUG):
-        '''Log to the system logging facility of the target system.''' if os.name == 'posix': # syslog is unsupported on Windows. syslog.syslog(level, str(msg)) 
+        '''Log to the system logging facility of the target system.'''
+        if os.name == 'posix': # syslog is unsupported on Windows.
+            syslog.syslog(level, str(msg))
+
     def fail(self, msg):
         self._module.fail_json(msg=msg)
 

@@ -1,4 +1,4 @@
 Common
 ======
 
-Perform common tasks.
+Role used by all systems.

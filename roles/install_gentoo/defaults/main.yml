@@ -1,8 +1,11 @@
 ---
 
-selinux: false
-systemd: true
-desktop: None
+systemd:   True
+desktop:   None
+selinux:   False
+developer: False
+
+boot: {}
 
 kernel:
   name: gentoo-sources

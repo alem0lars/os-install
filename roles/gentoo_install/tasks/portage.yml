@@ -1,8 +1,0 @@
-- name: Install Portage
-  command: "{{ '/usr/bin/emerge-webrsync' | chrooted() }}"
-
-# TODO
-- name: Select profile
-  command: "{{ eselect_profile(sys.arch, sys.hardened, sys.multilib, selinux,
-                               systemd, desktop) |
-               chrooted() }}"

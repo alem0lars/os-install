@@ -1,0 +1,13 @@
+---
+
+# TODO
+
+- name: Install UEFI packages
+  command: "{{ 'emerge sys-boot/efibootmgr sys-libs/efivar' |
+               chrooted('/mnt/gentoo') }}"
+  when: "{{ boot.uefi }}"
+
+- name: Install bootloader
+  command: "{{ 'bootctl --path=/boot install' |
+               chrooted('/mnt/gentoo') }}"
+  when: "{{ boot.kind == 'systemd' }}"

@@ -2,7 +2,7 @@
 
 galaxy_info:
   author: Alessandro Molari
-  description: Common role
+  description: Common role for Gentoo systems
   license: Apache
   min_ansible_version: 2.0
   categories:

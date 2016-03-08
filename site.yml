@@ -7,4 +7,7 @@
 - hosts: gentoo
   remote_user: root
   roles:
-    - { role: gentoo_install, when: install is defined }
+    - common_linux
+    - common_gentoo
+    - role: install_gentoo
+      when: install is defined

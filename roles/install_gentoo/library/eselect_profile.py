@@ -4,9 +4,9 @@
 # ------------------------------------------------------------------------------
 # IMPORTS ----------------------------------------------------------------------
 
-from sys import version_info as py_version_info
+import re, sys
 
-PY3K = py_version_info >= (3, 0)
+PY3K = sys.version_info >= (3, 0)
 if PY3K:
     basestring = str
 
@@ -101,57 +101,76 @@ def chrooted(command, path, profile='/etc/profile', work_dir=None):
     return prefix
 
 # ------------------------------------------------------------------------------
-# ESelect ----------------------------------------------------------------------
+# ESelectProfileExecutor -------------------------------------------------------
 
-class ESelectExecutor(BaseObject):
-
+class ESelectProfileExecutor(BaseObject):
     def __init__(self, module, subject, value):
-        super(ESelectExecutor, self).__init__(module, params=['action'])
-        self.command_prefix = 'eselect'
-        self.subject = subject
-        self.value   = value
-
-    def run(self):
-        if self.action == 'set':
-            self.set()
-        else:
-            self.fail('Invalid action: {}'.format(action=self.action))
-
-    @classmethod
-    def create(cls, module):
-        executors = []
-        for subject, value in module.params['values']:
-            if subject == 'profile':
-                executor = ESelectProfileExecutor(module, subject, value)
-            else:
-                executor = GenericProfileExecutor(module, subject, value)
-            executors.append(executor)
-        return executors
-
-class ESelectProfileExecutor(ESelectExecutor):
-    def __init__(self, module, subject, value):
-        super(ESelectProfileExecutor, self).__init__(module, subject, value)
+        super(BaseObject, self).__init__(module,
+            params=['hardened', 'systemd', 'multilib', 'arch', 'selinux',
+                    'desktop', 'developer', 'chroot'])
+        self.command_prefix = 'eselect profile'
 
     def set(self):
-        profile_id = None # TODO
-        self.run_command('profile set {id}'.format(id=profile_id))
+        '''Set the profile'''
+        profile_regexp = []
+        profile_regexp.append(self.hardened or 'default')
+        profile_regexp.append('linux')
+        profile_regexp.append(self.arch)
+        profile_regexp.append('[^/]+')
+        if not self.multilib:
+            profile_regexp.append('no-multilib')
+            if self.hardened and self.selinux:
+                profile_regexp.append('selinux')
+        elif self.selinux:
+            profile_regexp.append('selinux')
+        elif self.developer:
+            profile_regexp.append('developer')
+        elif self.desktop:
+            profile_regexp.append(self.desktop)
+            if self.systemd:
+                profile_regexp.append('systemd')
+        elif self.systemd:
+            profile_regexp.append('systemd')
+        profile_regexp = '/'.join(profile_regexp)
 
-class GenericProfileExecutor(ESelectExecutor):
-    def __init__(self, module):
-        super(GenericProfileExecutor, self).__init__(module, subject, value)
+        profile_id = None
+        for profile in self.list():
+            if re.match(profile_regexp, profile['name']):
+                profile_id = profile['id']
 
-    def set(self):
-        self.run_command('{subject} set {value}'.format(
-            subject=self.subject, value=self.value))
+        if profile_id is None:
+            self.fail('Cannot find a valid profile')
+
+        self.run_command('set {id}'.format(id=profile_id))
+
+    def list(self):
+        result = []
+
+        profiles = self.run_command('list')['out'].split('
+')
+        profiles = map(lambda x: re.split(r'\s+', x), profiles)
+        for prof in profiles:
+            id_regexp = r'\[(\d+)\]'
+            result.append({'id':   int(re.match(id_regexp, prof[0]).group(1)),
+                           'name': prof[1]})
+
+        return result
 
 # ------------------------------------------------------------------------------
 # MAIN FUNCTION ----------------------------------------------------------------
 
 def main():
-    module = AnsibleModule(argument_spec={
-            'action': dict(choices=['set'], required=True),
-            'values': dict(type='dict', default={})
-        })
+    module = AnsibleModule(argument_spec=dict(
+        arch=dict(choices=['alpha', 'amd64', 'arm', 'hppa', 'ia64', 'mips',
+                           'ppc', 's390', 'sh', 'sparc', 'x86'],
+                  required=True),
+        hardened=dict(type='bool', default=False),
+        multilib=dict(type='bool', default=True),
+        systemd=dict(type='bool', default=True),
+        selinux=dict(type='bool', default=False),
+        developer=dict(type='str', default=False),
+        desktop=dict(choices=['gnome', 'kde', 'plasma'], default=None),
+        chroot=dict(type='str', default=None)))
 
     executors = ESelectExecutor.create(module)
 
