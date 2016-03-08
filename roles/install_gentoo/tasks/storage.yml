@@ -128,7 +128,7 @@
     dump: '0'
     passno: '0'
     state: present
-  when: "{{ boot.efi }}"
+  when: "{{ boot.uefi }}"
 
 - name: Remove old crypttab
   file:

@@ -1,7 +1,5 @@
 ---
 
-# TODO
-
 - name: Install UEFI packages
   command: "{{ 'emerge sys-boot/efibootmgr sys-libs/efivar' |
                chrooted('/mnt/gentoo') }}"
@@ -11,3 +9,9 @@
   command: "{{ 'bootctl --path=/boot install' |
                chrooted('/mnt/gentoo') }}"
   when: "{{ boot.kind == 'systemd' }}"
+
+# TODO: Boot config
+
+# TODO: Dracut
+
+# TODO: Set root user password

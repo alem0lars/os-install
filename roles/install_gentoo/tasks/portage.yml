@@ -1,5 +1,5 @@
 - name: Install Portage
-  command: "{{ '/usr/bin/emerge-webrsync' | chrooted() }}"
+  command: "{{ '/usr/bin/emerge-webrsync' | chrooted('/mnt/gentoo') }}"
 
 - name: Select profile
   eselect_profile:
@@ -18,12 +18,3 @@
 - name: Fix udev version
   command: "{{ 'emerge --deselect sys-fs/udev' | chrooted('/mnt/gentoo') }}"
   when: "{{ sys.systemd }}"
-
-# TODO: make.conf
-# TODO: repos.conf
-
-- name: Update GCC version
-  command: "{{ 'gcc-config 1' | chrooted('/mnt/gentoo') }}" # TODO: Choose ?
-
-- name: Update environment
-  command: "{{ 'env-update' | chrooted('/mnt/gentoo') }}"

@@ -19,3 +19,6 @@
     - role: install_gentoo
       tags:
         - install
+    - role: setup_gentoo
+      tags:
+        - setup
