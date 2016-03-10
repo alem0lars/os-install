@@ -1,5 +1,10 @@
 ---
 
+- name: Update systemd
+  command: "{{ 'emerge --update --newuse --deep systemd' |
+               chrooted('/mnt/gentoo') }}"
+  when: "{{ boot.uefi and boot.kind == 'systemd' }}"
+
 - name: Ensure boot base directory is present
   file:
     path:  "{{ '/mnt/gentoo/%s' |
@@ -20,11 +25,14 @@
   command: "{{ 'emerge -u sys-kernel/dracut' |
                chrooted('/mnt/gentoo') }}"
 
-# TODO: Dracut config
-
 - name: Run dracut (generate init image)
-  command: "{{ 'dracut --force --host-only %s' |
+  command: "{{ 'dracut --force %s' |
                format(boot.base_dir) |
                chrooted('/mnt/gentoo') }}"
 
-# TODO: Boot config
+# TODO
+# - name: Configure Gentoo boot entry
+#   systemdboot_entry:
+#     title:   gentoo_<v>
+#     systemd: "{{ systemd }}"
+#     default: True

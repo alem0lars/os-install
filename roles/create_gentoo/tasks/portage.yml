@@ -18,10 +18,29 @@
                chrooted('/mnt/gentoo') }}"
 
 - name: Fix udev version
-  command: "{{ 'emerge --unmerge sys-fs/eudev' |
+  command: "{{ 'emerge --deselect=y sys-fs/eudev' |
                chrooted('/mnt/gentoo') }}"
   when: "{{ systemd }}"
 
+- name: Unmask some packages
+  lineinfile:
+    dest: /mnt/gentoo/etc/portage/package.keywords/temporary
+    line: "sys-kernel/dracut"
+    create: yes
+
+- name: Enable some common USE flags required later
+  lineinfile:
+    dest: /mnt/gentoo/etc/portage/make.conf
+    line: "USE=\"$USE
+      cryptsetup
+      elfutils
+      {{ (boot.uefi and boot.kind == 'systemd') | ternary('gnuefi', omit) }}\""
+
+- name: Disable parallel compiling
+  lineinfile:
+    dest: /mnt/gentoo/etc/portage/make.conf
+    line: MAKEOPTS=-j1
+
 - name: Update packages
-  command: "{{ 'emerge --update --newuse --deep --with-bdeps=y @world @system' |
+  command: "{{ 'emerge --update --newuse --deep --with-bdeps=y @system @world' |
                chrooted('/mnt/gentoo') }}"

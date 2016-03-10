@@ -116,8 +116,9 @@
     dump:   "{{ item | mount_backup() }}"
     passno: "{{ item | mount_check() }}"
     state:  "{{ item | mount_state({'tmp': 'present'}, default='mounted') }}"
-  when: "{{ 'mount' in item }}"
-  with_items: "{{ partitions | sorted_by_path(attribute='device') }}"
+  with_items: "{{ partitions |
+                  selectattr('mount', 'defined') |
+                  sorted_by_path(attribute='mount.path') }}"
 
 - name: Mount EFI variables # It will be copied later to final destination.
   mount:

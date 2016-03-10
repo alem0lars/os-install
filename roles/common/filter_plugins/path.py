@@ -9,13 +9,13 @@ from sys import maxsize as max_size
 
 def sorted_by_path(subject, attribute=None):
     def sort_fn(elem):
+        path = elem
         if attribute is not None:
-            if attribute in elem:
-                path = elem[attribute]
-            else:
-                return max_size
-        else: # By default, consider the subject as a list of strings (paths).
-            path = elem
+            attrs = attribute.split('.')
+            for attr in attrs:
+                if not attr in path:
+                    return max_size
+                path = path[attr]
         return len([component for component in path.split('/') if component])
     return sorted(subject, key=sort_fn)
 
