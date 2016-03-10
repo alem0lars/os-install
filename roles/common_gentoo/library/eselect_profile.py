@@ -91,7 +91,11 @@ class BaseObject(object):
     def _parse_params(self, params):
         for param in params:
             if param in self._module.params:
-                setattr(self, param, self._module.params[param])
+                value = self._module.params[param]
+                t = self._module.argument_spec[param].get('type')
+                if t == 'str' and value in ['None', 'none']:
+                    value = None
+                setattr(self, param, value)
             else:
                 setattr(self, param, None)
 
@@ -108,14 +112,15 @@ def chrooted(command, path, profile='/etc/profile', work_dir=None):
 # ESelectProfileExecutor -------------------------------------------------------
 
 class ESelectProfileExecutor(BaseObject):
-    def __init__(self, module, subject, value):
-        super(BaseObject, self).__init__(module,
+    def __init__(self, module):
+        super(ESelectProfileExecutor, self).__init__(module,
             params=['hardened', 'systemd', 'multilib', 'arch', 'selinux',
                     'desktop', 'developer', 'chroot'])
         self.command_prefix = 'eselect profile'
 
     def set(self):
-        '''Set the profile'''
+        '''Set the profile.
+        '''
         profile_regexp = []
         profile_regexp.append(self.hardened or 'default')
         profile_regexp.append('linux')
@@ -137,22 +142,24 @@ class ESelectProfileExecutor(BaseObject):
             profile_regexp.append('systemd')
         profile_regexp = '/'.join(profile_regexp)
 
-        profile_id = None
-        for profile in self.list():
-            if re.match(profile_regexp, profile['name']):
-                profile_id = profile['id']
+        profile = None
+        for prof in self.list():
+            if re.match(profile_regexp, prof['name']):
+                profile = prof
 
-        if profile_id is None:
+        if profile is None:
             self.fail('Cannot find a valid profile')
 
-        self.run_command('set {id}'.format(id=profile_id))
+        self.run_command('set {id}'.format(id=profile['id']))
+
+        return profile
 
     def list(self):
         result = []
 
-        profiles = self.run_command('list')['out_lines']
-        profiles = map(lambda x: re.split(r'\s+', x), profiles)
-        for prof in profiles:
+        profs = self.run_command('list')['out_lines'][1:]
+        profs = map(lambda x: [e for e in re.split(r'\s+', x) if e], profs)
+        for prof in profs:
             id_regexp = r'\[(\d+)\]'
             result.append({'id':   int(re.match(id_regexp, prof[0]).group(1)),
                            'name': prof[1]})
@@ -163,23 +170,23 @@ class ESelectProfileExecutor(BaseObject):
 # MAIN FUNCTION ----------------------------------------------------------------
 
 def main():
-    module = AnsibleModule(argument_spec=dict(
-        arch=dict(choices=['alpha', 'amd64', 'arm', 'hppa', 'ia64', 'mips',
-                           'ppc', 's390', 'sh', 'sparc', 'x86'],
-                  required=True),
-        hardened=dict(type='bool', default=False),
-        multilib=dict(type='bool', default=True),
-        systemd=dict(type='bool', default=True),
-        selinux=dict(type='bool', default=False),
-        developer=dict(type='str', default=False),
-        desktop=dict(choices=['gnome', 'kde', 'plasma'], default=None),
-        chroot=dict(type='str', default=None)))
+    module = AnsibleModule(argument_spec={
+        'arch': {'type':     'str',
+                 'required': True,
+                 'choices':  ['alpha', 'amd64', 'arm', 'hppa', 'ia64', 'mips',
+                              'ppc', 's390', 'sh', 'sparc', 'x86']},
+        'multilib':  {'type': 'bool', 'required': False, 'default': True},
+        'hardened':  {'type': 'bool', 'required': False, 'default': False},
+        'systemd':   {'type': 'bool', 'required': False, 'default': True},
+        'selinux':   {'type': 'bool', 'required': False, 'default': False},
+        'developer': {'type': 'bool', 'required': False, 'default': False},
+        'desktop':   {'type': 'str',  'required': False, 'default': None},
+        'chroot':    {'type': 'str',  'required': False, 'default': None},
+    })
 
-    executors = ESelectExecutor.create(module)
-
-    messages = [executor.run() for executor in executors]
-
-    module.exit_json(changed=True, messages=messages)
+    eselect_profile = ESelectProfileExecutor(module)
+    profile = eselect_profile.set()
+    module.exit_json(changed=True, profile=profile)
 
 # ------------------------------------------------------------------------------
 # ENTRY POINT ------------------------------------------------------------------

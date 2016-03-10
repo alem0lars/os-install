@@ -1,0 +1,30 @@
+---
+
+- name: Ensure boot base directory is present
+  file:
+    path:  "{{ '/mnt/gentoo/%s' |
+               format(boot.base_dir) }}"
+    state: directory
+
+- name: Install UEFI packages
+  command: "{{ 'emerge -u sys-boot/efibootmgr sys-libs/efivar' |
+               chrooted('/mnt/gentoo') }}"
+  when: "{{ boot.uefi }}"
+
+- name: Install bootloader
+  command: "{{ 'bootctl --path=/boot install' |
+               chrooted('/mnt/gentoo') }}"
+  when: "{{ boot.kind == 'systemd' }}"
+
+- name: Install dracut
+  command: "{{ 'emerge -u sys-kernel/dracut' |
+               chrooted('/mnt/gentoo') }}"
+
+# TODO: Dracut config
+
+- name: Run dracut (generate init image)
+  command: "{{ 'dracut --force --host-only %s' |
+               format(boot.base_dir) |
+               chrooted('/mnt/gentoo') }}"
+
+# TODO: Boot config

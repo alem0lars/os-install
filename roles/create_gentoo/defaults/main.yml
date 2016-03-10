@@ -1,10 +1,5 @@
 ---
 
-systemd:   True
-desktop:   None
-selinux:   False
-developer: False
-
 boot: {}
 
 kernel:

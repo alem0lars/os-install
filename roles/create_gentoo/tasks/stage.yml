@@ -7,9 +7,9 @@
 
 - name: Select the Stage
   select_stage:
-    arch:     "{{ sys.arch }}"
-    hardened: "{{ sys.hardened }}"
-    multilib: "{{ sys.multilib }}"
+    arch:     "{{ arch     }}"
+    hardened: "{{ hardened }}"
+    multilib: "{{ multilib }}"
   register: _output
 - set_fact:
     stage_path: "{{ _output.result }}"
@@ -18,7 +18,7 @@
   get_url:
     dest: /mnt/gentoo/stage.tar.bz2
     url:  "{{ '%s/releases/%s/autobuilds/%s' |
-              format(mirror_url, sys.arch, stage_path) }}"
+              format(mirror_url, arch, stage_path) }}"
 
 - name: Extract the Stage archive
   command: tar xvjpf /mnt/gentoo/stage.tar.bz2 --xattrs

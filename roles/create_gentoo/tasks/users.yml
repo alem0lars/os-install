@@ -1,0 +1,6 @@
+---
+
+- name: Set root password
+  command: "{{ 'echo root:%s | chpasswd' |
+               format(users.root.password) |
+               chrooted('/mnt/gentoo') }}"

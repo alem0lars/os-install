@@ -1,13 +1,21 @@
 ---
 
-sys:
-  arch: amd64
-  multilib: True
-  hardened: False
+arch:      amd64
+multilib:  True
+hardened:  False
+systemd:   True
+desktop:   None
+selinux:   False
+developer: False
+
+users:
+  root:
+    password: toor
 
 boot:
   uefi: True
   kind: systemd
+  base_dir: /boot/loader/entries/gentoo
 
 # - `type` can be one of:
 #   - `physical`: a normal partition.

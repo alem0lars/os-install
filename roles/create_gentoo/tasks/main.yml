@@ -1,0 +1,10 @@
+---
+
+# TODO: Uncomment
+- include: storage.yml
+- include: stage.yml
+- include: prepare_chroot.yml
+- include: portage.yml
+- include: users.yml
+#- include: bootloader.yml
+#- include: kernel.yml

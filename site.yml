@@ -16,9 +16,9 @@
     - role: common_gentoo
       tags:
         - always
-    - role: install_gentoo
-      tags:
-        - install
     - role: setup_gentoo
       tags:
         - setup
+    - role: create_gentoo
+      tags:
+        - create

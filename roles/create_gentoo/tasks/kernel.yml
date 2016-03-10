@@ -1,5 +1,8 @@
+---
+
 - name: Install kernel sources
-  command: "{{ '%s %s' | format('emerge', kernel.name) |
+  command: "{{ 'emerge -u %s' |
+               format(kernel.name) |
                chrooted('/mnt/gentoo') }}"
 
 - name: Remove existing kernel configuration
@@ -49,3 +52,5 @@
     task:     install
     work_dir: /usr/src/linux
     chroot:   /mnt/gentoo
+    opts:
+      INSTALL_PATH: "{{ boot.base_dir }}"

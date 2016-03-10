@@ -1,0 +1,27 @@
+- name: Install Portage
+  command: "{{ '/usr/bin/emerge-webrsync' |
+               chrooted('/mnt/gentoo') }}"
+
+- name: Select profile
+  eselect_profile:
+    arch:      "{{ arch                      }}"
+    multilib:  "{{ multilib  | default(omit) }}"
+    hardened:  "{{ hardened  | default(omit) }}"
+    systemd:   "{{ systemd   | default(omit) }}"
+    selinux:   "{{ selinux   | default(omit) }}"
+    developer: "{{ developer | default(omit) }}"
+    desktop:   "{{ desktop   | default(omit) }}"
+    chroot: /mnt/gentoo
+
+- name: Sync repository
+  command: "{{ 'emerge --sync' |
+               chrooted('/mnt/gentoo') }}"
+
+- name: Fix udev version
+  command: "{{ 'emerge --unmerge sys-fs/eudev' |
+               chrooted('/mnt/gentoo') }}"
+  when: "{{ systemd }}"
+
+- name: Update packages
+  command: "{{ 'emerge --update --newuse --deep --with-bdeps=y @world @system' |
+               chrooted('/mnt/gentoo') }}"

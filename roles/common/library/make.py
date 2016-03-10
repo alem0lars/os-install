@@ -82,7 +82,11 @@ class BaseObject(object):
     def _parse_params(self, params):
         for param in params:
             if param in self._module.params:
-                setattr(self, param, self._module.params[param])
+                value = self._module.params[param]
+                t = self._module.argument_spec[param].get('type')
+                if t == 'str' and value in ['None', 'none']:
+                    value = None
+                setattr(self, param, value)
             else:
                 setattr(self, param, None)
 
@@ -114,7 +118,8 @@ class MakeExecutor(BaseObject):
             command += self.task
 
         if self.opts:
-            command += ' {opts}'.format(opts=self.opts)
+            for name, value in self.opts.items():
+                command += ' {name}={value}'.format(name=name, value=value)
 
         self.run_command(command)
 
@@ -123,10 +128,10 @@ class MakeExecutor(BaseObject):
 
 def main():
     module = AnsibleModule(argument_spec=dict(
-        task=dict(type='str', default=None),
-        opts=dict(type='str', default=None),
-        work_dir=dict(type='str', default=None),
-        chroot=dict(type='str', default=None)))
+        task=dict(type='str', required=False, default=None),
+        opts=dict(type='dict', required=False, default={}),
+        work_dir=dict(type='str', required=False, default=None),
+        chroot=dict(type='str', required=False, default=None)))
 
     make = MakeExecutor(module)
 

@@ -16,11 +16,11 @@
 
 - name: Create partitions
   create_partition:
-    name:       "{{ item.name }}"
-    disk:       "{{ item.disk }}"
-    fs:         "{{ item.fs }}"
-    end:        "{{ item.end }}"
-    flags:      "{{ item.flags | default(omit) }}"
+    name:       "{{ item.name                       }}"
+    disk:       "{{ item.disk                       }}"
+    fs:         "{{ item.fs                         }}"
+    end:        "{{ item.end                        }}"
+    flags:      "{{ item.flags      | default(omit) }}"
     encryption: "{{ item.encryption | default(omit) }}"
   when: "{{ item.type == 'physical' }}"
   with_items: "{{ partitions }}"
@@ -50,9 +50,9 @@
 
 - name: Create LVM Logical Volumes
   lvol:
-    lv:   "{{ item.name }}"
+    lv:   "{{ item.name    }}"
     vg:   "{{ item.vg_name }}"
-    size: "{{ item.size }}"
+    size: "{{ item.size    }}"
   when: "{{ item.type == 'lvm-lv' }}"
   failed_when: "{{ ( partitions |
                      selectattr('name', 'equalto', item.vg_name) |
@@ -90,7 +90,7 @@
 - name: Format other partitions
   filesystem:
     fstype: "{{ item.fs }}"
-    dev: "{{ item.device }}"
+    dev:    "{{ item.device }}"
   when: "{{ 'fs' in item and
             item.type != 'tmp' and
             not item.fs in ['swap', 'fat32'] and

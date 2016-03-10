@@ -90,7 +90,11 @@ class BaseObject(object):
     def _parse_params(self, params):
         for param in params:
             if param in self._module.params:
-                setattr(self, param, self._module.params[param])
+                value = self._module.params[param]
+                t = self._module.argument_spec[param].get('type')
+                if t == 'str' and value in ['None', 'none']:
+                    value = None
+                setattr(self, param, value)
             else:
                 setattr(self, param, None)
 
