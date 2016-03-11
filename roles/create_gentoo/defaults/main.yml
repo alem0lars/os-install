@@ -17,3 +17,4 @@ kernel:
       - option: FANOTIFY_ACCESS_PERMISSIONS
         value:  True
         enabled: "{{ systemd }}"
+      # TODO: Add kernel options for uefi
