@@ -1,20 +1,20 @@
 ---
 
 # TODO: fix file
-- name: Setup make.conf
-  template:
-    src:   /make.conf.j2
-    dest:  /etc/portage/make.conf
+#- name: Setup make.conf
+#  template:
+#    src:   /make.conf.j2
+#    dest:  /etc/portage/make.conf
 
 # TODO: add other repos
-- name: Setup repos.conf
-  template:
-    src:   /repos/gentoo.conf.j2
-    dest:  /etc/portage/repos.conf/gentoo.conf
+#- name: Setup repos.conf
+#  template:
+#    src:   /repos/gentoo.conf.j2
+#    dest:  /etc/portage/repos.conf/gentoo.conf
 
 # TODO: Choose based on CHOST
-- name: Update GCC version
-  command: gcc-config 1
+#- name: Update GCC version
+#  command: gcc-config 1
 
 - name: Update environment
   command: env-update

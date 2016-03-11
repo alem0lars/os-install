@@ -1,5 +1,8 @@
 ---
 
+# NOTE: At the moment the only boot system supported is `systemd-boot`.
+#       It would be great to also support `grub`.
+
 - name: Update systemd
   command: "{{ 'emerge --update --newuse --deep systemd' |
                chrooted('/mnt/gentoo') }}"
@@ -7,7 +10,7 @@
 
 - name: Ensure boot base directory is present
   file:
-    path:  "{{ '/mnt/gentoo/%s' |
+    path:  "{{ '/mnt/gentoo%s' |
                format(boot.base_dir) }}"
     state: directory
 
@@ -17,7 +20,8 @@
   when: "{{ boot.uefi }}"
 
 - name: Install bootloader
-  command: "{{ 'bootctl --path=/boot install' |
+  command: "{{ 'bootctl --path=%s install' |
+               format(boot.base_dir) |
                chrooted('/mnt/gentoo') }}"
   when: "{{ boot.kind == 'systemd' }}"
 
@@ -26,13 +30,15 @@
                chrooted('/mnt/gentoo') }}"
 
 - name: Run dracut (generate init image)
-  command: "{{ 'dracut --force %s' |
+  command: "{{ 'dracut --force %s/`uname -r`' |
                format(boot.base_dir) |
                chrooted('/mnt/gentoo') }}"
 
-# TODO
-# - name: Configure Gentoo boot entry
-#   systemdboot_entry:
-#     title:   gentoo_<v>
-#     systemd: "{{ systemd }}"
-#     default: True
+- name: Configure Gentoo boot entry
+  boot_entry:
+    name: gentoo
+    enc_name: "{{ boot.enc_name }}"
+    default:  True
+    base_dir: "{{ boot.base_dir }}"
+    chroot:   /mnt/gentoo
+  when: "{{ boot.kind == 'systemd' }}"

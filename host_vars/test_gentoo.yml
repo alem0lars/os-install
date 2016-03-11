@@ -15,7 +15,8 @@ users:
 boot:
   uefi: True
   kind: systemd
-  base_dir: /boot/loader/entries/gentoo
+  base_dir: /boot
+  enc_name: primary
 
 # - `type` can be one of:
 #   - `physical`: a normal partition.
