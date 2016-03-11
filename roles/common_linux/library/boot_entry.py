@@ -141,9 +141,7 @@ class BootEntry(BaseObject):
         if self.initrd is None:
             self.initrd = r'initrd-{uname}'.format(uname=uname)
 
-        if self.title:
-            self.title = self.title.replace('<v>', uname)
-        else:
+        if not self.title:
             self.title = self.vmlinuz
 
         self.entry_conf = os.path.join(self.base_dir, 'loader', 'entries',
@@ -179,10 +177,10 @@ class BootEntry(BaseObject):
 
         with io.open(self.chroot + self.entry_conf, 'wb') as f:
             f.write('\n'.join([
-                'title   = {}'.format(self.title),
-                'linux   = {}'.format(os.path.join('/', self.vmlinuz)),
-                'initrd  = {}'.format(os.path.join('/', self.initrd)),
-                'options = {}'.format(' '.join(self.options)),
+                'title   {}'.format(self.title),
+                'linux   {}'.format(os.path.join('/', self.vmlinuz)),
+                'initrd  {}'.format(os.path.join('/', self.initrd)),
+                'options {}'.format(' '.join(self.options)),
                 ]) + '\n')
 
         if self.default:
