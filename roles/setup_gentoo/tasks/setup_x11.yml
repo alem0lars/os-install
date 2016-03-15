@@ -1,0 +1,62 @@
+---
+
+- name: Install X11 software
+  portage:
+    package: "{{ item }}"
+    state:   installed
+    update:  yes
+  with_items: "{{ packages.x11 }}"
+  tags:
+    - install
+    - system
+
+- name: Setup display manager (1/3: Install)
+  portage:
+    package: "{{ packages[display_manager] }}"
+    state:   installed
+    update:  yes
+  tags:
+    - install
+    - system
+
+- name: Setup display manager (2/3: Enable)
+  command: "{{ 'systemctl enable %s' |
+               format(display_manager) }}"
+  tags:
+    - service
+    - system
+
+- name: Setup display manager (3/4: Configure)
+  template:
+    src:  "{{ display_manager }}/{{ item }}.j2"
+    dest: "/etc/lightdm/{{ item }}"
+    mode: "{{ item == 'Xsession' |
+              ternary(0755, omit) }}"
+  with_items:
+    - keys.conf
+    - lightdm.conf
+    - lightdm-gtk-greeter.conf
+    - users.conf
+    - Xsession
+  when: "{{ display_manager == 'lightdm' }}"
+  tags:
+    - configure
+    - system
+
+- name: Setup window manager (1/2: Install)
+  portage:
+    package: "{{ packages[window_manager] }}"
+    state:   installed
+    update:  yes
+  tags:
+    - install
+    - system
+
+- name: Setup window manager (2/2: Configure)
+  template:
+    src:  "{{ window_manager }}/xmonad.hs.j2"
+    dest: ~/.xmonad/xmonad.hs
+  when: "{{ window_manager == 'xmonad' }}"
+  tags:
+    - configure
+    - user

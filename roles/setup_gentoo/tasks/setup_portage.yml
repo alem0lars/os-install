@@ -17,4 +17,6 @@
 #  command: gcc-config 1
 
 - name: Update environment
-  command: env-update
+  command: eselect env update
+  tags:
+    - system

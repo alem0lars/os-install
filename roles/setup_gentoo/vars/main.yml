@@ -1,0 +1,27 @@
+---
+
+packages:
+  basic:
+    # System
+    - sys-apps/gentoo-functions
+    # IO
+    - sys-apps/pciutils
+    - sys-apps/usbutils
+    # Compile
+    - dev-util/debugedit
+    # FS
+    - sys-block/parted
+    - sys-fs/ntfs3g
+  x11:
+    - x11-base/xorg-server
+    # Apps
+    - x11-apps/xrandr
+    - x11-apps/xdpyinfo
+    - x11-apps/setxkbmap
+    - x11-apps/xinput
+    - x11-apps/xbacklight
+  lightdm:
+    - x11-misc/lightdm
+  xmonad:
+    - x11-wm/xmonad
+    - x11-wm/xmonad-contrib

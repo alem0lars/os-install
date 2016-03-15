@@ -1,3 +1,15 @@
 ---
 
-# TODO
+arch:      amd64
+multilib:  True
+hardened:  False
+systemd:   True
+desktop:   None
+selinux:   False
+developer: False
+
+display_manager: lightdm
+window_manager:  xmonad
+
+# TODO: Add variables needed for installation
+#       (see `test_gentoo.yml` as an example)

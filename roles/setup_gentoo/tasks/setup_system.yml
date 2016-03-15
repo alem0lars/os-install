@@ -2,12 +2,21 @@
 
 - command: systemctl enable systemd-networkd systemd-resolved avahi-daemon
   when: "{{ systemd }}"
+  tags:
+    - service
+    - system
 
 - command: systemctl restart systemd-networkd systemd-resolved avahi-daemon
   when: "{{ systemd }}"
+  tags:
+    - service
+    - system
 
 - command: ln -sf /run/systemd/resolve/resolv.conf /etc/resolv.conf
   when: "{{ systemd }}"
+  tags:
+    - service
+    - system
 
 - name: Select profile
   eselect_profile:
@@ -18,23 +27,55 @@
     selinux:   "{{ selinux   | default(omit) }}"
     developer: "{{ developer | default(omit) }}"
     desktop:   "{{ desktop   | default(omit) }}"
+  tags:
+    - profile
+    - system
 
-- name: Sync repository
-  command: emerge --sync
+- name: Update packages
+  portage:
+    package: @world
+    update:  yes
+    deep:    yes
+    sync:    yes
+  tags:
+    - sync
+    - system
 
 - name: Setup local portage repository (1/4)
     path: /usr/local/portage/metadata
     state: directory
+  tags:
+    - repository
+    - system
 
 - name: Setup local portage repository (2/4)
   template:
     src:  local_repository/layout.conf
     dest: /usr/local/portage/layout.conf
+  tags:
+    - repository
+    - system
 
 - name: Setup local portage repository (3/4)
   template:
     src:  local_repository/repo_name
     dest: /usr/local/portage/repo_name
+  tags:
+    - repository
+    - system
 
 - name: Setup local portage repository (4/4)
   command: chown -R portage:portage /usr/local/portage
+  tags:
+    - repository
+    - system
+
+- name: Install basic software
+  portage:
+    package: "{{ item }}"
+    state:   installed
+    update:  yes
+  with_items: "{{ packages.basic }}"
+  tags:
+    - install
+    - system

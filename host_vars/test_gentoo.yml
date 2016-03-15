@@ -8,6 +8,9 @@ desktop:   None
 selinux:   False
 developer: False
 
+display_manager: lightdm
+window_manager:  xmonad
+
 users:
   root:
     password: toor

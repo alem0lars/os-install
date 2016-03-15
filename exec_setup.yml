@@ -17,8 +17,3 @@
       tags:
         - always
     - role: setup_gentoo
-      tags:
-        - setup
-    - role: create_gentoo
-      tags:
-        - create
