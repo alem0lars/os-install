@@ -1,81 +1,62 @@
 ---
 
 - command: systemctl enable systemd-networkd systemd-resolved avahi-daemon
-  when: "{{ systemd }}"
-  tags:
-    - service
-    - system
+  when: "{{ systemd is defined }}"
+  tags: service
 
 - command: systemctl restart systemd-networkd systemd-resolved avahi-daemon
-  when: "{{ systemd }}"
-  tags:
-    - service
-    - system
+  when: "{{ systemd is defined }}"
+  tags: service
 
 - command: ln -sf /run/systemd/resolve/resolv.conf /etc/resolv.conf
-  when: "{{ systemd }}"
-  tags:
-    - service
-    - system
+  when: "{{ systemd is defined }}"
+  tags: service
 
 - name: Select profile
   eselect_profile:
     arch:      "{{ arch                      }}"
     multilib:  "{{ multilib  | default(omit) }}"
     hardened:  "{{ hardened  | default(omit) }}"
-    systemd:   "{{ systemd   | default(omit) }}"
-    selinux:   "{{ selinux   | default(omit) }}"
+    systemd:   "{{ systemd is defined }}"
+    selinux:   "{{ selinux is defined }}"
     developer: "{{ developer | default(omit) }}"
     desktop:   "{{ desktop   | default(omit) }}"
-  tags:
-    - profile
-    - system
+  tags: profile
 
 - name: Update packages
   portage:
-    package: @world
-    update:  yes
-    deep:    yes
-    sync:    yes
-  tags:
-    - sync
-    - system
+    package: "@world"
+    update:  "yes"
+    deep:    "yes"
+    sync:    "yes"
+  tags: sync
 
 - name: Setup local portage repository (1/4)
-    path: /usr/local/portage/metadata
+  file:
+    path:  /usr/local/portage/metadata
     state: directory
-  tags:
-    - repository
-    - system
+  tags: repository
 
 - name: Setup local portage repository (2/4)
   template:
-    src:  local_repository/layout.conf
+    src:  portage/local_repository/layout.conf.j2
     dest: /usr/local/portage/layout.conf
-  tags:
-    - repository
-    - system
+  tags: repository
 
 - name: Setup local portage repository (3/4)
   template:
-    src:  local_repository/repo_name
+    src:  portage/local_repository/repo_name.j2
     dest: /usr/local/portage/repo_name
-  tags:
-    - repository
-    - system
+  tags: repository
 
 - name: Setup local portage repository (4/4)
   command: chown -R portage:portage /usr/local/portage
-  tags:
-    - repository
-    - system
+  tags: repository
 
 - name: Install basic software
   portage:
     package: "{{ item }}"
     state:   installed
-    update:  yes
+    update:  "yes"
   with_items: "{{ packages.basic }}"
-  tags:
-    - install
-    - system
+  tags: install

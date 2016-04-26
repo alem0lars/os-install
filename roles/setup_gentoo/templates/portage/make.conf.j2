@@ -1,41 +1,48 @@
 # ------------------------------------------------------------------------------
 # Host informations ------------------------------------------------------------
 
-CHOST="x86_64-pc-linux-gnu"
+CHOST="{{ ansible_machine }}-pc-linux-gnu"
 LINGUAS="en"
 
 # ------------------------------------------------------------------------------
 # Devices ----------------------------------------------------------------------
 
-ABI_X86="<%= get_var!('portage.abi_x86').join(' ') %>"
-INPUT_DEVICES="<%= get_var!('portage.input_devices').join(' ') %>"
-VIDEO_CARDS="<%= get_var!('portage.video_cards').join(' ') %>"
+{% if portage.abi_x86 is defined %}
+ABI_X86="{{ portage.abi_x86 | join(' ') }}"
+{% endif %}
+
+{% if portage.input_devices is defined %}
+INPUT_DEVICES="{{ input_devices | join(' ') }}"
+{% endif %}
+
+{% if portage.video_cards is defined %}
+VIDEO_CARDS="{{ video_cards | join(' ') }}"
+{% endif %}
 
 # ------------------------------------------------------------------------------
 # Compilers --------------------------------------------------------------------
 
-CFLAGS="-O2 -pipe -march=native {{ make.ggdb | ternary('-ggdb', omit) }}"
+CFLAGS="-O2 -pipe -march=native {{ make.cflags | join(' ') }}"
 CXXFLAGS="${CFLAGS}"
 
 MAKEOPTS="-j{{ ansible_processor_vcpus * 2 + 1 }} -l{{ ansible_processor_vcpus * 2 + 1 }}"
 
-# {{{ Portage - Misc directories.
+# ------------------------------------------------------------------------------
+# Portage - Misc directories ---------------------------------------------------
 
 PORTDIR="/usr/portage"
 DISTDIR="${PORTDIR}/distfiles"
 PKGDIR="${PORTDIR}/packages"
 
-# }}}
-
-# {{{ Portage - Logging.
+# ------------------------------------------------------------------------------
+# Portage - Logging ------------------------------------------------------------
 
 FEATURES="clean-logs split-log ${FEATURES}"
 
 PORT_LOGDIR="/var/log/portage"
 
-# }}}
-
-# {{{ Emerge.
+# ------------------------------------------------------------------------------
+# Emerge -----------------------------------------------------------------------
 
 FEATURES="splitdebug parallel-fetch metadata-transfer installsources ${FEATURES}"
 FEATURES="-userfetch -userpriv ${FEATURES}"
@@ -44,8 +51,8 @@ PORTAGE_NICENESS=16
 
 EMERGE_DEFAULT_OPTS="--with-bdeps=y --keep-going=y --quiet-unmerge-warn"
 EMERGE_DEFAULT_OPTS="${EMERGE_DEFAULT_OPTS} --quiet-build=y --verbose"
-EMERGE_DEFAULT_OPTS="${EMERGE_DEFAULT_OPTS} --jobs=<%= get_var! 'parallelism' %>"
-EMERGE_DEFAULT_OPTS="${EMERGE_DEFAULT_OPTS} --load=<%= get_var! 'parallelism' %>"
+EMERGE_DEFAULT_OPTS="${EMERGE_DEFAULT_OPTS} --jobs={{ ansible_processor_vcpus }}"
+EMERGE_DEFAULT_OPTS="${EMERGE_DEFAULT_OPTS} --load={{ ansible_processor_vcpus }}"
 
 # Minimum size of existing file for RESUMECOMMAND to be called.
 PORTAGE_FETCH_RESUME_MIN_SIZE="192K"
@@ -53,42 +60,44 @@ PORTAGE_FETCH_RESUME_MIN_SIZE="192K"
 PORTAGE_ELOG_CLASSES="warn error info log qa"
 PORTAGE_ELOG_SYSTEM="save"
 
-# }}}
+# ------------------------------------------------------------------------------
+# Python -----------------------------------------------------------------------
 
-# {{{ Python.
-
+{% if python is defined %}
 PYTHON_TARGETS="python3_4 python2_7"
 USE_PYTHON="2.7" # 3.4 isn't available yet.
 PYTHON_SINGLE_TARGET="python3_4"
+{% endif %}
 
-# }}}
+# ------------------------------------------------------------------------------
+# Ruby -------------------------------------------------------------------------
 
-# {{{ Ruby.
-
+{% if ruby is defined %}
 RUBY_TARGETS="ruby19 ruby20 ruby21"
+{% endif %}
 
-# }}}
+# ------------------------------------------------------------------------------
+# Netbeans ---------------------------------------------------------------------
 
-# {{{ Netbeans
-<% if get_var 'netbeans' %>
-NETBEANS_MODULES="<%= get_var!('netbeans.modules').join(' ') %>"
-<% end %>
-# }}}
+{% if netbeans is defined %}
+NETBEANS_MODULES="{%= netbeans.modules | join(' ') %}"
+{% endif %}
 
-# {{{ Use flags.
+# ------------------------------------------------------------------------------
+# Use flags --------------------------------------------------------------------
 
+{% if portage.use_flags is defined %}
 USE="${USE} <%= get_var!('portage.use_flags').join(' ') %>"
+{% endif %}
 
-<% if has_feature? :btrfs %>
-USE="${USE} btrfs"
-<% end %>
-<% if has_feature? :systemd %>
+{% if systemd is defined %}
 USE="${USE} -consolekit systemd"
-<% end %>
+{% end %}
 
 <% if has_feature? :alsa %>
 USE="${USE} alsa"
 <% end %>
+
 <% if has_feature? :pulseaudio %>
 USE="${USE} pulseaudio"
 <% end %>
@@ -118,5 +127,3 @@ USE="${USE} python"
 <% if has_feature? :haskell %>
 USE="${USE} hoogle hscolour"
 <% end %>
-
-# }}}

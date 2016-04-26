@@ -1,15 +1,26 @@
 ---
 
-arch:      amd64
-multilib:  True
-hardened:  False
-systemd:   True
-desktop:   None
-selinux:   False
+arch: amd64
+multilib: True
+hardened: False
+systemd: {}
+desktop: None
+selinux: {}
 developer: False
 
 display_manager: lightdm
 window_manager:  xmonad
+
+portage:
+  abi_x86: "64"
+
+input_devices: evdev
+video_cards: virtualbox
+make:
+  cflags: -ggdb
+
+python: {}
+ruby: {}
 
 users:
   root:

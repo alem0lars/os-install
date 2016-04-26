@@ -4,29 +4,24 @@
   portage:
     package: "{{ item }}"
     state:   installed
-    update:  yes
+    update:  "yes"
   with_items: "{{ packages.x11 }}"
-  tags:
-    - install
-    - system
+  tags: install
 
-- name: Setup display manager (1/3: Install)
+- name: Setup display manager (1/3 Install)
   portage:
-    package: "{{ packages[display_manager] }}"
+    package: "{{ packages |
+                 attr(display_manager) }}"
     state:   installed
-    update:  yes
-  tags:
-    - install
-    - system
+    update:  "yes"
+  tags: install
 
-- name: Setup display manager (2/3: Enable)
+- name: Setup display manager (2/3 Enable)
   command: "{{ 'systemctl enable %s' |
                format(display_manager) }}"
-  tags:
-    - service
-    - system
+  tags: service
 
-- name: Setup display manager (3/4: Configure)
+- name: Setup display manager (3/3 Configure)
   template:
     src:  "{{ display_manager }}/{{ item }}.j2"
     dest: "/etc/lightdm/{{ item }}"
@@ -39,24 +34,18 @@
     - users.conf
     - Xsession
   when: "{{ display_manager == 'lightdm' }}"
-  tags:
-    - configure
-    - system
+  tags: configure_system
 
-- name: Setup window manager (1/2: Install)
+- name: Setup window manager (1/2 Install)
   portage:
     package: "{{ packages[window_manager] }}"
     state:   installed
-    update:  yes
-  tags:
-    - install
-    - system
+    update:  "yes"
+  tags: install
 
-- name: Setup window manager (2/2: Configure)
+- name: Setup window manager (2/2 Configure)
   template:
     src:  "{{ window_manager }}/xmonad.hs.j2"
     dest: ~/.xmonad/xmonad.hs
   when: "{{ window_manager == 'xmonad' }}"
-  tags:
-    - configure
-    - user
+  tags: configure_user

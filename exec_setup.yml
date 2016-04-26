@@ -1,19 +1,13 @@
 # Apply common configuration to all hosts
 - hosts: all
-  remote_user: root
+  remote_user: "{{ user }}"
   roles:
     - role: common
-      tags:
-        - always
 
 # Configure `gentoo` hosts
 - hosts: gentoo
-  remote_user: root
+  remote_user: "{{ user }}"
   roles:
     - role: common_linux
-      tags:
-        - always
     - role: common_gentoo
-      tags:
-        - always
     - role: setup_gentoo

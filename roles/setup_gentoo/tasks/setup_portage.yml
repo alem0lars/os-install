@@ -19,4 +19,4 @@
 - name: Update environment
   command: eselect env update
   tags:
-    - system
+    - environment

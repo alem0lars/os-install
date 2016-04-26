@@ -4,3 +4,5 @@
   authorized_key:
     user: "{{ ansible_user_id        }}"
     key:  "{{ lookup('file', pubkey) }}"
+  tags:
+    - deploy_ssh_key

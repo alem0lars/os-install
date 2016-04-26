@@ -5,8 +5,8 @@
 # - sync: to sync portage repositories
 # - repository: to setup repository
 # - install: to install packages
-# - configure: to configure
-# - system || user: (to select system-level or user-level setup)
+# - configure_system: to perform system-level configuration
+# - configure_user: to perform user-level configuration
 
 - include: setup_system.yml
 - include: setup_portage.yml
