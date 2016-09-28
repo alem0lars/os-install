@@ -30,7 +30,7 @@
                chrooted('/mnt/gentoo') }}"
 
 - name: Run dracut (generate init image)
-  command: "{{ 'dracut --force %s/`uname -r`' |
+  command: "{{ 'dracut --force %s/initrd-`uname -r`' |
                format(boot.base_dir) |
                chrooted('/mnt/gentoo') }}"
 
