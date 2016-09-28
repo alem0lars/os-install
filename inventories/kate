@@ -1,2 +1,2 @@
 [gentoo]
-kate ansible_host=kate ansible_port=22 ansible_python_interpreter=python2
+kate ansible_host=10.0.0.134 ansible_port=22 ansible_python_interpreter=python2

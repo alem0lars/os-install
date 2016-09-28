@@ -7,14 +7,40 @@ kernel:
   config:
     entries: {}
     default_entries:
+      - option: EXPERT
+        value:  True
+      # Add support to the right init system.
       - option: GENTOO_LINUX_INIT_SCRIPT
         after:  GENTOO_LINUX
         value:  False
         enabled: "{{ systemd }}"
       - option: GENTOO_LINUX_INIT_SYSTEMD
         after:  GENTOO_LINUX_UDEV
+        value:  True
         enabled: "{{ systemd }}"
       - option: FANOTIFY_ACCESS_PERMISSIONS
         value:  True
         enabled: "{{ systemd }}"
-      # TODO: Add kernel options for uefi
+      # Add support to UEFI.
+      - option: PARTITION_ADVANCED
+        value:  True
+        enabled: "{{ boot.uefi }}"
+      - option: EFI_PARTITION
+        after:  PARTITION_ADVANCED
+        value:  True
+        enabled: "{{ boot.uefi }}"
+      - option: EFI
+        value:  True
+        enabled: "{{ boot.uefi }}"
+      - option: EFI_STUB
+        after:  EFI
+        value:  True
+        enabled: "{{ boot.uefi }}"
+      - option: EFI_VARS
+        after:  EFI
+        value:  True
+        enabled: "{{ boot.uefi }}"
+      - option: EFI_RUNTIME_MAP
+        after:  EFI
+        value:  True
+        enabled: "{{ boot.uefi }}"

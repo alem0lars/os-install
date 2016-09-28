@@ -65,9 +65,12 @@ class BaseObject(object):
         for param in params:
             if param in self._module.params:
                 value = self._module.params[param]
-                t = self._module.argument_spec[param].get('type')
-                if t == 'str' and value in ['None', 'none']:
+                if value in ['None', 'none']:
                     value = None
+                if value in ['True', 'true']:
+                    value = True
+                if value in ['False', 'false']:
+                    value = False
                 setattr(self, param, value)
             else:
                 setattr(self, param, None)

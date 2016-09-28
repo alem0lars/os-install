@@ -41,6 +41,23 @@
     dest: /mnt/gentoo/etc/portage/make.conf
     line: MAKEOPTS=-j1
 
-- name: Update packages
+- name: Update packages (1/4)
+  lineinfile:
+    dest: /mnt/gentoo/etc/portage/package.use/temporary
+    line: "sys-apps/systemd -cryptsetup -gnuefi"
+    create: yes
+
+- name: Update packages (2/4)
+  command: "{{ 'emerge --update --newuse --deep --with-bdeps=y @system @world' |
+               chrooted('/mnt/gentoo') }}"
+
+- name: Update packages (3/4)
+  lineinfile:
+    dest: /mnt/gentoo/etc/portage/package.use/temporary
+    line: "sys-apps/systemd -cryptsetup -gnuefi"
+    create: yes
+    state: absent
+
+- name: Update packages (4/4)
   command: "{{ 'emerge --update --newuse --deep --with-bdeps=y @system @world' |
                chrooted('/mnt/gentoo') }}"

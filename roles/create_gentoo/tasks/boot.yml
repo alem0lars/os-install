@@ -1,7 +1,7 @@
 ---
 
 # NOTE: At the moment the only boot system supported is `systemd-boot`.
-#       It would be great to also support `grub`.
+# TODO: It would be great to also support `grub`.
 
 - name: Update systemd
   command: "{{ 'emerge --update --newuse --deep systemd' |
@@ -37,7 +37,7 @@
 - name: Configure Gentoo boot entry
   boot_entry:
     name: gentoo
-    enc_name: "{{ boot.enc_name }}"
+    enc_name: "{{ boot.enc_name | default(omit) }}"
     default:  True
     base_dir: "{{ boot.base_dir }}"
     chroot:   /mnt/gentoo
