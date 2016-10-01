@@ -1,27 +1,56 @@
 ---
 
-- command: systemctl enable systemd-networkd systemd-resolved avahi-daemon
+- command: systemctl enable systemd-networkd
   when: "{{ systemd is defined }}"
   tags: service
 
-- command: systemctl restart systemd-networkd systemd-resolved avahi-daemon
+- command: systemctl enable systemd-resolved 
   when: "{{ systemd is defined }}"
   tags: service
+
+- command: systemctl enable avahi-daemon
+  when: "{{ systemd is defined }}"
+  tags: service
+
+- command: # TODO: Add wired.network config file
+  when: "{{ systemd is defined }}"
+  tags: service
+
+- command: systemctl restart systemd-networkd
+  when: "{{ systemd is defined }}"
+  tags: service
+
+- command: systemctl restart systemd-resolved 
+  when: "{{ systemd is defined }}"
+  tags: service
+
+- command: # TODO: Add /etc/nsswitch.conf config file
+  when: "{{ systemd is defined }}"
+  tags: service
+  # files mdns4_minimal [NOTFOUND=return] dns mdns4
+
+- command: emerge net-dns/avahi sys-auth/nss-mdns
+
+- command: systemctl restart avahi-daemon
+  when: "{{ systemd is defined }}"
+  tags: service
+  
 
 - command: ln -sf /run/systemd/resolve/resolv.conf /etc/resolv.conf
   when: "{{ systemd is defined }}"
   tags: service
 
-- name: Select profile
-  eselect_profile:
-    arch:      "{{ arch                      }}"
-    multilib:  "{{ multilib  | default(omit) }}"
-    hardened:  "{{ hardened  | default(omit) }}"
-    systemd:   "{{ systemd is defined }}"
-    selinux:   "{{ selinux is defined }}"
-    developer: "{{ developer | default(omit) }}"
-    desktop:   "{{ desktop   | default(omit) }}"
-  tags: profile
+- command: hostnamectl set-hostname kate # TODO: replace with customized value
+  when: "{{ systemd is defined }}"
+  tags: service
+
+- command: hostnamectl set-chassis laptop # TODO: replace with customized value
+  when: "{{ systemd is defined }}"
+  tags: service
+
+- command: hostnamectl set-deployment production # TODO: replace with customized value
+  when: "{{ systemd is defined }}"
+  tags: service
 
 - name: Update packages
   portage:
@@ -40,7 +69,7 @@
 - name: Setup local portage repository (2/4)
   template:
     src:  portage/local_repository/layout.conf.j2
-    dest: /usr/local/portage/layout.conf
+    dest: /usr/local/portage/metadata/layout.conf
   tags: repository
 
 - name: Setup local portage repository (3/4)

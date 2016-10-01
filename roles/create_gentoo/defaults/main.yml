@@ -44,3 +44,15 @@ kernel:
         after:  EFI
         value:  True
         enabled: "{{ boot.uefi }}"
+      # Device Drivers
+      - option: NET_VENDOR_INTEL
+        value:  True
+      - option: E1000E
+        after:  NET_VENDOR_INTEL
+        value:  True
+      # FUSE
+      - option: FUSE_FS
+        value:  True
+      - option: CUSE
+        after:  FUSE_FS
+        value:  True
