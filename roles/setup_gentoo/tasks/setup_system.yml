@@ -1,5 +1,25 @@
 ---
 
+- command: systemd-machine-id-setup
+  when: "{{ systemd is defined }}"
+  tags: service
+
+- command: localectl set-locale LANG=en_US.utf8
+  when: "{{ systemd is defined }}"
+  tags: service
+
+- command: localectl set-keymap us
+  when: "{{ systemd is defined }}"
+  tags: service
+
+- command: timedatectl set-ntp true
+  when: "{{ systemd is defined }}"
+  tags: service
+
+- command: timedatectl set-timezone Europe/Rome
+  when: "{{ systemd is defined }}"
+  tags: service
+
 - command: systemctl enable systemd-networkd
   when: "{{ systemd is defined }}"
   tags: service
@@ -89,3 +109,7 @@
     update:  "yes"
   with_items: "{{ packages.basic }}"
   tags: install
+
+
+- command: systemctl enable systemd-bootchart
+

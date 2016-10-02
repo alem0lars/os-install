@@ -56,3 +56,15 @@ kernel:
       - option: CUSE
         after:  FUSE_FS
         value:  True
+      # Systemd bootchart
+      - option: DEBUG_KERNEL
+        value:  True
+        enabled: "{{ systemd }}"
+      - option: SCHED_DEBUG
+        after:  DEBUG_KERNEL
+        value:  True
+        enabled: "{{ systemd }}"
+      - option: SCHEDSTATS
+        after:  DEBUG_KERNEL
+        value:  True
+        enabled: "{{ systemd }}"
