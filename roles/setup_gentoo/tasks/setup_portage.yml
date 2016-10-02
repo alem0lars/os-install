@@ -39,3 +39,16 @@
   command: eselect env update
   tags:
     - environment
+
+# Aggiungere l'utente
+- command: useradd -m -G -s /bin/bash alem0lars
+
+- name: fare passi di alem0lars/configs_book/gentoo/configuration/software/portage.md
+
+
+# ------------------------------------------------------------------------------------
+
+# TODO: check se son buoni: eclean-kernel diffmask flaggie install-mask portpeek smart-live-rebuild
+# e in tal caso aggiungerli
+
+- command: layman -o https://raw.github.com/alem0lars/apo/master/repositories.xml -f -a apo

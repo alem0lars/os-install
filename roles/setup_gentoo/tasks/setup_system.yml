@@ -4,6 +4,11 @@
   when: "{{ systemd is defined }}"
   tags: service
 
+mettere in /etc/locale.gen
+  en_US.UTF-8 UTF-8
+
+- command: locale-gen
+
 - command: localectl set-locale LANG=en_US.utf8
   when: "{{ systemd is defined }}"
   tags: service
