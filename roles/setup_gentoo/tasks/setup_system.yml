@@ -32,15 +32,23 @@ mettere in /etc/locale.gen
 - command: systemctl enable systemd-resolved 
   when: "{{ systemd is defined }}"
   tags: service
+  
+- command: systemctl enable wpa_supplicant 
+  when: "{{ systemd is defined }}"
+  tags: service
 
 - command: systemctl enable avahi-daemon
   when: "{{ systemd is defined }}"
   tags: service
 
-- command: # TODO: Add wired.network config file
+- command: # TODO: Add wired.network and wireless.network config file
   when: "{{ systemd is defined }}"
   tags: service
 
+- command: systemctl restart wpa_supplicant 
+  when: "{{ systemd is defined }}"
+  tags: service
+  
 - command: systemctl restart systemd-networkd
   when: "{{ systemd is defined }}"
   tags: service
