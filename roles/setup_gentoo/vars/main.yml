@@ -12,6 +12,8 @@ packages:
     # FS
     - sys-block/parted
     - sys-fs/ntfs3g
+    # Network
+    - net-wireless/wpa_supplicant
   x11:
     - x11-base/xorg-server
     # Apps

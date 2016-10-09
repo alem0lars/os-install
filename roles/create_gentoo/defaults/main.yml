@@ -50,6 +50,12 @@ kernel:
       - option: E1000E
         after:  NET_VENDOR_INTEL
         value:  True
+      - option: IWLWIFI
+        after:  WLAN
+        value:  True
+      - option: IWLMVM
+        after:  IWLWIFI
+        value:  True
       # FUSE
       - option: FUSE_FS
         value:  True
