@@ -29,7 +29,11 @@ mettere in /etc/locale.gen
   when: "{{ systemd is defined }}"
   tags: service
 
-- command: systemctl enable systemd-resolved 
+- command: systemctl enable systemd-resolved
+  when: "{{ systemd is defined }}"
+  tags: service
+
+- command: systemctl enable wpa_supplicant
   when: "{{ systemd is defined }}"
   tags: service
 
@@ -37,7 +41,11 @@ mettere in /etc/locale.gen
   when: "{{ systemd is defined }}"
   tags: service
 
-- command: # TODO: Add wired.network config file
+- command: # TODO: Add wired.network and wireless.network config file
+  when: "{{ systemd is defined }}"
+  tags: service
+
+- command: systemctl restart wpa_supplicant
   when: "{{ systemd is defined }}"
   tags: service
 
@@ -45,7 +53,7 @@ mettere in /etc/locale.gen
   when: "{{ systemd is defined }}"
   tags: service
 
-- command: systemctl restart systemd-resolved 
+- command: systemctl restart systemd-resolved
   when: "{{ systemd is defined }}"
   tags: service
 
@@ -59,7 +67,7 @@ mettere in /etc/locale.gen
 - command: systemctl restart avahi-daemon
   when: "{{ systemd is defined }}"
   tags: service
-  
+
 - command: ln -sf /run/systemd/resolve/resolv.conf /etc/resolv.conf
   when: "{{ systemd is defined }}"
   tags: service
@@ -84,47 +92,6 @@ mettere in /etc/locale.gen
     sync:    "yes"
   tags: sync
 
-- name: Setup local portage repository (1/4)
-  file:
-    path:  /usr/local/portage/metadata
-    state: directory
-  tags: repository
-
-- name: Setup local portage repository (2/4)
-  template:
-    src:  portage/local_repository/layout.conf.j2
-    dest: /usr/local/portage/metadata/layout.conf
-  tags: repository
-
-- name: Setup local portage repository (3/4)
-  template:
-    src:  portage/local_repository/repo_name.j2
-    dest: /usr/local/portage/repo_name
-  tags: repository
-
-- name: Setup local portage repository (4/4)
-  command: chown -R portage:portage /usr/local/portage
-  tags: repository
-
-# Crossdev
-# root #mkdir -p /usr/local/portage-crossdev/{profiles,metadata}
-# root #echo 'crossdev' > /usr/local/portage-crossdev/profiles/repo_name
-# root #echo 'masters = gentoo' > /usr/local/portage-crossdev/metadata/layout.conf
-# root #chown -R portage:portage /usr/local/portage-crossdev
-# If the main Portage tree is synchronized by using Git, or any other method with Manifest files that do not include checksums for ebuilds, prevent "masked by: corruption" errors with:
-
-# FILE /usr/local/portage-crossdev/metadata/layout.conf
-# masters = gentoo
-# thin-manifests = true
-# Then instruct Portage and crossdev to use this overlay:
-
-# FILE /etc/portage/repos.conf/crossdev.conf
-# [crossdev]
-# location = /usr/local/portage-crossdev
-# priority = 10
-# masters = gentoo
-# auto-sync = no
-
 - name: Install basic software
   portage:
     package: "{{ item }}"
@@ -133,6 +100,4 @@ mettere in /etc/locale.gen
   with_items: "{{ packages.basic }}"
   tags: install
 
-
 - command: systemctl enable systemd-bootchart
-

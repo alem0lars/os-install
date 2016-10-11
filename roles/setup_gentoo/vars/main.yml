@@ -12,6 +12,10 @@ packages:
     # FS
     - sys-block/parted
     - sys-fs/ntfs3g
+    # Network
+    - net-wireless/wpa_supplicant
+  kate: # TODO: solo per kate
+    - sys-kernel/linux-firmware
   x11:
     - x11-base/xorg-server
     # Apps
