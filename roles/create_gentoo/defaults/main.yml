@@ -53,9 +53,11 @@ kernel:
       - option: IWLWIFI
         after:  WLAN
         value:  True
+        as_module: True
       - option: IWLMVM
         after:  IWLWIFI
         value:  True
+        as_module: True
       # FUSE
       - option: FUSE_FS
         value:  True
