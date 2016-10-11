@@ -1,5 +1,8 @@
 ---
 
+fizzy cfg s -C portage -U ssh:alem0lars/configs-dracut
+fizzy qi -C dracut -I dracut -V kate
+
 - command: systemd-machine-id-setup
   when: "{{ systemd is defined }}"
   tags: service
@@ -25,6 +28,12 @@ mettere in /etc/locale.gen
   when: "{{ systemd is defined }}"
   tags: service
 
+fizzy cfg s -C systemd -U ssh:alem0lars/configs-systemd
+fizzy qi -C systemd -I systemd -V kate
+
+fizzy cfg s -C portage -U ssh:alem0lars/configs-wpa
+fizzy qi -C wpa -I wpa -V kate
+
 - command: systemctl enable systemd-networkd
   when: "{{ systemd is defined }}"
   tags: service
@@ -38,10 +47,6 @@ mettere in /etc/locale.gen
   tags: service
 
 - command: systemctl enable avahi-daemon
-  when: "{{ systemd is defined }}"
-  tags: service
-
-- command: # TODO: Add wired.network and wireless.network config file
   when: "{{ systemd is defined }}"
   tags: service
 

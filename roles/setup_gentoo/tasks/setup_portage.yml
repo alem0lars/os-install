@@ -1,5 +1,8 @@
 ---
 
+fizzy cfg s -C portage -U ssh:alem0lars/configs-portage
+fizzy qi -C portage -I portage -V kate
+
 - name: Setup local portage repository (1/4)
   file:
     path:  /usr/local/portage/metadata
