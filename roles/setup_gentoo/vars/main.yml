@@ -20,6 +20,8 @@ packages:
     - x11-apps/setxkbmap
     - x11-apps/xinput
     - x11-apps/xbacklight
+  net_tools:
+    - net-misc/nmap
   lightdm:
     - x11-misc/lightdm
   xmonad:

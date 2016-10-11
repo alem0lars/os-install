@@ -1,0 +1,7 @@
+# Install fizzy dependencies.
+emerge dev-ruby/thor
+emerge sudo
+
+# Install fizzy.
+curl -sL https://raw.githubusercontent.com/alem0lars/fizzy/master/build/fizzy | tee /usr/local/bin/fizzy > /dev/null
+chmod +x /usr/local/bin/fizzy

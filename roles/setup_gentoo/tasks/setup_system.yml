@@ -60,7 +60,6 @@ mettere in /etc/locale.gen
   when: "{{ systemd is defined }}"
   tags: service
   
-
 - command: ln -sf /run/systemd/resolve/resolv.conf /etc/resolv.conf
   when: "{{ systemd is defined }}"
   tags: service
@@ -106,6 +105,25 @@ mettere in /etc/locale.gen
 - name: Setup local portage repository (4/4)
   command: chown -R portage:portage /usr/local/portage
   tags: repository
+
+# Crossdev
+# root #mkdir -p /usr/local/portage-crossdev/{profiles,metadata}
+# root #echo 'crossdev' > /usr/local/portage-crossdev/profiles/repo_name
+# root #echo 'masters = gentoo' > /usr/local/portage-crossdev/metadata/layout.conf
+# root #chown -R portage:portage /usr/local/portage-crossdev
+# If the main Portage tree is synchronized by using Git, or any other method with Manifest files that do not include checksums for ebuilds, prevent "masked by: corruption" errors with:
+
+# FILE /usr/local/portage-crossdev/metadata/layout.conf
+# masters = gentoo
+# thin-manifests = true
+# Then instruct Portage and crossdev to use this overlay:
+
+# FILE /etc/portage/repos.conf/crossdev.conf
+# [crossdev]
+# location = /usr/local/portage-crossdev
+# priority = 10
+# masters = gentoo
+# auto-sync = no
 
 - name: Install basic software
   portage:
