@@ -1,5 +1,8 @@
 ---
 
+fizzy cfg s -C xorg -U ssh:alem0lars/configs-xorg
+fizzy qi -C xorg -I xorg -V kate
+
 - name: Install X11 software
   portage:
     package: "{{ item }}"
@@ -23,20 +26,8 @@
                format(display_manager) }}"
   tags: service
 
-- name: Setup display manager (3/3 Configure)
-  template:
-    src:  "{{ display_manager }}/{{ item }}.j2"
-    dest: "/etc/lightdm/{{ item }}"
-    mode: "{{ item == 'Xsession' |
-              ternary(0755, omit) }}"
-  with_items:
-    - keys.conf
-    - lightdm.conf
-    - lightdm-gtk-greeter.conf
-    - users.conf
-    - Xsession
-  when: "{{ display_manager == 'lightdm' }}"
-  tags: configure_system
+fizzy cfg s -C lightdm -U ssh:alem0lars/configs-lightdm
+fizzy qi -C lightdm -I lightdm -V kate
 
 - name: Setup window manager (1/2 Install)
   portage:

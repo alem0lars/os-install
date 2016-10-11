@@ -50,10 +50,4 @@ fizzy qi -C portage -I portage -V kate
 
 - name: fare passi di alem0lars/configs_book/gentoo/configuration/software/portage.md
 
-
-# ------------------------------------------------------------------------------------
-
-# TODO: check se son buoni: eclean-kernel diffmask flaggie install-mask portpeek smart-live-rebuild
-# e in tal caso aggiungerli
-
 - command: layman -o https://raw.github.com/alem0lars/apo/master/repositories.xml -f -a apo

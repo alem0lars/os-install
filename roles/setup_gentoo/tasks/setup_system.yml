@@ -1,6 +1,6 @@
 ---
 
-fizzy cfg s -C portage -U ssh:alem0lars/configs-dracut
+fizzy cfg s -C dracut -U ssh:alem0lars/configs-dracut
 fizzy qi -C dracut -I dracut -V kate
 
 - command: systemd-machine-id-setup
@@ -31,7 +31,7 @@ mettere in /etc/locale.gen
 fizzy cfg s -C systemd -U ssh:alem0lars/configs-systemd
 fizzy qi -C systemd -I systemd -V kate
 
-fizzy cfg s -C portage -U ssh:alem0lars/configs-wpa
+fizzy cfg s -C wpa -U ssh:alem0lars/configs-wpa
 fizzy qi -C wpa -I wpa -V kate
 
 - command: systemctl enable systemd-networkd
@@ -42,17 +42,11 @@ fizzy qi -C wpa -I wpa -V kate
   when: "{{ systemd is defined }}"
   tags: service
 
-- command: systemctl enable wpa_supplicant
-  when: "{{ systemd is defined }}"
-  tags: service
-
 - command: systemctl enable avahi-daemon
   when: "{{ systemd is defined }}"
   tags: service
 
-- command: systemctl restart wpa_supplicant
-  when: "{{ systemd is defined }}"
-  tags: service
+systemctl enable wpa_supplicant@wlp3s0
 
 - command: systemctl restart systemd-networkd
   when: "{{ systemd is defined }}"
@@ -61,6 +55,12 @@ fizzy qi -C wpa -I wpa -V kate
 - command: systemctl restart systemd-resolved
   when: "{{ systemd is defined }}"
   tags: service
+
+- command: systemctl restart avahi-daemon
+  when: "{{ systemd is defined }}"
+  tags: service
+
+systemctl start wpa_supplicant@wlp3s0
 
 - command: # TODO: Add /etc/nsswitch.conf config file
   when: "{{ systemd is defined }}"
