@@ -13,3 +13,6 @@
 - include: setup_portage.yml
 - include: setup_x11.yml
 - include: setup_fonts.yml
+
+- follow backup.md in configs_book
+

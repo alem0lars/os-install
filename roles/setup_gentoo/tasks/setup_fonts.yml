@@ -1,1 +1,3 @@
 - command: emerge media-fonts/hack
+- command: emerge media-fonts/roboto
+- command: eselect fontconfig enable "90-roboto-regular.conf"
