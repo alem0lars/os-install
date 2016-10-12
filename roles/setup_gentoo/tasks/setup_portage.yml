@@ -45,9 +45,6 @@ fizzy qi -C portage -I portage -V kate
   tags:
     - environment
 
-# Aggiungere l'utente
-- command: useradd -m -G -s /bin/bash alem0lars
-
 - name: fare passi di alem0lars/configs_book/gentoo/configuration/software/portage.md
 
 - command: layman -o https://raw.github.com/alem0lars/apo/master/repositories.xml -f -a apo

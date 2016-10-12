@@ -1,0 +1,9 @@
+# Aggiungere l'utente
+- command: useradd -m -G -s /bin/bash alem0lars
+- command: groupadd admin
+- command: gpasswd -a alem0lars admin
+- command: gpasswd -a alem0lars users
+- command: gpasswd -a alem0lars portage
+- command: gpasswd -a alem0lars systemd-journal
+
+Add line %admin ALL=(ALL) ALL to /etc/sudoers

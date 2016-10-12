@@ -2,8 +2,16 @@
 
 packages:
   basic:
+    # Kernel
+    - sys-kernel/linux-firmware
     # System
     - sys-apps/gentoo-functions
+    - app-admin/sudo
+    # Shell
+    - app-shells/zsh
+    - x11-terms/rxvt-unicode
+    - x11-terms/urxvt-perls
+    - x11-terms/urxvt-font-size
     # IO
     - sys-apps/pciutils
     - sys-apps/usbutils
@@ -14,8 +22,6 @@ packages:
     - sys-fs/ntfs3g
     # Network
     - net-wireless/wpa_supplicant
-  kate: # TODO: solo per kate
-    - sys-kernel/linux-firmware
   x11:
     - x11-base/xorg-server
     # Apps
@@ -24,10 +30,10 @@ packages:
     - x11-apps/setxkbmap
     - x11-apps/xinput
     - x11-apps/xbacklight
+    # Clipboard
+    - x11-misc/xclip
+    - x11-misc/xsel
   net_tools:
     - net-misc/nmap
   lightdm:
     - x11-misc/lightdm
-  xmonad:
-    - x11-wm/xmonad
-    - x11-wm/xmonad-contrib

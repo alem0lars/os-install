@@ -8,6 +8,8 @@
 # - configure_system: to perform system-level configuration
 # - configure_user: to perform user-level configuration
 
+- include: setup_users.yml
 - include: setup_system.yml
 - include: setup_portage.yml
 - include: setup_x11.yml
+- include: setup_fonts.yml

@@ -36,9 +36,7 @@ fizzy qi -C lightdm -I lightdm -V kate
     update:  "yes"
   tags: install
 
-- name: Setup window manager (2/2 Configure)
-  template:
-    src:  "{{ window_manager }}/xmonad.hs.j2"
-    dest: ~/.xmonad/xmonad.hs
-  when: "{{ window_manager == 'xmonad' }}"
-  tags: configure_user
+fizzy cfg s -C awesomewm -U ssh:alem0lars/configs-awesomewm
+fizzy qi -C awesomewm -I awesomewm -V alem0lars
+
+- command: emerge x11-wm/awesome
