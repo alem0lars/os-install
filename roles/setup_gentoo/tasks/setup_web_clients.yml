@@ -1,0 +1,9 @@
+emerge "www-client/chromium" "www-plugins/google-talkplugin"
+Login to sync
+
+emerge "www-client/firefox"
+Login to sync (device name: alem0lars@kate)
+
+emerge "net-misc/httpie"
+
+emerge "www-plugins/adobe-flash"

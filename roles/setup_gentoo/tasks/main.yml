@@ -17,3 +17,7 @@
 
 If there are multiple video cards
 - include: setup_bumblebee.yml
+
+# Setup software
+- follow backup.md in configs_book
+- include: setup_web_clients.yml
