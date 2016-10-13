@@ -1,0 +1,8 @@
+emerge "www-client/chromium"
+emerge "www-plugins/chrome-binary-plugins" "www-plugins/google-talkplugin"
+
+emerge "www-client/firefox"
+
+emerge "net-misc/httpie"
+
+emerge "www-plugins/adobe-flash"
