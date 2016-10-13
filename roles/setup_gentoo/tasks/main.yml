@@ -16,3 +16,4 @@
 
 - follow backup.md in configs_book
 
+- include: setup_web_clients.yml
