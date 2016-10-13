@@ -9,6 +9,12 @@ kernel:
     default_entries:
       - option: EXPERT
         value:  True
+      # Enable MTRR
+      - option: MTRR
+        value:  True
+      - option: MTRR_SANITIZER
+        after:  MTRR
+        value:  True
       # Add support to the right init system.
       - option: GENTOO_LINUX_INIT_SCRIPT
         after:  GENTOO_LINUX
@@ -76,3 +82,4 @@ kernel:
         after:  DEBUG_KERNEL
         value:  True
         enabled: "{{ systemd }}"
+

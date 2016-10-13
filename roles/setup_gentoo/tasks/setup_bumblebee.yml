@@ -1,0 +1,4 @@
+- command: emerge x11-misc/bumblebee
+gpasswd -a alem0lars bumblebee
+systemctl enable bumblebeed
+systemctl restart bumblebeed
