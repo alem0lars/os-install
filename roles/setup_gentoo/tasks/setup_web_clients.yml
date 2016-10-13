@@ -2,6 +2,7 @@ emerge "www-client/chromium"
 emerge "www-plugins/chrome-binary-plugins" "www-plugins/google-talkplugin"
 
 emerge "www-client/firefox"
+Login to sync (device name: alem0lars@kate)
 
 emerge "net-misc/httpie"
 
