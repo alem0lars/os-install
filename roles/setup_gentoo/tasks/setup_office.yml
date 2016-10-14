@@ -1,0 +1,4 @@
+emerge "app-office/libreoffice"
+emerge "app-office/unoconv"
+
+TODO: Save configs with fizzy

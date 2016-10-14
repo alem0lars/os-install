@@ -1,0 +1,27 @@
+emerge "dev-vcs/git"
+emerge "dev-vcs/git-flow"
+emerge "dev-vcs/git-imerge"
+emerge "dev-vcs/git-crypt"
+emerge "dev-vcs/gitinspector"
+emerge "dev-vcs/tig"
+
+
+fizzy cfg s -C git -U ssh:alem0lars/configs-git
+fizzy qi -C git -I git-alem0lars -V alem0lars
+sudo fizzy qi -C git -I git-root -V alem0lars
+
+
+
+
+emerge "dev-vcs/mercurial"
+
+fizzy cfg s -C mercurial -U ssh:alem0lars/configs-mercurial
+fizzy qi -C mercurial -I mercurial-alem0lars -V alem0lars
+
+
+
+
+emerge "dev-vcs/subversion"
+
+fizzy cfg s -C svn -U ssh:alem0lars/configs-svn
+fizzy qi -C svn -I svn-alem0lars -V alem0lars

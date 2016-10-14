@@ -21,3 +21,8 @@ If there are multiple video cards
 # Setup software
 - follow backup.md in configs_book
 - include: setup_web_clients.yml
+- include: setup_virtualization.yml
+- include: setup_office.yml
+- include: setup_vcs.yml
+- include: setup_video.yml
+- include: setup_torrent.yml

@@ -82,4 +82,30 @@ kernel:
         after:  DEBUG_KERNEL
         value:  True
         enabled: "{{ systemd }}"
-
+      # KVM
+      - option: KVM
+        value:  True
+      - option: KVM_INTEL
+        after:  KVM
+        value:  True
+      - option: VHOST_NET
+        value:  True
+      - option: NET_CORE
+        value:  True
+      - option: TUN
+        after:  NET_CORE
+        value:  True
+      - option: IPV6
+        value:  True
+      - option: BRIDGE
+        value:  True
+      - option: BRIDGE_IGMP_SNOOPING
+        after:  BRIDGE
+        value:  True
+      - option: DEBUG_FS
+        value:  True
+      - option: EXT4_FS
+        value:  True
+      - option: EXT4_FS_SECURITY
+        after:  EXT4_FS
+        value:  True
