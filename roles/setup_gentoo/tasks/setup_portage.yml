@@ -47,4 +47,14 @@ fizzy qi -C portage -I portage -V kate
 
 - name: fare passi di alem0lars/configs_book/gentoo/configuration/software/portage.md
 
+Se si vuole abilitare crosscompiling allora:
+
+emerge crossdev
+
+Se si vuole abilitare distcc allora:
+
+emerge distcc
+systemctl enable distccd
+systemctl restart distccd
+
 - command: layman -o https://raw.github.com/alem0lars/apo/master/repositories.xml -f -a apo
