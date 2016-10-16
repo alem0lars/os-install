@@ -7,6 +7,7 @@ packages:
     # System
     - sys-apps/gentoo-functions
     - app-admin/sudo
+    - dev-util/debugedit
     # Shell
     - app-shells/zsh
     - x11-terms/rxvt-unicode

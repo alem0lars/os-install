@@ -2,3 +2,13 @@ emerge "app-office/libreoffice"
 emerge "app-office/unoconv"
 
 TODO: Save configs with fizzy
+
+
+
+emerge "dev-tex/texmfind" # Contains a program to search for the Gentoo package containing a tex package
+emerge "app-eselect/eselect-pdftex"
+emerge "app-text/texlive"
+
+eselect pdftex select 1
+
+texmf-update

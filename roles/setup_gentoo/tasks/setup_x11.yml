@@ -1,7 +1,7 @@
 ---
 
-fizzy cfg s -C xorg -U ssh:alem0lars/configs-xorg
-fizzy qi -C xorg -I xorg -V kate
+sudo fizzy cfg s -C xorg -U ssh:alem0lars/configs-xorg
+sudo fizzy qi -C xorg -I xorg -V kate
 
 - name: Install X11 software
   portage:
@@ -26,8 +26,8 @@ fizzy qi -C xorg -I xorg -V kate
                format(display_manager) }}"
   tags: service
 
-fizzy cfg s -C lightdm -U ssh:alem0lars/configs-lightdm
-fizzy qi -C lightdm -I lightdm -V kate
+sudo fizzy cfg s -C lightdm -U ssh:alem0lars/configs-lightdm
+sudo fizzy qi -C lightdm -I lightdm -V kate
 
 - name: Setup window manager (1/2 Install)
   portage:
@@ -36,7 +36,13 @@ fizzy qi -C lightdm -I lightdm -V kate
     update:  "yes"
   tags: install
 
-fizzy cfg s -C awesomewm -U ssh:alem0lars/configs-awesomewm
-fizzy qi -C awesomewm -I awesomewm -V alem0lars
+sudo fizzy cfg s -C awesomewm -U ssh:alem0lars/configs-awesomewm
+fizzy qi -C awesomewm -I awesomewm-alem0lars -V alem0lars
 
 - command: emerge x11-wm/awesome
+
+emerge arc-theme
+emerge arc-icon-theme
+
+sudo fizzy cfg s -C gtk -U ssh:alem0lars/configs-gtk
+sudo fizzy qi -C gtk -I gtk -V alem0lars

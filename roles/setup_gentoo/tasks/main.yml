@@ -18,11 +18,14 @@
 If there are multiple video cards
 - include: setup_bumblebee.yml
 
+- include: setup_alsa.yml
+- include: setup_pulseaudio.yml
+
 # Setup software
 - follow backup.md in configs_book
 - include: setup_web_clients.yml
 - include: setup_virtualization.yml
 - include: setup_office.yml
 - include: setup_vcs.yml
-- include: setup_video.yml
+- include: setup_video_players.yml
 - include: setup_torrent.yml

@@ -1,0 +1,2 @@
+sudo fizzy cfg s -C alsa -U ssh:alem0lars/configs-alsa
+sudo fizzy qi -C alsa -I alsa -V kate
