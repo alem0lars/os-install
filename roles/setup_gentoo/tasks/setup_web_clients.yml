@@ -7,3 +7,7 @@ Login to sync (device name: alem0lars@kate)
 emerge "net-misc/httpie"
 
 emerge "www-plugins/adobe-flash"
+
+emerge "www-client/uzbl"
+TODO: configs using fizzy (~/.local/share/uzbl and ~/.config/uzbl)
+      start from ones stored in kate

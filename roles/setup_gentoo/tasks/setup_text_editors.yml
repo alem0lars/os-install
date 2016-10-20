@@ -1,0 +1,10 @@
+sudo emerge "app-editors/vim"
+
+Set default editor:
+
+eselect editor list # Shows the available editors.
+eselect editor set 3 # Set the system editor
+source /etc/profile
+
+sudo fizzy cfg s -C vim -U ssh:alem0lars/configs-vim
+fizzy qi -C vim -I vim-alem0lars -V alem0lars
