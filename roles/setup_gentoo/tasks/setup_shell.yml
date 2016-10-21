@@ -1,0 +1,6 @@
+sudo emerge "app-shells/zsh"
+
+sudo chsh -s /bin/zsh alem0lars
+
+sudo fizzy cfg s -C zsh -U ssh:alem0lars/configs-zsh
+fizzy qi -C zsh -I zsh-alem0lars -V alem0lars

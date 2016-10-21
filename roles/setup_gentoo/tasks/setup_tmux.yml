@@ -1,0 +1,4 @@
+sudo emerge "app-misc/tmux"
+
+sudo fizzy cfg s -C tmux -U ssh:alem0lars/configs-tmux
+fizzy qi -C tmux -I tmux-alem0lars -V alem0lars

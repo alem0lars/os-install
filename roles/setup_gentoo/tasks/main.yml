@@ -21,7 +21,10 @@ If there are multiple video cards
 - include: setup_alsa.yml
 - include: setup_pulseaudio.yml
 
+- include: setup_chips.yml
+
 # Setup software
+- include: setup_shell.yml
 - follow backup.md in configs_book
 - include: setup_web_clients.yml
 - include: setup_virtualization.yml
