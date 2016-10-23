@@ -59,11 +59,20 @@ kernel:
       - option: IWLWIFI
         after:  WLAN
         value:  True
-        as_module: True
+        as_module: True # Otherwise it can't load firmware from filesystem (because it gets loaded too early).
       - option: IWLMVM
         after:  IWLWIFI
         value:  True
         as_module: True
+      - option: FB_NVIDIA
+        value: True
+      - option: FB_NVIDIA_I2C
+        after:  FB_NVIDIA
+        as_module: True # Otherwise it goes in kernel panic.
+        value:  True
+      - option: FB_NVIDIA_BACKLIGHT
+        after:  FB_NVIDIA
+        value:  True
       # FUSE
       - option: FUSE_FS
         value:  True
