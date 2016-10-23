@@ -1,12 +1,4 @@
 ---
-# Used tags:
-# - service: to enable and manage services
-# - profile: to setup the profile
-# - sync: to sync portage repositories
-# - repository: to setup repository
-# - install: to install packages
-# - configure_system: to perform system-level configuration
-# - configure_user: to perform user-level configuration
 
 - include: setup_users.yml
 - include: setup_dirs.yml
@@ -24,7 +16,8 @@ If there are multiple video cards
 - include: setup_chips.yml
 
 # Setup software
-- include: setup_shell.yml
+- include: setup_ssh
+- include: setup_shell
 - follow backup.md in configs_book
 - include: setup_web_clients.yml
 - include: setup_virtualization.yml

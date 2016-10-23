@@ -1,0 +1,6 @@
+emerge net-misc/sshpass
+
+sudo fizzy cfg s -C ssh -U ssh:alem0lars/configs-ssh
+fizzy qi -C ssh -I ssh-alem0lars -V alem0lars
+
+systemctl enable --user ssh-agent.service
