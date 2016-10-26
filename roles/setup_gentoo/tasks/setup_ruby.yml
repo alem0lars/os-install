@@ -1,0 +1,7 @@
+sudo emerge "dev-ruby/bundler"
+sudo emerge "dev-ruby/awesome_print"
+sudo emerge "dev-ruby/yard"
+sudo emerge "dev-ruby/pry"
+
+sudo fizzy cfg s -C ruby -U ssh:alem0lars/configs-ruby
+fizzy qi -C ruby -I ruby-alem0lars -V alem0lars

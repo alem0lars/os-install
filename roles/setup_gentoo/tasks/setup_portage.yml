@@ -59,6 +59,9 @@ emerge crossdev
 
 Installare le architetture aggiuntive volute:
 
-sudo crossdev -t mingw32
+sudo crossdev -t i686-w64-mingw32
+sudo crossdev -t armv5tel
 
 - command: layman -o https://raw.github.com/alem0lars/apo/master/repositories.xml -f -a apo
+
+- command: layman -a pentoo

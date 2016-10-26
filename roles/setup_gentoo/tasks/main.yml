@@ -1,27 +1,143 @@
 ---
 
-- include: setup_users.yml
-- include: setup_dirs.yml
-- include: setup_system.yml
-- include: setup_portage.yml
-- include: setup_x11.yml
-- include: setup_fonts.yml
+- include: setup_users
+- include: setup_dirs
+- include: setup_system
+- include: setup_portage
+- include: setup_x11
+- include: setup_fonts
 
 If there are multiple video cards
-- include: setup_bumblebee.yml
+- include: setup_bumblebee
 
-- include: setup_alsa.yml
-- include: setup_pulseaudio.yml
+- include: setup_alsa
+- include: setup_pulseaudio
 
-- include: setup_chips.yml
+- include: setup_chips
 
 # Setup software
+- include: setup_archive
 - include: setup_ssh
 - include: setup_shell
+- include: setup_tmux
+- include: setup_text_editors
 - follow backup.md in configs_book
-- include: setup_web_clients.yml
-- include: setup_virtualization.yml
-- include: setup_office.yml
-- include: setup_vcs.yml
-- include: setup_video_players.yml
-- include: setup_torrent.yml
+- include: setup_web_clients
+- include: setup_virtualization
+- include: setup_office
+- include: setup_vcs
+- include: setup_video_players
+- include: setup_torrent
+- include: setup_sysmon
+- include: setup_ruby
+# Password manager
+sudo emerge "app-admin/lastpass-cli"
+
+# Screencasts
+sudo emerge "app-misc/ttyrec"
+sudo emerge "app-misc/asciinema"
+
+# News
+sudo emerge "net-news/newsbeuter"
+sudo fizzy cfg s -C newsbeuter -U ssh:alem0lars/configs-newsbeuter
+fizzy qi -C newsbeuter -I newsbeuter-alem0lars -V alem0lars
+
+# Dev -> Regex tools
+sudo emerge "dev-util/txt2regex"
+
+# Dev -> R
+sudo emerge "dev-lang/R"
+
+# Dev -> Perl
+sudo emerge "app-admin/perl-cleaner"
+cpan
+
+# Signal processing
+sudo emerge "net-wireless/gnuradio"
+
+# Semantic Web
+sudo emerge "dev-util/protege"
+
+# Sec -> SQLmap
+sudo emerge "dev-db/sqlmap"
+
+# Sec -> pwd cracking
+sudo emerge "app-crypt/johntheripper"
+sudo emerge "app-crypt/hashcat"
+
+# Network tools
+sudo emerge "net-misc/ipcalc"
+sudo emerge "net-misc/bridge-utils"
+sudo emerge "www-client/httrack"
+sudo emerge "net-dns/bind-tools"
+sudo emerge "net-misc/socat"
+
+# Network analyzers
+sudo emerge "net-analyzer/tcpflow"
+sudo emerge "net-analyzer/tcpdump"
+sudo emerge "net-analyzer/mtr"
+sudo emerge "net-analyzer/p0f"
+sudo emerge "net-analyzer/tsung"
+sudo emerge "net-analyzer/nmap"
+sudo emerge "net-analyzer/speedtest-cli"
+sudo emerge "net-analyzer/wireshark"
+sudo gpasswd -a "alem0lars" "wireshark" # Replace with your username.
+
+# IRC
+sudo emerge "net-irc/weechat"
+sudo fizzy cfg s -C weechat -U ssh:alem0lars/configs-weechat
+fizzy qi -C weechat -I weechat-alem0lars -V alem0lars
+
+# Image viewers
+sudo emerge "media-gfx/sxiv"
+
+# Image Tools
+sudo emerge "media-libs/exiftool"
+sudo emerge "media-gfx/scrot"
+# Image Tools -> ImageOptim
+sudo emerge "app-arch/advancecomp"
+sudo emerge "app-arch/zopfli"
+sudo emerge "media-gfx/gifsicle"
+sudo emerge "media-gfx/jhead"
+sudo emerge "media-gfx/jpegoptim"
+sudo emerge "media-gfx/optipng"
+sudo emerge "media-gfx/pngcrush"
+sudo emerge "media-gfx/pngquant"
+
+# Image Editors
+sudo emerge "media-gfx/inkscape"
+# Image Editors -> Gimp
+sudo emerge "media-gfx/gimp"
+# Image Editors -> Gimp -> Plugins
+sudo emerge "media-plugins/gimp-gmic"
+sudo emerge "media-plugins/gimp-lqr"
+sudo emerge "media-plugins/gimp-lensfun"
+
+# Voice call
+sudo emerge "media-sound/mumble"
+
+# Benchmark
+sudo emerge "app-benchmarks/stress"
+
+# Commandline misc tools
+sudo emerge "sys-process/parallel"
+sudo emerge "app-misc/jq"
+
+# Dev -> JVM -> Java
+sudo emerge "virtual/jdk"
+sudo emerge "virtual/jre"
+sudo emerge "dev-java/javatoolkit"
+eselect java-vm set user 2
+sudo eselect java-vm set system 2
+# Dev -> JVM -> Scala
+sudo emerge "dev-lang/scala"
+
+# Dev -> Haskell
+sudo emerge "dev-lang/ghc"
+sudo emerge "dev-haskell/cabal-install"
+sudo emerge "app-emacs/ghc-mod"
+sudo fizzy cfg s -C haskell -U ssh:alem0lars/configs-haskell
+fizzy qi -C haskell -I haskell-alem0lars -V alem0lars
+
+# Filesharing
+sudo emerge "www-servers/pshs"

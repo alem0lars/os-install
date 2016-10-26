@@ -1,0 +1,2 @@
+sudo emerge "app-arch/deb2targz"
+sudo emerge "app-arch/rpm2targz"
