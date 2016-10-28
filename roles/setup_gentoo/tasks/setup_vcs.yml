@@ -6,6 +6,7 @@ emerge "dev-vcs/git-imerge"
 emerge "dev-vcs/git-crypt"
 emerge "dev-vcs/gitinspector"
 emerge "dev-vcs/tig"
+emerge "dev-vcs/hub"
 
 fizzy cfg s -C git -U ssh:alem0lars/configs-git
 fizzy qi -C git -I git-alem0lars -V alem0lars

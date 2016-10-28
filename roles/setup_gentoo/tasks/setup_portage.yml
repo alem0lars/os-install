@@ -1,5 +1,7 @@
 ---
 
+sudo emerge app-admin/repoman
+
 sudo fizzy cfg s -C portage -U ssh:alem0lars/configs-portage
 sudo fizzy qi -C portage -I portage -V kate
 

@@ -7,6 +7,10 @@
 - include: setup_x11
 - include: setup_fonts
 
+# Install linux miscellaneous configurations.
+sudo fizzy cfg s -C linux-misc -U ssh:alem0lars/configs-misc
+fizzy qi -C linux-misc -I linux-misc -V kate
+
 If there are multiple video cards
 - include: setup_bumblebee
 
@@ -50,7 +54,10 @@ sudo emerge "dev-lang/R"
 
 # Dev -> Perl
 sudo emerge "app-admin/perl-cleaner"
-cpan
+cpan # quando chiede il metodo da usare, scegliere `sudo`
+
+# Dev -> Misc
+sudo emerge "dev-util/source-highlight"
 
 # Signal processing
 sudo emerge "net-wireless/gnuradio"
@@ -64,6 +71,9 @@ sudo emerge "dev-db/sqlmap"
 # Sec -> pwd cracking
 sudo emerge "app-crypt/johntheripper"
 sudo emerge "app-crypt/hashcat"
+
+# Sec -> File formats
+sudo emerge "dev-util/elfkickers"
 
 # Network tools
 sudo emerge "net-misc/ipcalc"
@@ -123,6 +133,10 @@ sudo emerge "app-benchmarks/stress"
 sudo emerge "sys-process/parallel"
 sudo emerge "app-misc/jq"
 
+# Text-formatting/Diagram tools
+sudo emerge "app-misc/figlet"
+sudo emerge "media-gfx/plantuml"
+
 # Dev -> JVM -> Java
 sudo emerge "virtual/jdk"
 sudo emerge "virtual/jre"
@@ -139,5 +153,35 @@ sudo emerge "app-emacs/ghc-mod"
 sudo fizzy cfg s -C haskell -U ssh:alem0lars/configs-haskell
 fizzy qi -C haskell -I haskell-alem0lars -V alem0lars
 
+# Dev -> Go
+sudo emerge "dev-lang/go"
+# TODO: Configure GOROOT and GOPATH in shell
+
+# Dev -> C -> REPL
+emerge "sci-physics/root"
+# Dev -> C -> Build tools
+emerge "dev-util/cmake"
+# Dev -> C -> Misc tools
+emerge "dev-util/strace"
+emerge "dev-util/splint"
+emerge "dev-util/uncrustify"
+emerge "dev-util/valgrind"
+emerge "dev-util/complexity"
+emerge "dev-util/global"
+# Dev -> C -> Libraries
+emerge "dev-util/cunit"
+
+# Dev -> NodeJS
+emerge "net-libs/nodejs"
+
 # Filesharing
 sudo emerge "www-servers/pshs"
+
+# Filesystem
+sudo emerge "app-misc/ranger"
+sudo fizzy cfg s -C ranger -U ssh:alem0lars/configs-ranger
+fizzy qi -C ranger -I ranger-alem0lars -V alem0lars-linux
+
+# Electronics
+sudo emerge "sci-electronics/quartus-prime-lite"
+sudo emerge "sci-electronics/eagle"

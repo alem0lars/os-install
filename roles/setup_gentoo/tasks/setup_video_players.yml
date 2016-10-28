@@ -4,3 +4,5 @@ emerge "media-video/mplayer"
 
 Watch internet videos:
 emerge "net-misc/livestreamer"
+
+emerge "media-video/media-info"
