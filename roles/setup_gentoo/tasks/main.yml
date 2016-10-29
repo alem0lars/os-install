@@ -37,6 +37,9 @@ If there are multiple video cards
 # Password manager
 sudo emerge "app-admin/lastpass-cli"
 
+# Docs viewers
+sudo emerge "app-text/zathura"
+
 # Screencasts
 sudo emerge "app-misc/ttyrec"
 sudo emerge "app-misc/asciinema"
