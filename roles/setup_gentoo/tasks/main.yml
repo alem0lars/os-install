@@ -135,6 +135,7 @@ sudo emerge "app-benchmarks/stress"
 # Commandline misc tools
 sudo emerge "sys-process/parallel"
 sudo emerge "app-misc/jq"
+sudo emerge "app-misc/fzf"
 
 # Text-formatting/Diagram tools
 sudo emerge "app-misc/figlet"
