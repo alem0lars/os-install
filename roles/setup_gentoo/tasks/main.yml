@@ -54,6 +54,8 @@ sudo emerge "app-admin/lastpass-cli"
 
 # Docs viewers
 sudo emerge "app-text/zathura"
+sudo fizzy cfg s -C zathura -U ssh:alem0lars/configs-zathura
+sudo fizzy qi -C zathura -I zathura -V kate
 
 # Screencasts
 sudo emerge "app-misc/ttyrec"
