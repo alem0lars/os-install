@@ -34,6 +34,21 @@ If there are multiple video cards
 - include: setup_torrent
 - include: setup_sysmon
 - include: setup_ruby
+
+# Virtualization -> VirtualBox
+emerge "sys-apps/usermode-utilities" "net-misc/bridge-utils"
+emerge "app-emulation/virtualbox"
+emerge "app-emulation/virtualbox-modules"
+gpasswd -a alem0lars vboxusers
+VBoxManage setproperty machinefolder /vm/virtualbox
+# <- import the virtualbox virtual machines
+# Virtualization -> Vagrant
+emerge app-emulation/vagrant
+# Virtualization -> QEmu
+emerge app-emulation/qemu
+gpasswd -a alem0lars kvm
+udevadm trigger -c add /dev/kvm
+
 # Password manager
 sudo emerge "app-admin/lastpass-cli"
 
@@ -182,6 +197,7 @@ emerge "net-libs/nodejs"
 sudo emerge "www-servers/pshs"
 
 # Filesystem
+sudo emerge "app-misc/tmsu"
 sudo emerge "app-misc/ranger"
 sudo fizzy cfg s -C ranger -U ssh:alem0lars/configs-ranger
 fizzy qi -C ranger -I ranger-alem0lars -V alem0lars-linux
