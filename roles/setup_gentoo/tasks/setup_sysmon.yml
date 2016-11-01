@@ -1,5 +1,6 @@
-sudo emerge sys-process/htop
-sudo emerge sys-apps/dstat
-sudo emerge net-analyzer/nethogs
-sudo emerge app-admin/pydf
-sudo emerge app-admin/lnav
+sudo emerge "sys-process/htop"
+sudo emerge "sys-apps/dstat"
+sudo emerge "net-analyzer/nethogs"
+sudo emerge "app-admin/pydf"
+sudo emerge "app-admin/lnav"
+sudo emerge "sys-power/powertop"

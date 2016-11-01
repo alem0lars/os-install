@@ -1,7 +1,14 @@
+sudo emerge "dev-lang/ruby"
+
+sudo eselect ruby set ruby23
+
 sudo emerge "dev-ruby/bundler"
 sudo emerge "dev-ruby/awesome_print"
 sudo emerge "dev-ruby/yard"
 sudo emerge "dev-ruby/pry"
+sudo emerge "dev-ruby/thor"
+
+sudo gem install "irbtools-more"
 
 sudo fizzy cfg s -C ruby -U ssh:alem0lars/configs-ruby
-fizzy qi -C ruby -I ruby-alem0lars -V alem0lars
+sudo fizzy qi -C ruby -I ruby -V kate

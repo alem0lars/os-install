@@ -23,9 +23,12 @@ If there are multiple video cards
 - include: setup_archive
 - include: setup_ssh
 - include: setup_shell
-- include: setup_tmux
+- include: setup_terminal_multiplexer
 - include: setup_text_editors
-- follow backup.md in configs_book
+
+# Backup
+sudo emerge "app-backup/attic"
+
 - include: setup_web_clients
 - include: setup_virtualization
 - include: setup_office
@@ -34,6 +37,9 @@ If there are multiple video cards
 - include: setup_torrent
 - include: setup_sysmon
 - include: setup_ruby
+
+# Dev -> Python
+sudo emerge "app-admin/python-updater"
 
 # Virtualization -> VirtualBox
 emerge "sys-apps/usermode-utilities" "net-misc/bridge-utils"
@@ -53,7 +59,7 @@ udevadm trigger -c add /dev/kvm
 sudo emerge "app-admin/lastpass-cli"
 
 # Docs viewers
-sudo emerge "app-text/zathura"
+sudo emerge "app-text/zathura-meta"
 sudo fizzy cfg s -C zathura -U ssh:alem0lars/configs-zathura
 sudo fizzy qi -C zathura -I zathura -V kate
 
@@ -66,11 +72,21 @@ sudo emerge "net-news/newsbeuter"
 sudo fizzy cfg s -C newsbeuter -U ssh:alem0lars/configs-newsbeuter
 fizzy qi -C newsbeuter -I newsbeuter-alem0lars -V alem0lars
 
+# Dev -> Docs
+sudo emerge "dev-util/dasht"
+mkdir -p ~/.local/share/dasht/docsets
+# install docsets
+# list of official docsets is available here: https://github.com/Kapeli/feeds
+dasht-docsets-install -f android ansible apache_http_server arduino bash boost bootstrap_4 cmake css clojure common_lisp compass django docker elasticsearch elixir emmet erlang express expressionengine net_framework go groovy grunt gulp html haml handlebars haskell jade javafx javascript java_se8 jekyll jinja joomla julia latex less lodash lua_5.3 markdown mongodb mongoose nginx nodejs numpy php perl python_2 python_3 racket react redis ruby_2 sqlite svg scypy pandas rust
+
 # Dev -> Regex tools
 sudo emerge "dev-util/txt2regex"
 
 # Dev -> R
 sudo emerge "dev-lang/R"
+
+# Dev -> NASM
+sudo emerge "dev-lang/nasm"
 
 # Dev -> Perl
 sudo emerge "app-admin/perl-cleaner"
@@ -94,6 +110,9 @@ sudo emerge "app-crypt/hashcat"
 
 # Sec -> File formats
 sudo emerge "dev-util/elfkickers"
+
+# Sec -> Carving
+sudo emerge "app-forensics/scalpel"
 
 # Network tools
 sudo emerge "net-misc/ipcalc"
@@ -143,6 +162,9 @@ sudo emerge "media-plugins/gimp-gmic"
 sudo emerge "media-plugins/gimp-lqr"
 sudo emerge "media-plugins/gimp-lensfun"
 
+# Dict
+sudo emerge "app-i18n/translate-shell"
+
 # Voice call
 sudo emerge "media-sound/mumble"
 
@@ -151,12 +173,17 @@ sudo emerge "app-benchmarks/stress"
 
 # Commandline misc tools
 sudo emerge "sys-process/parallel"
-sudo emerge "app-misc/jq"
 sudo emerge "app-misc/fzf"
 
 # Text-formatting/Diagram tools
 sudo emerge "app-misc/figlet"
 sudo emerge "media-gfx/plantuml"
+
+# Dev -> JSON
+sudo emerge "app-misc/jq"
+
+# Dev -> R
+sudo emerge "dev-lang/R"
 
 # Dev -> JVM -> Java
 sudo emerge "virtual/jdk"
@@ -195,11 +222,26 @@ emerge "dev-util/cunit"
 # Dev -> NodeJS
 emerge "net-libs/nodejs"
 
-# Filesharing
+# Dev -> Rust
+emerge "dev-lang/rust"
+emerge "dev-util/cargo"
+emerge "dev-util/rust-sources"
+emerge "dev-util/racer"
+
+# Dev -> Misc
+emerge "dev-util/cloc"
+
+# Bookmarks
+emerge "app-misc/buku"
+
+# Files Sharing
 sudo emerge "www-servers/pshs"
 
-# Filesystem
+# Files Management
 sudo emerge "app-misc/tmsu"
+sudo emerge "app-text/tree"
+sudo emerge "app-misc/watchman"
+sudo emerge "sys-fs/ncdu"
 sudo emerge "app-misc/ranger"
 sudo fizzy cfg s -C ranger -U ssh:alem0lars/configs-ranger
 fizzy qi -C ranger -I ranger-alem0lars -V alem0lars-linux
@@ -207,3 +249,6 @@ fizzy qi -C ranger -I ranger-alem0lars -V alem0lars-linux
 # Electronics
 sudo emerge "sci-electronics/quartus-prime-lite"
 sudo emerge "sci-electronics/eagle"
+
+# Email
+sudo emerge "mail-client/mutt"
