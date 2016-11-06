@@ -1,4 +1,4 @@
 Install chips:
 1. Clone repo
-2. Run `./setup.sh`
+2. Run `sudo ./setup -c gentoo,linux`
 3. Remove cloned repo

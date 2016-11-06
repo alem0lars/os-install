@@ -11,4 +11,4 @@ sudo emerge "dev-ruby/thor"
 sudo gem install "irbtools-more"
 
 sudo fizzy cfg s -C ruby -U ssh:alem0lars/configs-ruby
-sudo fizzy qi -C ruby -I ruby -V kate
+fizzy qi -C ruby -I ruby-alem0lars -V kate

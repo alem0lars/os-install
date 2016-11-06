@@ -50,7 +50,36 @@ kernel:
         after:  EFI
         value:  True
         enabled: "{{ boot.uefi }}"
+      # HID
+      - option: UHID
+        after:  HID
+        value:  True
+      - option: HID_BATTERY_STRENGTH
+        after:  HID
+        value:  True
       # Device Drivers
+      - option: UIO
+        value:  True
+      # Device Drivers - SCSI
+      - option: CHR_DEV_ST
+        value:  True
+      - option: SCSI_LOWLEVEL
+        value:  True
+      - option: SCSI_DH
+        value:  True
+      - option: SCSI_LOWLEVEL_PCMCIA
+        value:  True
+      # Device Drivers - MMC
+      - option: MMC
+        value:  True
+      # Device Drivers - USB
+      - option: USB_XHCI_HCD
+        after:  USB
+        value:  True
+      - option: USB_UAS
+        after:  USB
+        value:  True
+      # Device Drivers - Net
       - option: NET_VENDOR_INTEL
         value:  True
       - option: E1000E
@@ -64,15 +93,6 @@ kernel:
         after:  IWLWIFI
         value:  True
         as_module: True
-      - option: FB_NVIDIA
-        value: True
-      - option: FB_NVIDIA_I2C
-        after:  FB_NVIDIA
-        as_module: True # Otherwise it goes in kernel panic.
-        value:  True
-      - option: FB_NVIDIA_BACKLIGHT
-        after:  FB_NVIDIA
-        value:  True
       # FUSE
       - option: FUSE_FS
         value:  True
@@ -117,4 +137,8 @@ kernel:
         value:  True
       - option: EXT4_FS_SECURITY
         after:  EXT4_FS
+        value:  True
+      # KATE-specific
+      - option: HID_LENOVO
+        after:  HID
         value:  True

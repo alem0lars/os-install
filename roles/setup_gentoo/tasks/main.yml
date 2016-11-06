@@ -1,11 +1,47 @@
 ---
 
 - include: setup_users
-- include: setup_dirs
+
+# Setup dirs:
+# FARE:
+# main [
+#   { path: "/vm" },
+#   { path: "/vm/virtualbox" },
+#   { path: "/data/backup" },
+#   { path: "/data/tmp" },
+#   { path: "/data/documents" },
+#   { path: "/data/graphics" },
+#   { path: "/data/graphics/wallpapers" },
+#   { path: "/data/audio" },
+#   { path: "/data/audio/music" },
+#   { path: "/data/video" },
+#   { path: "/data/video/movies" },
+#   { path: "/data/develop" },
+#   { path: "/data/develop/projects/personal" },
+#   { path: "/data/develop/projects/work" },
+#   { path: "/data/develop/projects/work/yoroi" },
+#   { path: "/data/develop/projects/university" },
+#   { path: "/data/develop/projects/university/unibo" },
+#   { path: "/data/develop/playground" },
+#   { path: "/data/downloads" },
+#   { path: "/data/shared" },
+#   { path: "/data/shared/unsafe" }
+# ].map do |h|
+#   { owner: :root,
+#     group: :users,
+#     perms: "770",
+#     allow: %i(alem0lars)
+#   }.merge(h)
+# end
+
 - include: setup_system
+  sudo gpasswd -a alem0lars plugdev
 - include: setup_portage
 - include: setup_x11
 - include: setup_fonts
+
+# Hard-disk management.
+sudo emerge "sys-apps/hdparm"
 
 # Install linux miscellaneous configurations.
 sudo fizzy cfg s -C linux-misc -U ssh:alem0lars/configs-misc
@@ -38,8 +74,40 @@ sudo emerge "app-backup/attic"
 - include: setup_sysmon
 - include: setup_ruby
 
+# Clipboard
+sudo emerge "x11-apps/copyq"
+sudo fizzy cfg s -C copyq -U ssh:alem0lars/configs-copyq
+fizzy qi -C copyq -I copyq-alem0lars -V alem0lars
+
+# Commandline misc tools
+sudo emerge "sys-process/parallel"
+sudo emerge "app-misc/fzf"
+sudo emerge "app-shells/fasd"
+
+# Dev -> Android
+emerge "dev-util/android-sdk-update-manager"
+emerge "dev-util/android-tools"
+gpasswd -a "alem0lars" "android" # Replace with your user.
+
+# Dev -> Misc -> ctags
+sudo emerge "dev-util/ctags"
+sudo emerge "app-eselect/eselect-ctags"
+sudo eselect etags set "exuberant-ctags"
+
 # Dev -> Python
 sudo emerge "app-admin/python-updater"
+# Dev -> Python -> REPL
+sudo emerge "dev-python/ipython"
+# Dev -> Python -> VirtualEnv
+sudo emerge "dev-python/virtualenv"
+# Dev -> Python -> SciPy
+sudo emerge "dev-python/scipy"
+sudo emerge "dev-python/numpy"
+sudo emerge "dev-python/sympy"
+sudo emerge "dev-python/matplotlib"
+sudo emerge "dev-python/pandas"
+# For additional functionality in pandas.
+sudo emerge "dev-python/google-api-python-client" "dev-python/pymysql" "dev-python/python-gflags" "dev-python/psycopg:2" "dev-python/statsmodels" "dev-python/sqlalchemy"
 
 # Virtualization -> VirtualBox
 emerge "sys-apps/usermode-utilities" "net-misc/bridge-utils"
@@ -63,6 +131,12 @@ sudo emerge "app-text/zathura-meta"
 sudo fizzy cfg s -C zathura -U ssh:alem0lars/configs-zathura
 sudo fizzy qi -C zathura -I zathura -V kate
 
+# Docs
+sudo emerge "app-doc/phrack-all"
+sudo emerge "app-doc/tldp-howto"
+sudo emerge "app-doc/pms"
+sudo emerge "app-portage/eclass-manpages"
+
 # Screencasts
 sudo emerge "app-misc/ttyrec"
 sudo emerge "app-misc/asciinema"
@@ -77,13 +151,16 @@ sudo emerge "dev-util/dasht"
 mkdir -p ~/.local/share/dasht/docsets
 # install docsets
 # list of official docsets is available here: https://github.com/Kapeli/feeds
-dasht-docsets-install -f android ansible apache_http_server arduino bash boost bootstrap_4 cmake css clojure common_lisp compass django docker elasticsearch elixir emmet erlang express expressionengine net_framework go groovy grunt gulp html haml handlebars haskell jade javafx javascript java_se8 jekyll jinja joomla julia latex less lodash lua_5.3 markdown mongodb mongoose nginx nodejs numpy php perl python_2 python_3 racket react redis ruby_2 sqlite svg scypy pandas rust
+dasht-docsets-install -f android ansible apache_http_server arduino bash boost bootstrap_4 cmake css clojure common_lisp compass django docker elasticsearch elixir emmet erlang express expressionengine net_framework go groovy grunt gulp html haml handlebars haskell jade javafx javascript java_se8 jekyll jinja joomla julia latex less lodash lua_5.3 markdown mongodb mongoose nginx nodejs numpy php perl python_2 python_3 racket react redis ruby_2 sqlite svg scipy pandas rust
 
 # Dev -> Regex tools
 sudo emerge "dev-util/txt2regex"
 
 # Dev -> R
 sudo emerge "dev-lang/R"
+
+# Dev -> Julia
+sudo emerge "dev-lang/julia"
 
 # Dev -> NASM
 sudo emerge "dev-lang/nasm"
@@ -113,6 +190,10 @@ sudo emerge "dev-util/elfkickers"
 
 # Sec -> Carving
 sudo emerge "app-forensics/scalpel"
+
+# Sec -> Fuzzers
+sudo emerge "app-forensics/afl"
+sudo emerge "app-forensics/radamsa"
 
 # Network tools
 sudo emerge "net-misc/ipcalc"
@@ -153,7 +234,7 @@ sudo emerge "media-gfx/optipng"
 sudo emerge "media-gfx/pngcrush"
 sudo emerge "media-gfx/pngquant"
 
-# Image Editors
+# Image Editors -> Inkscape
 sudo emerge "media-gfx/inkscape"
 # Image Editors -> Gimp
 sudo emerge "media-gfx/gimp"
@@ -171,13 +252,10 @@ sudo emerge "media-sound/mumble"
 # Benchmark
 sudo emerge "app-benchmarks/stress"
 
-# Commandline misc tools
-sudo emerge "sys-process/parallel"
-sudo emerge "app-misc/fzf"
-
 # Text-formatting/Diagram tools
 sudo emerge "app-misc/figlet"
 sudo emerge "media-gfx/plantuml"
+sudo emerge "media-gfx/graphviz"
 
 # Dev -> JSON
 sudo emerge "app-misc/jq"
@@ -230,6 +308,12 @@ emerge "dev-util/racer"
 
 # Dev -> Misc
 emerge "dev-util/cloc"
+emerge "app-misc/colordiff"
+emerge "sys-apps/the_silver_searcher"
+
+# Debugging
+emerge "sys-devel/gdb"
+emerge "dev-util/radare2"
 
 # Bookmarks
 emerge "app-misc/buku"
@@ -252,3 +336,17 @@ sudo emerge "sci-electronics/eagle"
 
 # Email
 sudo emerge "mail-client/mutt"
+
+# FTP
+sudo emerge "net-ftp/yafc"
+
+# Cups
+sudo emerge "net-print/cups"
+sudo gpasswd -a alem0lars lp
+sudo gpasswd -a alem0lars lpadmin
+sudo systemctl enable cups
+sudo systemctl restart cups
+
+# [OPTIONAL] Nitrokey
+sudo emerge "app-misc/nitrokey-app"
+
