@@ -10,6 +10,7 @@
 #   { path: "/data/backup" },
 #   { path: "/data/tmp" },
 #   { path: "/data/documents" },
+#   { path: "/data/documents/ebooks" },
 #   { path: "/data/graphics" },
 #   { path: "/data/graphics/wallpapers" },
 #   { path: "/data/audio" },
@@ -75,6 +76,7 @@ sudo emerge "app-backup/attic"
 - include: setup_ruby
 
 # Clipboard
+sudo emerge "x11-misc/unclutter"
 sudo emerge "x11-apps/copyq"
 sudo fizzy cfg s -C copyq -U ssh:alem0lars/configs-copyq
 fizzy qi -C copyq -I copyq-alem0lars -V alem0lars
@@ -243,6 +245,10 @@ sudo emerge "media-plugins/gimp-gmic"
 sudo emerge "media-plugins/gimp-lqr"
 sudo emerge "media-plugins/gimp-lensfun"
 
+# Audio
+emerge "media-sound/cmus" "media-sound/cmusfm"
+emerge "media-sound/beets"
+
 # Dict
 sudo emerge "app-i18n/translate-shell"
 
@@ -321,6 +327,15 @@ emerge "app-misc/buku"
 # Files Sharing
 sudo emerge "www-servers/pshs"
 
+# Files sync
+sudo emerge "net-misc/drive"
+sudo emerge "net-misc/megatools"
+
+# GTD
+sudo emerge "app-misc/task"
+sudo fizzy cfg s -C taskwarrior -U ssh:alem0lars/configs-taskwarrior
+fizzy qi -C taskwarrior -I taskwarrior-alem0lars -V alem0lars-linux
+
 # Files Management
 sudo emerge "app-misc/tmsu"
 sudo emerge "app-text/tree"
@@ -349,4 +364,3 @@ sudo systemctl restart cups
 
 # [OPTIONAL] Nitrokey
 sudo emerge "app-misc/nitrokey-app"
-

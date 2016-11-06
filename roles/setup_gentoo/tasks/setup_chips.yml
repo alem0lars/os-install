@@ -1,4 +1,8 @@
-Install chips:
+# Install chips:
 1. Clone repo
 2. Run `sudo ./setup -c gentoo,linux`
 3. Remove cloned repo
+
+# Configure chips:
+sudo fizzy cfg s -C chips -U ssh:alem0lars/configs-chips
+fizzy qi -C chips -I chips-alem0lars -V generic
