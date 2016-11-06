@@ -222,6 +222,8 @@ fizzy qi -C weechat -I weechat-alem0lars -V alem0lars
 
 # Image viewers
 sudo emerge "media-gfx/sxiv"
+sudo fizzy cfg s -C sxiv -U ssh:alem0lars/configs-sxiv
+fizzy qi -C sxiv -I sxiv-alem0lars -V kate
 
 # Image Tools
 sudo emerge "media-libs/exiftool"
@@ -338,6 +340,7 @@ fizzy qi -C taskwarrior -I taskwarrior-alem0lars -V alem0lars-linux
 
 # Files Management
 sudo emerge "app-misc/tmsu"
+tmsu init --database "~/.tmsu/default.db"
 sudo emerge "app-text/tree"
 sudo emerge "app-misc/watchman"
 sudo emerge "sys-fs/ncdu"
