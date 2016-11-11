@@ -38,10 +38,16 @@ sudo fizzy qi -C lightdm -I lightdm -V kate
     update:  "yes"
   tags: install
 
+# alternative a: If using awesomewm
+emerge x11-wm/awesome
 sudo fizzy cfg s -C awesomewm -U ssh:alem0lars/configs-awesomewm
 fizzy qi -C awesomewm -I awesomewm-alem0lars -V alem0lars
 
-- command: emerge x11-wm/awesome
+# alternative b: If using xmonad
+emerge x11-wm/xmonad
+emerge x11-wm/xmonad-contrib
+sudo fizzy cfg s -C xmonad -U ssh:alem0lars/configs-xmonad
+fizzy qi -C xmonad -I xmonad-alem0lars -V kate
 
 emerge arc-theme
 emerge arc-icon-theme

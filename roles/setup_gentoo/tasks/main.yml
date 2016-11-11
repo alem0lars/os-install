@@ -108,6 +108,7 @@ sudo emerge "dev-python/numpy"
 sudo emerge "dev-python/sympy"
 sudo emerge "dev-python/matplotlib"
 sudo emerge "dev-python/pandas"
+sudo emerge "dev-python/twisted"
 # For additional functionality in pandas.
 sudo emerge "dev-python/google-api-python-client" "dev-python/pymysql" "dev-python/python-gflags" "dev-python/psycopg:2" "dev-python/statsmodels" "dev-python/sqlalchemy"
 
@@ -249,7 +250,11 @@ sudo emerge "media-plugins/gimp-lensfun"
 
 # Audio
 emerge "media-sound/cmus" "media-sound/cmusfm"
+sudo fizzy cfg s -C cmus -U ssh:alem0lars/configs-cmus
+fizzy qi -C cmus -I cmus-alem0lars -V kate
 emerge "media-sound/beets"
+sudo fizzy cfg s -C beets -U ssh:alem0lars/configs-beets
+fizzy qi -C beets -I beets-alem0lars -V kate
 
 # Dict
 sudo emerge "app-i18n/translate-shell"
@@ -340,7 +345,7 @@ fizzy qi -C taskwarrior -I taskwarrior-alem0lars -V alem0lars-linux
 
 # Files Management
 sudo emerge "app-misc/tmsu"
-tmsu init --database "~/.tmsu/default.db"
+cd ~ && tmsu init && mv ~/.tmsu/db ~/.tmsu/default.db
 sudo emerge "app-text/tree"
 sudo emerge "app-misc/watchman"
 sudo emerge "sys-fs/ncdu"

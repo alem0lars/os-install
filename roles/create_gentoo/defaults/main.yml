@@ -60,6 +60,15 @@ kernel:
       # Device Drivers
       - option: UIO
         value:  True
+      # Device Drivers - Audio
+      - option: SND_HDA_INTEL
+        value: True
+      - option: SND_HDA_GENERIC
+        after: SND_HDA_INTEL
+        value: True
+      - option: SND_HDA_RECONFIG
+        after: SND_HDA_INTEL
+        value: True
       # Device Drivers - SCSI
       - option: CHR_DEV_ST
         value:  True
