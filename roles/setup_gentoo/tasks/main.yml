@@ -361,7 +361,7 @@ sudo emerge "sci-electronics/eagle"
 sudo emerge "mail-client/mutt"
 
 # FTP
-sudo emerge "net-ftp/yafc"
+sudo emerge "net-ftp/lftp"
 
 # Cups
 sudo emerge "net-print/cups"
