@@ -147,6 +147,112 @@ kernel:
       - option: EXT4_FS_SECURITY
         after:  EXT4_FS
         value:  True
+      # CGroups
+      - option: CGROUP_DEVICE
+        after:  CGROUP
+        value:  True
+      - option: CGROUP_PIDS
+        after:  CGROUP
+        value:  True
+      - option: MEMCG
+        after:  CGROUP
+        value:  True
+      - option: MEMCG_SWAP
+        after:  MEMCG
+        value:  True
+      - option: MEMCG_SWAP_ENABLED
+        after:  MEMCG_SWAP
+        value:  True
+      - option: MEMCG_KMEM
+        after:  MEMCG
+        value:  True
+      - option: CGROUP_HUGETLB
+        after:  CGROUP
+        value:  True
+      - option: CGROUP_PERF
+        after:  CGROUP
+        value:  True
+      - option: CGROUP_SCHED
+        after:  CGROUP
+        value:  True
+      - option: FAIR_GROUP_SCHED
+        after:  CGROUP_SCHED
+        value:  True
+      - option: CFS_BANDWIDTH
+        after:  FAIR_GROUP_SCHED
+        value:  True
+      - option: RT_GROUP_SCHED
+        after:  CGROUP_SCHED
+        value:  True
+      - option: BLK_CGROUP
+        after:  CGROUP
+        value:  True
+      - option: NET_CLS_CGROUP
+        after:  CGROUP
+        value:  True
+      - option: CGROUP_NET_PRIO
+        after:  CGROUP
+        value:  True
+      # Namespaces
+      - option: UTS_NS
+        after:  NAMESPACES
+        value:  True
+      - option: USER_NS
+        after:  NAMESPACES
+        value:  True
+      - option: PID_NS
+        after:  NAMESPACES
+        value:  True
+      # Netfilter
+      - option: NETFILTER
+        value:  True
+      - option: NETFILTER_ADVANCED
+        after:  NETFILTER
+        value:  True
+      - option: BRIDGE_NETFILTER
+        after:  NETFILTER_ADVANCED
+        value:  True
+      - option: NF_CONNTRACK_MARK
+        after:  NETFILTER
+        value:  True
+      - option: NETFILTER_XT_MATCH_ADDRTYPE
+        after:  NETFILTER
+        value:  True
+      - option: NETFILTER_XT_MATCH_CONNTRACK
+        after:  NETFILTER
+        value:  True
+      - option: NF_NAT_IPV4
+        after:  NETFILTER
+        value:  True
+      - option: NF_NAT_MASQUERADE_IPV4
+        after:  NETFILTER
+        value:  True
+      - option: IP_NF_IPTABLES
+        after:  NETFILTER
+        value:  True
+      - option: IP_NF_NAT
+        after:  NETFILTER
+        value:  True
+      - option: IP_NF_TARGET_MASQUERADE
+        after:  NETFILTER
+        value:  True
+      - option: IP_NF_TARGET_NETMAP
+        after:  NETFILTER
+        value:  True
+      - option: IP_NF_TARGET_REDIRECT
+        after:  NETFILTER
+        value:  True
+      # Filesystem
+      - option: OVERLAY_FS
+        value:  True
+      - option: HUGETLBFS
+        value:  True
+      # Security
+      - option: PERSISTENT_KEYRINGS
+        value: True
+      - option: ENCRYPTED_KEYS
+        value: True
+        as_module: True
       # KATE-specific
       - option: HID_LENOVO
         after:  HID

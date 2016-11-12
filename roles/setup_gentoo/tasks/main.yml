@@ -255,6 +255,8 @@ fizzy qi -C cmus -I cmus-alem0lars -V kate
 emerge "media-sound/beets"
 sudo fizzy cfg s -C beets -U ssh:alem0lars/configs-beets
 fizzy qi -C beets -I beets-alem0lars -V kate
+# Now import your library:
+beet import <path>
 
 # Dict
 sudo emerge "app-i18n/translate-shell"
@@ -269,6 +271,12 @@ sudo emerge "app-benchmarks/stress"
 sudo emerge "app-misc/figlet"
 sudo emerge "media-gfx/plantuml"
 sudo emerge "media-gfx/graphviz"
+
+# Dev -> Docker
+sudo emerge "app-emulation/docker"
+sudo systemctl enable docker
+sudo systemctl restart docker
+sudo gpasswd -a alem0lars docker
 
 # Dev -> JSON
 sudo emerge "app-misc/jq"
