@@ -60,6 +60,8 @@ kernel:
       # Device Drivers
       - option: UIO
         value:  True
+      - option: DM_THIN_PROVISIONING
+        value:  True
       # Device Drivers - Audio
       - option: SND_HDA_INTEL
         value: True
@@ -89,6 +91,8 @@ kernel:
         after:  USB
         value:  True
       # Device Drivers - Net
+      - option: VETH
+        value:  True
       - option: NET_VENDOR_INTEL
         value:  True
       - option: E1000E

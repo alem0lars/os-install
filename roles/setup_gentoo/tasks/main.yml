@@ -63,6 +63,10 @@ If there are multiple video cards
 - include: setup_terminal_multiplexer
 - include: setup_text_editors
 
+# File system support
+sudo emerge "sys-fs/exfat-utils"
+sudo emerge "sys-fs/fuse-exfat"
+
 # Backup
 sudo emerge "app-backup/attic"
 
@@ -73,6 +77,8 @@ sudo emerge "app-backup/attic"
 - include: setup_video_players
 - include: setup_torrent
 - include: setup_sysmon
+emerge iotop
+emerge smartmontools
 - include: setup_ruby
 
 # Clipboard
@@ -109,6 +115,8 @@ sudo emerge "dev-python/sympy"
 sudo emerge "dev-python/matplotlib"
 sudo emerge "dev-python/pandas"
 sudo emerge "dev-python/twisted"
+# Dev -> Python -> Useful libs
+sudo emerge "dev-python/python-magic"
 # For additional functionality in pandas.
 sudo emerge "dev-python/google-api-python-client" "dev-python/pymysql" "dev-python/python-gflags" "dev-python/psycopg:2" "dev-python/statsmodels" "dev-python/sqlalchemy"
 
@@ -218,8 +226,15 @@ sudo gpasswd -a "alem0lars" "wireshark" # Replace with your username.
 
 # IRC
 sudo emerge "net-irc/weechat"
+sudo emerge "dev-python/websocket-client" # needed by plugin `wee_slack.py`
 sudo fizzy cfg s -C weechat -U ssh:alem0lars/configs-weechat
 fizzy qi -C weechat -I weechat-alem0lars -V alem0lars
+# Now, after opening weechat, enter login informations:
+# -> IRC
+/secure set <server_name> <pwd>
+# -> wee_slack.py
+# you can generate tokens here: https://api.slack.com/docs/oauth-test-tokens
+/secure set slack_token <token_for_server_a>,<token_for_server_b>,..
 
 # Image viewers
 sudo emerge "media-gfx/sxiv"
@@ -249,9 +264,12 @@ sudo emerge "media-plugins/gimp-lqr"
 sudo emerge "media-plugins/gimp-lensfun"
 
 # Audio
+# Audio -> CMUS
 emerge "media-sound/cmus" "media-sound/cmusfm"
 sudo fizzy cfg s -C cmus -U ssh:alem0lars/configs-cmus
 fizzy qi -C cmus -I cmus-alem0lars -V kate
+# Audio -> Beets
+emerge "dev-python/pyxdg" "dev-python/pathlib" # deps
 emerge "media-sound/beets"
 sudo fizzy cfg s -C beets -U ssh:alem0lars/configs-beets
 fizzy qi -C beets -I beets-alem0lars -V kate
@@ -271,6 +289,11 @@ sudo emerge "app-benchmarks/stress"
 sudo emerge "app-misc/figlet"
 sudo emerge "media-gfx/plantuml"
 sudo emerge "media-gfx/graphviz"
+sudo emerge "app-text/pandoc"
+sudo emerge "net-analyzer/bro"
+
+# Dev -> Salt
+sudo emerge "app-admin/salt"
 
 # Dev -> Docker
 sudo emerge "app-emulation/docker"
