@@ -1,10 +1,11 @@
 # Aggiungere l'utente
-- command: useradd -m -G -s /bin/bash alem0lars
+- command: useradd -m -s /bin/bash alem0lars
 - command: groupadd admin
 - command: gpasswd -a alem0lars admin
 - command: gpasswd -a alem0lars users
+- command: gpasswd -a alem0lars video
 - command: gpasswd -a alem0lars portage
 - command: gpasswd -a alem0lars systemd-journal
 
- echo "%admin ALL=(ALL) ALL" > "/etc/sudoers.d/group_admin"
+ echo "%admin ALL=(ALL) ALL" > "/etc/sudoers.d/group-admin"
  chmod 600 "/etc/sudoers.d/group-admin"

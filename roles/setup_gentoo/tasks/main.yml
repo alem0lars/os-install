@@ -36,8 +36,33 @@
 # end
 
 - include: setup_system
-  sudo gpasswd -a alem0lars plugdev
+
+- name: Update packages
+  portage:
+    package: "@world"
+    update:  "yes"
+    deep:    "yes"
+    sync:    "yes"
+  tags: sync
+
+- name: Install basic software
+  portage:
+    package: "{{ item }}"
+    state:   installed
+    update:  "yes"
+  with_items: "{{ packages.basic }}"
+  tags: install
+
 - include: setup_portage
+
+sudo gpasswd -a alem0lars plugdev
+
+# SSH
+emerge net-misc/sshpass
+sudo fizzy cfg s -C ssh -U ssh:alem0lars/configs-ssh
+fizzy qi -C ssh -I ssh-alem0lars -V kate
+systemctl enable --user ssh-agent.service
+
 - include: setup_x11
 - include: setup_fonts
 

@@ -87,6 +87,9 @@ kernel:
       - option: USB_XHCI_HCD
         after:  USB
         value:  True
+      - option: USB_XHCI_PLATFORM
+        after:  USB_XHCI_HCD
+        value:  True
       - option: USB_UAS
         after:  USB
         value:  True

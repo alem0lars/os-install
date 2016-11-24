@@ -22,7 +22,11 @@ packages:
     - sys-block/parted
     - sys-fs/ntfs3g
     # Network
-    - net-wireless/wpa_supplicant
+    - net-wireless/wpa_supplicant # if using wireless
+    # Portage
+    - layman
+    - eix
+    - gentoolkit
   x11:
     - x11-base/xorg-server
     # Apps

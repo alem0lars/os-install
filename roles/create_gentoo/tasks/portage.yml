@@ -34,6 +34,7 @@
     line: "USE=\"$USE
       cryptsetup
       elfutils
+      gnuefi
       {{ (boot.uefi and boot.kind == 'systemd') | ternary('gnuefi', omit) }}\""
 
 - name: Disable parallel compiling

@@ -31,9 +31,6 @@ mettere in /etc/locale.gen
 fizzy cfg s -C systemd -U ssh:alem0lars/configs-systemd
 fizzy qi -C systemd -I systemd -V kate
 
-fizzy cfg s -C wpa -U ssh:alem0lars/configs-wpa
-fizzy qi -C wpa -I wpa -V kate
-
 - command: systemctl enable systemd-networkd
   when: "{{ systemd is defined }}"
   tags: service
@@ -41,12 +38,6 @@ fizzy qi -C wpa -I wpa -V kate
 - command: systemctl enable systemd-resolved
   when: "{{ systemd is defined }}"
   tags: service
-
-- command: systemctl enable avahi-daemon
-  when: "{{ systemd is defined }}"
-  tags: service
-
-systemctl enable wpa_supplicant@wlp3s0
 
 - command: systemctl restart systemd-networkd
   when: "{{ systemd is defined }}"
@@ -56,10 +47,10 @@ systemctl enable wpa_supplicant@wlp3s0
   when: "{{ systemd is defined }}"
   tags: service
 
-- command: systemctl restart avahi-daemon
-  when: "{{ systemd is defined }}"
-  tags: service
-
+# Wireless
+fizzy cfg s -C wpa -U ssh:alem0lars/configs-wpa
+fizzy qi -C wpa -I wpa -V kate
+systemctl enable wpa_supplicant@wlp3s0
 systemctl start wpa_supplicant@wlp3s0
 
 - command: # TODO: Add /etc/nsswitch.conf config file
@@ -68,7 +59,9 @@ systemctl start wpa_supplicant@wlp3s0
   # files mdns4_minimal [NOTFOUND=return] dns mdns4
 
 - command: emerge net-dns/avahi sys-auth/nss-mdns
-
+- command: systemctl enable avahi-daemon
+  when: "{{ systemd is defined }}"
+  tags: service
 - command: systemctl restart avahi-daemon
   when: "{{ systemd is defined }}"
   tags: service
@@ -88,21 +81,5 @@ systemctl start wpa_supplicant@wlp3s0
 - command: hostnamectl set-deployment production # TODO: replace with customized value
   when: "{{ systemd is defined }}"
   tags: service
-
-- name: Update packages
-  portage:
-    package: "@world"
-    update:  "yes"
-    deep:    "yes"
-    sync:    "yes"
-  tags: sync
-
-- name: Install basic software
-  portage:
-    package: "{{ item }}"
-    state:   installed
-    update:  "yes"
-  with_items: "{{ packages.basic }}"
-  tags: install
 
 - command: systemctl enable systemd-bootchart
