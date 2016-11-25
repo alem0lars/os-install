@@ -9,19 +9,18 @@ emerge "dev-vcs/tig"
 emerge "dev-vcs/hub"
 
 fizzy cfg s -C git -U ssh:alem0lars/configs-git
-fizzy qi -C git -I git-alem0lars -V alem0lars
-sudo fizzy qi -C git -I git-root -V alem0lars
+fizzy qi -C git -I git-alem0lars -V kate
 
 # Mercurial
 
 emerge "dev-vcs/mercurial"
 
 fizzy cfg s -C mercurial -U ssh:alem0lars/configs-mercurial
-fizzy qi -C mercurial -I mercurial-alem0lars -V alem0lars
+fizzy qi -C mercurial -I mercurial-alem0lars -V kate
 
 # Subversion
 
 emerge "dev-vcs/subversion"
 
 fizzy cfg s -C svn -U ssh:alem0lars/configs-svn
-fizzy qi -C svn -I svn-alem0lars -V alem0lars
+fizzy qi -C svn -I svn-alem0lars -V kate

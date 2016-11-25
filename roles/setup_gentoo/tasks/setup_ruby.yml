@@ -8,7 +8,7 @@ sudo emerge "dev-ruby/yard"
 sudo emerge "dev-ruby/pry"
 sudo emerge "dev-ruby/thor"
 
-sudo gem install "irbtools-more"
+sudo gem install "irbtools" "irbtools-more"
 
 sudo fizzy cfg s -C ruby -U ssh:alem0lars/configs-ruby
 fizzy qi -C ruby -I ruby-alem0lars -V kate

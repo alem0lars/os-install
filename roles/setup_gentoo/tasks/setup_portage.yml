@@ -43,13 +43,13 @@ sudo fizzy qi -C portage -I portage -V kate
 
 - name: fare passi di alem0lars/configs_book/gentoo/configuration/software/portage.md
 
-Se si vuole abilitare distcc allora:
+# Se si vuole abilitare distcc allora:
 
 emerge distcc
 systemctl enable distccd
 systemctl restart distccd
 
-Se si vuole abilitare crosscompiling allora:
+# Se si vuole abilitare crosscompiling allora:
 
 emerge crossdev
 

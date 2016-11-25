@@ -16,8 +16,6 @@ packages:
     # IO
     - sys-apps/pciutils
     - sys-apps/usbutils
-    # Compile
-    - dev-util/debugedit
     # FS
     - sys-block/parted
     - sys-fs/ntfs3g

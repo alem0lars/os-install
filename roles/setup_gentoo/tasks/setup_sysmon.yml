@@ -9,4 +9,8 @@ sudo emerge "app-admin/pydf"
 sudo emerge "sys-power/powertop"
 
 sudo emerge "app-admin/lnav"
+sudo lnav -i extra
 lnav -i extra
+
+sudo emerge iotop
+sudo emerge smartmontools

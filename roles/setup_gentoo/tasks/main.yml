@@ -70,7 +70,7 @@ systemctl enable --user ssh-agent.service
 sudo emerge "sys-apps/hdparm"
 
 # Install linux miscellaneous configurations.
-sudo fizzy cfg s -C linux-misc -U ssh:alem0lars/configs-misc
+sudo fizzy cfg s -C linux-misc -U ssh:alem0lars/configs-linux-misc
 fizzy qi -C linux-misc -I linux-misc -V kate
 
 If there are multiple video cards
@@ -83,7 +83,6 @@ If there are multiple video cards
 
 # Setup software
 - include: setup_archive
-- include: setup_ssh
 - include: setup_shell
 - include: setup_terminal_multiplexer
 - include: setup_text_editors
@@ -96,21 +95,18 @@ sudo emerge "sys-fs/fuse-exfat"
 sudo emerge "app-backup/attic"
 
 - include: setup_web_clients
-- include: setup_virtualization
 - include: setup_office
 - include: setup_vcs
 - include: setup_video_players
 - include: setup_torrent
 - include: setup_sysmon
-emerge iotop
-emerge smartmontools
 - include: setup_ruby
 
 # Clipboard
 sudo emerge "x11-misc/unclutter"
 sudo emerge "x11-apps/copyq"
 sudo fizzy cfg s -C copyq -U ssh:alem0lars/configs-copyq
-fizzy qi -C copyq -I copyq-alem0lars -V alem0lars
+fizzy qi -C copyq -I copyq-alem0lars -V kate
 
 # Commandline misc tools
 sudo emerge "sys-process/parallel"
@@ -204,9 +200,6 @@ sudo emerge "dev-lang/nasm"
 # Dev -> Perl
 sudo emerge "app-admin/perl-cleaner"
 cpan # quando chiede il metodo da usare, scegliere `sudo`
-
-# Dev -> Misc
-sudo emerge "dev-util/source-highlight"
 
 # Signal processing
 sudo emerge "net-wireless/gnuradio"
@@ -346,7 +339,7 @@ sudo emerge "dev-lang/ghc"
 sudo emerge "dev-haskell/cabal-install"
 sudo emerge "app-emacs/ghc-mod"
 sudo fizzy cfg s -C haskell -U ssh:alem0lars/configs-haskell
-fizzy qi -C haskell -I haskell-alem0lars -V alem0lars
+fizzy qi -C haskell -I haskell-alem0lars -V kate
 
 # Dev -> Go
 sudo emerge "dev-lang/go"

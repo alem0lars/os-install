@@ -1,14 +1,10 @@
 sudo emerge "app-office/libreoffice"
 sudo emerge "app-office/unoconv"
 
-TODO: Save configs with fizzy
-
-
-
 sudo emerge "dev-tex/texmfind" # Contains a program to search for the Gentoo package containing a tex package
 sudo emerge "app-eselect/eselect-pdftex"
 sudo emerge "app-text/texlive"
 
-sudo eselect pdftex select 1
+sudo eselect pdftex set 1
 
 sudo texmf-update

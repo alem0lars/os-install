@@ -5,4 +5,4 @@
 
 # Configure chips:
 sudo fizzy cfg s -C chips -U ssh:alem0lars/configs-chips
-fizzy qi -C chips -I chips-alem0lars -V generic
+fizzy qi -C chips -I chips-alem0lars -V kate

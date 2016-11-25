@@ -1,6 +1,6 @@
 # NeoVim
 
-sudo emerge "app-editors/nvim"
+sudo emerge "app-editors/neovim"
 
 Set default editor:
 
@@ -10,7 +10,3 @@ source /etc/profile
 
 sudo fizzy cfg s -C vim -U ssh:alem0lars/configs-vim
 sudo fizzy qi -C vim -I vim -V kate
-
-# Etherpad Lite
-
-sudo emerge "www-apps/etherpad-lite"

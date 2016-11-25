@@ -1,4 +1,4 @@
 emerge "net-p2p/rtorrent"
 
 fizzy cfg s -C rtorrent -U ssh:alem0lars/configs-rtorrent
-fizzy qi -C rtorrent -I rtorrent-alem0lars -V alem0lars
+fizzy qi -C rtorrent -I rtorrent-alem0lars -V kate

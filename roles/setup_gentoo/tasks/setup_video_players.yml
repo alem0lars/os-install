@@ -1,8 +1,8 @@
-Video players:
+# Video players:
 emerge "media-video/vlc"
 emerge "media-video/mplayer"
 
-Watch internet videos:
+# Watch internet videos:
 emerge "net-misc/livestreamer"
 
-emerge "media-video/media-info"
+emerge "media-video/mediainfo"
