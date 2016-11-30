@@ -419,5 +419,9 @@ sudo gpasswd -a alem0lars lpadmin
 sudo systemctl enable cups
 sudo systemctl restart cups
 
+# Screensaver
+sudo emerge "x11-misc/slock"
+sudo emerge "app-misc/vlock"
+
 # [OPTIONAL] Nitrokey
 sudo emerge "app-misc/nitrokey-app"
