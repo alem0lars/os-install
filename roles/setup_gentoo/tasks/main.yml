@@ -423,5 +423,8 @@ sudo systemctl restart cups
 sudo emerge "x11-misc/slock"
 sudo emerge "app-misc/vlock"
 
+# Redis
+sudo emerge "dev-db/redis"
+
 # [OPTIONAL] Nitrokey
 sudo emerge "app-misc/nitrokey-app"
