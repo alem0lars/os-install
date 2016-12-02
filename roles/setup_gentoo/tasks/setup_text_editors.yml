@@ -10,3 +10,5 @@ source /etc/profile
 
 sudo fizzy cfg s -C vim -U ssh:alem0lars/configs-vim
 sudo fizzy qi -C vim -I vim -V kate
+
+sudo git clone git@github.com:alem0lars/vim-templates /etc/xdg/nvim/templates

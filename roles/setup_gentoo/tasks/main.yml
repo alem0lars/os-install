@@ -207,6 +207,9 @@ sudo emerge "net-wireless/gnuradio"
 # Semantic Web
 sudo emerge "dev-util/protege"
 
+# Sec -> IDS
+sudo emerge "net-analyzer/suricata"
+
 # Sec -> SQLmap
 sudo emerge "dev-db/sqlmap"
 
@@ -280,6 +283,9 @@ sudo emerge "media-gfx/gimp"
 sudo emerge "media-plugins/gimp-gmic"
 sudo emerge "media-plugins/gimp-lqr"
 sudo emerge "media-plugins/gimp-lensfun"
+# Image Editors -> Others
+sudo emerge "media-gfx/imagemagick"
+sudo emerge "media-gfx/graphicsmagick"
 
 # Audio
 # Audio -> CMUS
