@@ -61,3 +61,8 @@ sudo crossdev -t armv5tel
 - command: layman -o https://raw.github.com/alem0lars/apo/master/repositories.xml -f -a apo
 
 - command: layman -a pentoo
+
+rm -rf /var/cache/edb/dep
+emerge --regen
+emerge --metadata
+eix-sync

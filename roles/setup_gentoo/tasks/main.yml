@@ -421,3 +421,5 @@ sudo systemctl restart cups
 
 # [OPTIONAL] Nitrokey
 sudo emerge "app-misc/nitrokey-app"
+
+sudo emerge "sys-apps/pv"

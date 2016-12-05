@@ -41,7 +41,7 @@ sudo fizzy qi -C lightdm -I lightdm -V kate
 # alternative a: If using awesomewm
 emerge x11-wm/awesome
 sudo fizzy cfg s -C awesomewm -U ssh:alem0lars/configs-awesomewm
-fizzy qi -C awesomewm -I awesomewm-alem0lars -V alem0lars
+fizzy qi -C awesomewm -I awesomewm-alem0lars -V kate
 
 # alternative b: If using xmonad
 emerge x11-wm/xmonad
@@ -53,4 +53,4 @@ emerge arc-theme
 emerge arc-icon-theme
 
 sudo fizzy cfg s -C gtk -U ssh:alem0lars/configs-gtk
-sudo fizzy qi -C gtk -I gtk -V alem0lars
+sudo fizzy qi -C gtk -I gtk -V kate
