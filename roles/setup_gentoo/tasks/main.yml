@@ -207,6 +207,9 @@ sudo emerge "net-wireless/gnuradio"
 # Semantic Web
 sudo emerge "dev-util/protege"
 
+# Sec -> IDS
+sudo emerge "net-analyzer/suricata"
+
 # Sec -> SQLmap
 sudo emerge "dev-db/sqlmap"
 
@@ -280,6 +283,9 @@ sudo emerge "media-gfx/gimp"
 sudo emerge "media-plugins/gimp-gmic"
 sudo emerge "media-plugins/gimp-lqr"
 sudo emerge "media-plugins/gimp-lensfun"
+# Image Editors -> Others
+sudo emerge "media-gfx/imagemagick"
+sudo emerge "media-gfx/graphicsmagick"
 
 # Audio
 # Audio -> CMUS
@@ -418,6 +424,13 @@ sudo gpasswd -a alem0lars lp
 sudo gpasswd -a alem0lars lpadmin
 sudo systemctl enable cups
 sudo systemctl restart cups
+
+# Screensaver
+sudo emerge "x11-misc/slock"
+sudo emerge "app-misc/vlock"
+
+# Redis
+sudo emerge "dev-db/redis"
 
 # [OPTIONAL] Nitrokey
 sudo emerge "app-misc/nitrokey-app"
