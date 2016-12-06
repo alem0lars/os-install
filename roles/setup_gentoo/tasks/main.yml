@@ -112,6 +112,7 @@ fizzy qi -C copyq -I copyq-alem0lars -V kate
 sudo emerge "sys-process/parallel"
 sudo emerge "app-misc/fzf"
 sudo emerge "app-shells/fasd"
+sudo emerge "sys-apps/pv"
 
 # Dev -> Android
 emerge "dev-util/android-sdk-update-manager"
@@ -252,6 +253,7 @@ sudo fizzy cfg s -C weechat -U ssh:alem0lars/configs-weechat
 fizzy qi -C weechat -I weechat-alem0lars -V alem0lars
 # Now, after opening weechat, enter login informations:
 # -> IRC
+/secure passphrase <weechat_master_password>
 /secure set <server_name> <pwd>
 # -> wee_slack.py
 # you can generate tokens here: https://api.slack.com/docs/oauth-test-tokens
