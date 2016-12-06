@@ -434,3 +434,8 @@ sudo emerge "dev-db/redis"
 
 # [OPTIONAL] Nitrokey
 sudo emerge "app-misc/nitrokey-app"
+
+# [OPTIONAL] Citrix
+sudo emerge "net-misc/icaclient"
+sudo fizzy cfg s -C citrix -U ssh:alem0lars/configs-citrix
+fizzy qi -C citrix -I citrix-alem0lars -V kate
