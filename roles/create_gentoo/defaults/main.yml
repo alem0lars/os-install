@@ -50,6 +50,14 @@ kernel:
         after:  EFI
         value:  True
         enabled: "{{ boot.uefi }}"
+      # CPU
+      - option: CPU_FREQ_STAT
+        value:  True
+      - option: CPU_FREQ_STAT_DETAILS
+        after:  CPU_FREQ_STAT
+        value:  True
+      - option: CHECKPOINT_RESTORE
+        value:  True
       # HID
       - option: UHID
         after:  HID
@@ -94,6 +102,11 @@ kernel:
         after:  USB
         value:  True
       # Device Drivers - Net
+      - option: MACVLAN
+        value:  True
+      - option: MACVTAP
+        after:  MACVLAN
+        value:  True
       - option: VETH
         value:  True
       - option: NET_VENDOR_INTEL
@@ -212,6 +225,9 @@ kernel:
         value:  True
       # Netfilter
       - option: NETFILTER
+        value:  True
+      - option: NETFILTER_NETLINK_QUEUE
+        after:  NETFILTER
         value:  True
       - option: NETFILTER_ADVANCED
         after:  NETFILTER
