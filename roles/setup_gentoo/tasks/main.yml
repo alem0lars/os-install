@@ -422,6 +422,8 @@ sudo emerge "net-ftp/lftp"
 
 # Cups
 sudo emerge "net-print/cups"
+sudo emerge "net-print/gutenprint"
+sudo emerge "media-gfx/xsane"
 sudo gpasswd -a alem0lars lp
 sudo gpasswd -a alem0lars lpadmin
 sudo systemctl enable cups
