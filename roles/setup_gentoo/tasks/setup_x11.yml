@@ -46,6 +46,8 @@ fizzy qi -C awesomewm -I awesomewm-alem0lars -V kate
 # alternative b: If using xmonad
 emerge x11-wm/xmonad
 emerge x11-wm/xmonad-contrib
+emerge x11-misc/xmobar
+emerge x11-misc/trayer-srg
 sudo fizzy cfg s -C xmonad -U ssh:alem0lars/configs-xmonad
 fizzy qi -C xmonad -I xmonad-alem0lars -V kate
 
@@ -54,3 +56,5 @@ emerge arc-icon-theme
 
 sudo fizzy cfg s -C gtk -U ssh:alem0lars/configs-gtk
 sudo fizzy qi -C gtk -I gtk -V kate
+
+sudo emerge xfontsel
