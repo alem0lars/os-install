@@ -191,6 +191,7 @@ sudo emerge "dev-util/txt2regex"
 
 # Dev -> R
 sudo emerge "dev-lang/R"
+sudo layman -a "R_Overlay"
 
 # Dev -> Julia
 sudo emerge "dev-lang/julia"
@@ -234,6 +235,8 @@ sudo emerge "net-misc/bridge-utils"
 sudo emerge "www-client/httrack"
 sudo emerge "net-dns/bind-tools"
 sudo emerge "net-misc/socat"
+
+sudo emerge "net-misc/openconnect"
 
 # Network analyzers
 sudo emerge "net-analyzer/tcpflow"
@@ -406,6 +409,7 @@ cd ~ && tmsu init && mv ~/.tmsu/db ~/.tmsu/default.db
 sudo emerge "app-text/tree"
 sudo emerge "app-misc/watchman"
 sudo emerge "sys-fs/ncdu"
+sudo emerge "app-misc/wipe"
 sudo emerge "app-misc/ranger"
 sudo fizzy cfg s -C ranger -U ssh:alem0lars/configs-ranger
 fizzy qi -C ranger -I ranger-alem0lars -V alem0lars-linux
