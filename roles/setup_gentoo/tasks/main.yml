@@ -237,6 +237,7 @@ sudo emerge "net-dns/bind-tools"
 sudo emerge "net-misc/socat"
 
 sudo emerge "net-misc/openconnect"
+sudo emerge "net-dialup/pptpclient"
 
 # Network analyzers
 sudo emerge "net-analyzer/tcpflow"
