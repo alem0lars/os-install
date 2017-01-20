@@ -1,3 +1,6 @@
+# Install deps
+sudo emerge "dev-python/mwclient"
+
 # NeoVim
 
 sudo emerge "app-editors/neovim"
