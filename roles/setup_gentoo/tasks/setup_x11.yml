@@ -46,10 +46,14 @@ fizzy qi -C awesomewm -I awesomewm-alem0lars -V kate
 # alternative b: If using xmonad
 emerge x11-wm/xmonad
 emerge x11-wm/xmonad-contrib
-emerge x11-misc/xmobar
-emerge x11-misc/trayer-srg
 sudo fizzy cfg s -C xmonad -U ssh:alem0lars/configs-xmonad
 fizzy qi -C xmonad -I xmonad-alem0lars -V kate
+
+# IF you use taffybar
+emerge x11-misc/taffybar
+# ELSE IF you use xmobar
+emerge x11-misc/xmobar
+emerge x11-misc/trayer-srg
 
 emerge arc-theme
 emerge arc-icon-theme

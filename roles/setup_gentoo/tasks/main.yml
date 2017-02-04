@@ -114,6 +114,9 @@ sudo emerge "app-misc/fzf"
 sudo emerge "app-shells/fasd"
 sudo emerge "sys-apps/pv"
 
+# VNC
+sudo emerge "net-misc/tigervnc"
+
 # Dev -> Android
 emerge "dev-util/android-sdk-update-manager"
 emerge "dev-util/android-tools"
@@ -155,6 +158,9 @@ emerge app-emulation/vagrant
 emerge app-emulation/qemu
 gpasswd -a alem0lars kvm
 udevadm trigger -c add /dev/kvm
+# Emulation -> Wine
+emerge app-emulation/wine
+emerge app-emulation/winetricks
 
 # Password manager
 sudo emerge "app-admin/lastpass-cli"
@@ -188,9 +194,6 @@ dasht-docsets-install -f android ansible apache_http_server arduino bash boost b
 
 # Dev -> Regex tools
 sudo emerge "dev-util/txt2regex"
-
-# Dev -> R
-sudo emerge "dev-lang/R"
 
 # Dev -> Julia
 sudo emerge "dev-lang/julia"
@@ -288,6 +291,8 @@ sudo emerge "media-plugins/gimp-lensfun"
 # Image Editors -> Others
 sudo emerge "media-gfx/imagemagick"
 sudo emerge "media-gfx/graphicsmagick"
+#
+sudo emerge "media-libs/opencv"
 
 # Audio
 # Audio -> CMUS
@@ -435,6 +440,9 @@ sudo emerge "app-misc/vlock"
 
 # Redis
 sudo emerge "dev-db/redis"
+
+# TeamViewer
+sudo emerge "app-misc/teamviewer"
 
 # [OPTIONAL] Nitrokey
 sudo emerge "app-misc/nitrokey-app"

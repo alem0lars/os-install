@@ -62,6 +62,12 @@ sudo crossdev -t armv5tel
 
 - command: layman -a pentoo
 
+sudo layman -a "R_Overlay"
+sudo layman -s "R_Overlay"
+
+sudo layman -a "haskell"
+sudo layman -s "haskell"
+
 rm -rf /var/cache/edb/dep
 emerge --regen
 emerge --metadata
