@@ -276,6 +276,25 @@ kernel:
       - option: ENCRYPTED_KEYS
         value: True
         as_module: True
+      # PPTP
+      - option: PPP
+        value:  True
+      - option: PPP_BSDCOMP
+        value:  True
+      - option: PPP_DEFLATE
+        value:  True
+      - option: PPP_FILTER
+        value:  True
+      - option: PPP_MPPE
+        value:  True
+      - option: PPP_MULTILINK
+        value:  True
+      - option: PPPOE
+        value:  True
+      - option: PPP_ASYNC
+        value:  True
+      - option: PPP_SYNC_TTY
+        value:  True
       # KATE-specific
       - option: HID_LENOVO
         after:  HID
