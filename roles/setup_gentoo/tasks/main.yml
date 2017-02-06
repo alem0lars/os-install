@@ -360,11 +360,13 @@ sudo eselect java-vm set system 2
 sudo emerge "dev-lang/scala"
 
 # Dev -> Haskell
-sudo emerge "dev-lang/ghc"
-sudo emerge "dev-haskell/cabal-install"
-sudo emerge "app-emacs/ghc-mod"
+sudo layman -a haskell
 sudo fizzy cfg s -C haskell -U ssh:alem0lars/configs-haskell
 fizzy qi -C haskell -I haskell-alem0lars -V kate
+sudo emerge "dev-lang/ghc"
+sudo emerge "dev-haskell/stack"
+sudo emerge "dev-haskell/cabal-install"
+sudo emerge "app-emacs/ghc-mod"
 
 # Dev -> Go
 sudo emerge "dev-lang/go"
