@@ -251,6 +251,7 @@ sudo emerge "net-misc/openconnect"
 sudo emerge "net-dialup/pptpclient"
 
 # Network analyzers
+sudo emerge "net-analyzer/tcpreplay"
 sudo emerge "net-analyzer/tcpflow"
 sudo emerge "net-analyzer/tcpdump"
 sudo emerge "net-analyzer/mtr"
