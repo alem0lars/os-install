@@ -235,6 +235,11 @@ sudo emerge "app-forensics/scalpel"
 sudo emerge "app-forensics/afl"
 sudo emerge "app-forensics/radamsa"
 
+# Sec -> Decompilers
+sudo emerge "dev-util/dex2jar"
+sudo emerge "dev-util/jd-gui-bin" # TODO: check
+sudo emerge "dev-util/jad-bin"    # TODO: check
+
 # Network tools
 sudo emerge "net-misc/ipcalc"
 sudo emerge "net-misc/bridge-utils"
