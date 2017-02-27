@@ -403,8 +403,9 @@ emerge "app-misc/colordiff"
 emerge "sys-apps/the_silver_searcher"
 
 # Debugging
-emerge "sys-devel/gdb"
-emerge "dev-util/radare2"
+sudo emerge "sys-devel/gdb"
+sudo emerge "sys-devel/voltron"
+sudo emerge "dev-util/radare2"
 
 # Bookmarks
 emerge "app-misc/buku"
@@ -415,6 +416,7 @@ sudo emerge "www-servers/pshs"
 # Files sync
 sudo emerge "net-misc/drive"
 sudo emerge "net-misc/megatools"
+sudo emerge "net-misc/megasync"
 
 # GTD
 sudo emerge "app-misc/task"

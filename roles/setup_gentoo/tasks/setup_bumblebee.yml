@@ -1,5 +1,4 @@
 sudo emerge x11-misc/bumblebee
-sudo emerge x11-misc/primus
 gpasswd -a alem0lars bumblebee
 systemctl enable bumblebeed
 systemctl restart bumblebeed
