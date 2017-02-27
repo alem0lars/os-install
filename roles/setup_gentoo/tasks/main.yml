@@ -293,6 +293,8 @@ sudo emerge "media-gfx/jpegoptim"
 sudo emerge "media-gfx/optipng"
 sudo emerge "media-gfx/pngcrush"
 sudo emerge "media-gfx/pngquant"
+# Image Libs
+sudo emerge "media-libs/opencv"
 
 # Image Editors -> Inkscape
 sudo emerge "media-gfx/inkscape"
