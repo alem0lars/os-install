@@ -261,6 +261,7 @@ sudo emerge "net-analyzer/nmap"
 sudo emerge "net-analyzer/speedtest-cli"
 sudo emerge "net-analyzer/wireshark"
 sudo gpasswd -a "alem0lars" "wireshark" # Replace with your username.
+sudo emerge "net-analyzer/slurm"
 
 # IRC
 sudo emerge "net-irc/weechat"
