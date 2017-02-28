@@ -144,6 +144,8 @@ sudo emerge "dev-python/twisted"
 sudo emerge "dev-python/python-magic"
 # For additional functionality in pandas.
 sudo emerge "dev-python/google-api-python-client" "dev-python/pymysql" "dev-python/python-gflags" "dev-python/psycopg:2" "dev-python/statsmodels" "dev-python/sqlalchemy"
+# Dev -> Python -> Tools
+sudo emerge "dev-python/pylint"
 
 # Virtualization -> VirtualBox
 emerge "sys-apps/usermode-utilities" "net-misc/bridge-utils"
