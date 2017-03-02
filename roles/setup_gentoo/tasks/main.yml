@@ -127,6 +127,9 @@ sudo emerge "dev-util/ctags"
 sudo emerge "app-eselect/eselect-ctags"
 sudo eselect etags set "exuberant-ctags"
 
+# Dev -> Misc -> PhantomJS
+sudo emerge "www-client/phantomjs"
+
 # Dev -> Python
 sudo emerge "app-admin/python-updater"
 # Dev -> Python -> REPL
