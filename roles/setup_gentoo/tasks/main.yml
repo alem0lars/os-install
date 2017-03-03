@@ -415,6 +415,7 @@ sudo emerge "sys-devel/voltron"
 sudo emerge "dev-util/radare2"
 
 sudo emerge "dev-util/unicorn"
+sudo emerge "dev-util/unicorn-bindings"
 sudo emerge "dev-libs/capstone"
 
 # Files Sharing
