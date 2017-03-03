@@ -413,9 +413,8 @@ emerge "sys-apps/the_silver_searcher"
 sudo emerge "sys-devel/gdb"
 sudo emerge "sys-devel/voltron"
 sudo emerge "dev-util/radare2"
-
-sudo emerge "dev-util/unicorn"
-sudo emerge "dev-util/unicorn-bindings"
+# Debugging -> Libs
+sudo emerge "dev-libs/unicorn-bindings"
 sudo emerge "dev-libs/capstone"
 
 # Files Sharing
