@@ -414,6 +414,9 @@ sudo emerge "sys-devel/gdb"
 sudo emerge "sys-devel/voltron"
 sudo emerge "dev-util/radare2"
 
+sudo emerge "dev-util/unicorn"
+sudo emerge "dev-libs/capstone"
+
 # Bookmarks
 emerge "app-misc/buku"
 
