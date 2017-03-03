@@ -417,9 +417,6 @@ sudo emerge "dev-util/radare2"
 sudo emerge "dev-util/unicorn"
 sudo emerge "dev-libs/capstone"
 
-# Bookmarks
-emerge "app-misc/buku"
-
 # Files Sharing
 sudo emerge "www-servers/pshs"
 
