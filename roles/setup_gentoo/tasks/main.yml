@@ -154,6 +154,7 @@ sudo emerge "dev-python/pylint"
 emerge "sys-apps/usermode-utilities" "net-misc/bridge-utils"
 emerge "app-emulation/virtualbox"
 emerge "app-emulation/virtualbox-modules"
+emerge "app-emulation/virtualbox-extpack-oracle"
 gpasswd -a alem0lars vboxusers
 VBoxManage setproperty machinefolder /vm/virtualbox
 # <- import the virtualbox virtual machines
