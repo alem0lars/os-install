@@ -414,9 +414,9 @@ emerge "sys-apps/the_silver_searcher"
 sudo emerge "sys-devel/gdb"
 sudo emerge "sys-devel/voltron"
 sudo emerge "dev-util/radare2"
-
-# Bookmarks
-emerge "app-misc/buku"
+# Debugging -> Libs
+sudo emerge "dev-libs/unicorn-bindings"
+sudo emerge "dev-libs/capstone"
 
 # Files Sharing
 sudo emerge "www-servers/pshs"
