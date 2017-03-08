@@ -60,7 +60,9 @@ sudo crossdev -t armv5tel
 
 - command: layman -o https://raw.github.com/alem0lars/apo/master/repositories.xml -f -a apo
 
-- command: layman -a pentoo
+sudo layman -a pentoo
+
+sudo layman -a rindeal
 
 sudo layman -a "R_Overlay"
 sudo layman -s "R_Overlay"
