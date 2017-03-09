@@ -116,6 +116,7 @@ sudo emerge "sys-apps/pv"
 
 # Docs -> Preview
 sudo emerge "app-text/grip"
+sudo emerge "app-text/restview"
 
 # VNC
 sudo emerge "net-misc/tigervnc"
