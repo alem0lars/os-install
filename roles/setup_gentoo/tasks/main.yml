@@ -114,6 +114,9 @@ sudo emerge "app-misc/fzf"
 sudo emerge "app-shells/fasd"
 sudo emerge "sys-apps/pv"
 
+# Docs -> Preview
+sudo emerge "app-text/grip"
+
 # VNC
 sudo emerge "net-misc/tigervnc"
 
@@ -246,6 +249,7 @@ sudo emerge "dev-util/dex2jar"
 sudo emerge "dev-util/jd-gui-bin" # TODO: check
 sudo emerge "dev-util/jad-bin"    # TODO: check
 
+# Sec -> pentest
 emerge --config "dev-db/postgresql"
 systemctl enable postgresql-9.5
 systemctl restart postgresql-9.5
