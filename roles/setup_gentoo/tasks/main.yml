@@ -164,10 +164,13 @@ VBoxManage setproperty machinefolder /vm/virtualbox
 # <- import the virtualbox virtual machines
 # Virtualization -> Vagrant
 emerge app-emulation/vagrant
+vagrant plugin install vagrant-cachier
+emerge app-emulation/packer
 # Virtualization -> QEmu
 emerge app-emulation/qemu
 gpasswd -a alem0lars kvm
 udevadm trigger -c add /dev/kvm
+emerge app-emulation/virt-manager
 # Emulation -> Wine
 emerge app-emulation/wine
 emerge app-emulation/winetricks
