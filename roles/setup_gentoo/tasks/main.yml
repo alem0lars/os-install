@@ -485,6 +485,9 @@ sudo emerge "dev-db/redis"
 # TeamViewer
 sudo emerge "app-misc/teamviewer"
 
+# RDP
+sudo emerge "net-misc/freerdp"
+
 # [OPTIONAL] Nitrokey
 sudo emerge "app-misc/nitrokey-app"
 
