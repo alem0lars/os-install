@@ -442,6 +442,7 @@ sudo emerge "net-misc/megasync"
 
 # GTD
 sudo emerge "app-misc/task"
+sudo emerge "dev-python/tasklib"
 sudo fizzy cfg s -C taskwarrior -U ssh:alem0lars/configs-taskwarrior
 fizzy qi -C taskwarrior -I taskwarrior-alem0lars -V alem0lars-linux
 
