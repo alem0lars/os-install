@@ -321,7 +321,7 @@ sudo emerge "media-gfx/inkscape"
 # Image Editors -> Gimp
 sudo emerge "media-gfx/gimp"
 # Image Editors -> Gimp -> Plugins
-sudo emerge "media-plugins/gimp-gmic"
+sudo emerge "media-gfx/gmic"
 sudo emerge "media-plugins/gimp-lqr"
 sudo emerge "media-plugins/gimp-lensfun"
 # Image Editors -> Others
