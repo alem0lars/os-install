@@ -359,6 +359,10 @@ sudo emerge "media-gfx/graphviz"
 sudo emerge "app-text/pandoc"
 sudo emerge "net-analyzer/bro"
 
+# Dev -> Generic IDEs
+sudo emerge "dev-java/idea"
+sudo emerge "dev-util/webstorm"
+
 # Dev -> Salt
 sudo emerge "app-admin/salt"
 
