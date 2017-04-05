@@ -422,6 +422,7 @@ emerge "dev-util/cunit"
 
 # Dev -> NodeJS
 emerge "net-libs/nodejs"
+emerge "sys-apps/yarn"
 
 # Dev -> Rust
 emerge "dev-lang/rust"
