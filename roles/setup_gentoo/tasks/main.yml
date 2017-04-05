@@ -499,6 +499,8 @@ sudo emerge "app-misc/teamviewer"
 # RDP
 sudo emerge "net-misc/freerdp"
 
+sudo emerge "sysstat"
+
 # [OPTIONAL] Nitrokey
 sudo emerge "app-misc/nitrokey-app"
 
