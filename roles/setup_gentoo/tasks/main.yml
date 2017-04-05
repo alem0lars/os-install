@@ -154,6 +154,11 @@ sudo emerge "dev-python/google-api-python-client" "dev-python/pymysql" "dev-pyth
 # Dev -> Python -> Tools
 sudo emerge "dev-python/pylint"
 
+# Virtualization -> VMware player
+sudo layman -a vmware
+sudo emerge vmware-player
+sudo emerge --config vmware-player
+sudo gpasswd -a alem0lars vmware
 # Virtualization -> VirtualBox
 emerge "sys-apps/usermode-utilities" "net-misc/bridge-utils"
 emerge "app-emulation/virtualbox"
