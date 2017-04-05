@@ -159,6 +159,7 @@ sudo layman -a vmware
 sudo emerge vmware-player
 sudo emerge --config vmware-player
 sudo gpasswd -a alem0lars vmware
+sudo systemctl enable vmware.target
 # Virtualization -> VirtualBox
 emerge "sys-apps/usermode-utilities" "net-misc/bridge-utils"
 emerge "app-emulation/virtualbox"
