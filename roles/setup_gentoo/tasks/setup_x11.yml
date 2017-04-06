@@ -49,6 +49,8 @@ emerge x11-wm/xmonad-contrib
 sudo fizzy cfg s -C xmonad -U ssh:alem0lars/configs-xmonad
 fizzy qi -C xmonad -I xmonad-alem0lars -V kate
 
+sudo emerge dunst
+
 # IF you use taffybar
 emerge x11-misc/taffybar
 # ELSE IF you use xmobar
