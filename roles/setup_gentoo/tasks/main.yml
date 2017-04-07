@@ -467,6 +467,8 @@ sudo emerge "app-misc/wipe"
 sudo emerge "app-misc/ranger"
 sudo fizzy cfg s -C ranger -U ssh:alem0lars/configs-ranger
 fizzy qi -C ranger -I ranger-alem0lars -V alem0lars-linux
+# Needed by ranger.
+sudo emerge "media-libs/libcaca"
 
 # Electronics
 sudo emerge "sci-electronics/quartus-prime-lite"
