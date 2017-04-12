@@ -302,6 +302,12 @@ fizzy qi -C weechat -I weechat-alem0lars -V alem0lars
 # you can generate tokens here: https://api.slack.com/docs/oauth-test-tokens
 /secure set slack_token <token_for_server_a>,<token_for_server_b>,..
 
+# Skype
+sudo emerge "net-im/skype"
+
+# Slack
+sudo emerge "net-im/slack-bin"
+
 # Image viewers
 sudo emerge "media-gfx/sxiv"
 sudo fizzy cfg s -C sxiv -U ssh:alem0lars/configs-sxiv
@@ -469,6 +475,7 @@ sudo fizzy cfg s -C ranger -U ssh:alem0lars/configs-ranger
 fizzy qi -C ranger -I ranger-alem0lars -V alem0lars-linux
 # Needed by ranger.
 sudo emerge "media-libs/libcaca"
+sudo emerge "dev-python/pygments"
 
 # Electronics
 sudo emerge "sci-electronics/quartus-prime-lite"
