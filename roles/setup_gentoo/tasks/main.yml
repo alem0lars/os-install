@@ -113,6 +113,7 @@ sudo emerge "sys-process/parallel"
 sudo emerge "app-misc/fzf"
 sudo emerge "app-shells/fasd"
 sudo emerge "sys-apps/pv"
+sudo emerge "urlview"
 
 # Docs -> Preview
 sudo emerge "app-text/grip"
