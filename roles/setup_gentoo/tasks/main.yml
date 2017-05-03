@@ -122,6 +122,9 @@ sudo emerge "app-text/restview"
 # VNC
 sudo emerge "net-misc/tigervnc"
 
+# Hamachi
+sudo emerge "net-vpn/logmein-hamachi"
+
 # Dev -> Android
 emerge "dev-util/android-sdk-update-manager"
 emerge "dev-util/android-tools"
