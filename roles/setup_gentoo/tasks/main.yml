@@ -127,6 +127,8 @@ sudo emerge "net-misc/tigervnc"
 
 # Hamachi
 sudo emerge "net-vpn/logmein-hamachi"
+Add `Ipc.User alem0lars` to `/var/lib/logmein-hamachi/h2-engine-override.cfg`
+Add `Setup.AutoNick alem0lars` to `/var/lib/logmein-hamachi/h2-engine-override.cfg`
 
 # Dev -> Android
 emerge "dev-util/android-sdk-update-manager"
