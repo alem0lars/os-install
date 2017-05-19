@@ -91,6 +91,9 @@ If there are multiple video cards
 sudo emerge "sys-fs/exfat-utils"
 sudo emerge "sys-fs/fuse-exfat"
 
+# Crypted FS
+sudo emerge "sys-fs/gocryptfs"
+
 # Backup
 sudo emerge "app-backup/attic"
 
