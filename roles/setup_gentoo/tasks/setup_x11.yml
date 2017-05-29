@@ -64,6 +64,8 @@ sudo fizzy cfg s -C gtk -U ssh:alem0lars/configs-gtk
 sudo fizzy qi -C gtk -I gtk -V kate
 
 sudo emerge xfontsel
+sudo emerge xcursor-themes
+sudo emerge feh
 
 # If hidpi
 sudo gsettings set org.gnome.desktop.interface scaling-factor 2 # TODO verify this is needed..
