@@ -487,6 +487,9 @@ fizzy qi -C ranger -I ranger-alem0lars -V alem0lars-linux
 sudo emerge "media-libs/libcaca"
 sudo emerge "dev-python/pygments"
 
+# Pastebin
+emerge wgetpaste
+
 # Electronics
 sudo emerge "sci-electronics/quartus-prime-lite"
 sudo emerge "sci-electronics/eagle"
