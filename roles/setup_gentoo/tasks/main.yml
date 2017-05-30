@@ -145,6 +145,8 @@ sudo emerge "www-client/phantomjs"
 
 # Dev -> Python
 sudo emerge "app-admin/python-updater"
+sudo eselect python set --python3 <your-python3-version>
+sudo eselect python set --python2 <your-python2-version>
 # Dev -> Python -> REPL
 sudo emerge "dev-python/ipython"
 # Dev -> Python -> VirtualEnv
