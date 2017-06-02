@@ -501,6 +501,7 @@ sudo emerge "mail-client/thunderbird"
 
 # FTP
 sudo emerge "net-ftp/lftp"
+sudo emerge "net-ftp/filezilla"
 
 # Cups
 sudo emerge "net-print/cups"
