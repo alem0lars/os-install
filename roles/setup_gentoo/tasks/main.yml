@@ -314,9 +314,6 @@ fizzy qi -C weechat -I weechat-alem0lars -V alem0lars
 # you can generate tokens here: https://api.slack.com/docs/oauth-test-tokens
 /secure set slack_token <token_for_server_a>,<token_for_server_b>,..
 
-# Skype
-sudo emerge "net-im/skype"
-
 # Slack
 sudo emerge "net-im/slack-bin"
 
