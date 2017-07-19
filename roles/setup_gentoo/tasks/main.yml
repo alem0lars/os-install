@@ -66,6 +66,9 @@ systemctl enable --user ssh-agent.service
 - include: setup_x11
 - include: setup_fonts
 
+# Tor
+sudo emerge net-vpn/tor
+
 # Hard-disk management.
 sudo emerge "sys-apps/hdparm"
 
