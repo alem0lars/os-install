@@ -527,6 +527,10 @@ sudo emerge "net-misc/freerdp"
 
 sudo emerge "sysstat"
 
+sudo emerge "pyrenamer"
+
+# Install jdownloader manually into /opt/jdownloader using installer
+
 # [OPTIONAL] Nitrokey
 sudo emerge "app-misc/nitrokey-app"
 
