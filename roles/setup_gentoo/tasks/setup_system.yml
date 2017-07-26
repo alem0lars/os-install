@@ -35,15 +35,15 @@ fizzy qi -C systemd -I systemd -V kate
   when: "{{ systemd is defined }}"
   tags: service
 
+sudo emerge dnsmasq
+
+sudo systemctl restart dnsmasq
+
 - command: systemctl enable systemd-resolved
   when: "{{ systemd is defined }}"
   tags: service
 
 - command: systemctl restart systemd-networkd
-  when: "{{ systemd is defined }}"
-  tags: service
-
-- command: systemctl restart systemd-resolved
   when: "{{ systemd is defined }}"
   tags: service
 

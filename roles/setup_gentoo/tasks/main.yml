@@ -529,6 +529,12 @@ sudo emerge "sysstat"
 
 sudo emerge "pyrenamer"
 
+sudo emerge "dev-vcs/mr"
+sudo fizzy cfg s -C myrepos -U alem0lars/configs-myrepos
+fizzy qi -C myrepos -V kate -I myrepos-alem0lars
+
+sudo emerge traceroute
+
 # Install jdownloader manually into /opt/jdownloader using installer
 
 # [OPTIONAL] Nitrokey
