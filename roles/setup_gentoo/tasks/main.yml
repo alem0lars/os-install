@@ -537,6 +537,8 @@ sudo emerge traceroute
 
 # Install jdownloader manually into /opt/jdownloader using installer
 
+install foxitreader and link to /usr/local/bin using installer from download site
+
 # [OPTIONAL] Nitrokey
 sudo emerge "app-misc/nitrokey-app"
 
