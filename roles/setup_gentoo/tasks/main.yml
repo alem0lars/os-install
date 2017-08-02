@@ -539,7 +539,7 @@ sudo emerge traceroute
 
 install foxitreader and link to /usr/local/bin using installer from download site
 
-sudo emerge telegram-desktop
+sudo emerge telegram-desktop-bin
 
 # [OPTIONAL] Nitrokey
 sudo emerge "app-misc/nitrokey-app"
