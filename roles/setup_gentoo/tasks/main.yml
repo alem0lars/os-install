@@ -541,6 +541,8 @@ install foxitreader and link to /usr/local/bin using installer from download sit
 
 sudo emerge telegram-desktop-bin
 
+sudo emerge "app-text/xournal"
+
 # [OPTIONAL] Nitrokey
 sudo emerge "app-misc/nitrokey-app"
 
