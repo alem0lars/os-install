@@ -543,6 +543,8 @@ sudo emerge telegram-desktop-bin
 
 sudo emerge "app-text/xournal"
 
+sudo emerge "playerctl"
+
 # [OPTIONAL] Nitrokey
 sudo emerge "app-misc/nitrokey-app"
 
