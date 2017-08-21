@@ -4,7 +4,7 @@ sudo emerge "app-office/unoconv"
 sudo emerge "dev-tex/texmfind" # Contains a program to search for the Gentoo package containing a tex package
 sudo emerge "app-eselect/eselect-pdftex"
 sudo emerge "app-text/texlive"
-sudo emerge "app-tex/biblatex"
+sudo emerge "app-tex/biblatex" "app-tex/biber"
 
 sudo eselect pdftex set 1
 
