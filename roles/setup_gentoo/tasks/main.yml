@@ -545,6 +545,8 @@ sudo emerge "app-text/xournal"
 
 sudo emerge "playerctl"
 
+sudo emerge "xev"
+
 # [OPTIONAL] Nitrokey
 sudo emerge "app-misc/nitrokey-app"
 
