@@ -549,8 +549,6 @@ sudo emerge "playerctl"
 
 sudo emerge "xev"
 
-emerge libav
-
 # [OPTIONAL] Nitrokey
 sudo emerge "app-misc/nitrokey-app"
 
