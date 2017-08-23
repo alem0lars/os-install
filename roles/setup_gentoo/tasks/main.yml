@@ -549,6 +549,8 @@ sudo emerge "playerctl"
 
 sudo emerge "xev"
 
+sudo emerge "maven-bin"
+
 # [OPTIONAL] Nitrokey
 sudo emerge "app-misc/nitrokey-app"
 
