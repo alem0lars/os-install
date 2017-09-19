@@ -551,6 +551,8 @@ sudo emerge "xev"
 
 sudo emerge "maven-bin"
 
+sudo emerge "udftools"
+
 # [OPTIONAL] Nitrokey
 sudo emerge "app-misc/nitrokey-app"
 
