@@ -553,6 +553,8 @@ sudo emerge "maven-bin"
 
 sudo emerge "udftools"
 
+sudo emerge "burpsuite"
+
 # [OPTIONAL] Nitrokey
 sudo emerge "app-misc/nitrokey-app"
 
