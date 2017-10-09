@@ -191,9 +191,6 @@ emerge app-emulation/qemu
 gpasswd -a alem0lars kvm
 udevadm trigger -c add /dev/kvm
 emerge app-emulation/virt-manager
-# Emulation -> Wine
-emerge app-emulation/wine
-emerge app-emulation/winetricks
 
 # Password manager
 sudo emerge "app-admin/lastpass-cli"
