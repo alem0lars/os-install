@@ -562,3 +562,9 @@ sudo emerge "app-misc/nitrokey-app"
 sudo emerge "net-misc/icaclient"
 sudo fizzy cfg s -C citrix -U ssh:alem0lars/configs-citrix
 fizzy qi -C citrix -I citrix-alem0lars -V kate
+
+# Create control group for management tasks:
+sudo cgcreate -g memory,cpu:mgmt
+sudo cgset -r cpu.shares=128 mgmt
+sudo cgset -r memory.limit_in_bytes=536870912 mgmt
+# Now to emerge: sudo cgexec -g cpu,memory:mgmt emerge ...
