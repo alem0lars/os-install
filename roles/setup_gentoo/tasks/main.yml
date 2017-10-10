@@ -552,6 +552,9 @@ sudo emerge "udftools"
 
 sudo emerge "burpsuite"
 
+# Tools to work with cgroups
+sudo emerge "libcgroup"
+
 # [OPTIONAL] Nitrokey
 sudo emerge "app-misc/nitrokey-app"
 
