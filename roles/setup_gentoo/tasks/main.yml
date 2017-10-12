@@ -552,6 +552,9 @@ sudo emerge "udftools"
 
 sudo emerge "burpsuite"
 
+sudo emerge "alacritty"
+fizzy qi -C alacritty -V kate -I alacritty-alem0lars
+
 # Tools to work with cgroups
 sudo emerge "libcgroup"
 
