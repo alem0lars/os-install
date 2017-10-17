@@ -200,6 +200,8 @@ sudo emerge "app-text/zathura-meta"
 sudo fizzy cfg s -C zathura -U ssh:alem0lars/configs-zathura
 sudo fizzy qi -C zathura -I zathura -V kate
 
+sudo emerge "app-text/sigil"
+
 # Docs
 sudo emerge "app-doc/phrack-all"
 sudo emerge "app-doc/tldp-howto"
