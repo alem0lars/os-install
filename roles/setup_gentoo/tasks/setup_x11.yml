@@ -13,7 +13,7 @@ sudo fizzy qi -C xorg -I xorg -V kate
 
 sudo emerge x11-misc/dmenu
 
-- command: localectl set-x11-keymap us pc105+inet "" terminate:ctrl_alt_bksp,ctrl:nocaps
+localectl set-x11-keymap us pc105+inet altgr-intl terminate:ctrl_alt_bksp,ctrl:nocaps
 
 - name: Setup display manager (1/3 Install)
   portage:
