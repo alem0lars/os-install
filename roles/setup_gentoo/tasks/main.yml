@@ -557,6 +557,8 @@ sudo emerge "burpsuite"
 sudo emerge "alacritty"
 fizzy qi -C alacritty -V kate -I alacritty-alem0lars
 
+sudo emerge "ltrace"
+
 # Tools to work with cgroups
 sudo emerge "libcgroup"
 
