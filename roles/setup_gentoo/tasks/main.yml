@@ -575,3 +575,5 @@ sudo cgcreate -g memory,cpu:mgmt
 sudo cgset -r cpu.shares=128 mgmt
 sudo cgset -r memory.limit_in_bytes=536870912 mgmt
 # Now to emerge: sudo cgexec -g cpu,memory:mgmt emerge ...
+
+sudo emerge app-mobilephone/dfu-util
