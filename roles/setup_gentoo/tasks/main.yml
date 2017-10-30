@@ -563,7 +563,7 @@ sudo emerge "ltrace"
 sudo emerge "libcgroup"
 
 # [OPTIONAL] Nitrokey
-sudo emerge "app-misc/nitrokey-app"
+sudo emerge "app-crypt/nitrokey-app"
 
 # [OPTIONAL] Citrix
 sudo emerge "net-misc/icaclient"
