@@ -577,3 +577,8 @@ sudo cgset -r memory.limit_in_bytes=536870912 mgmt
 # Now to emerge: sudo cgexec -g cpu,memory:mgmt emerge ...
 
 sudo emerge app-mobilephone/dfu-util
+
+# Work with smartcards
+sudo emerge opensc
+
+sudo emerge dfu-programmer
