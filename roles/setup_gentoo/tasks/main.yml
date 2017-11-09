@@ -582,3 +582,5 @@ sudo emerge app-mobilephone/dfu-util
 sudo emerge opensc
 
 sudo emerge dfu-programmer
+
+sudo emerge arandr
