@@ -49,13 +49,20 @@ emerge x11-wm/xmonad-contrib
 sudo fizzy cfg s -C xmonad -U ssh:alem0lars/configs-xmonad
 fizzy qi -C xmonad -I xmonad-alem0lars -V kate
 
-sudo emerge dunst
-
+# IN XMONAD:
 # IF you use taffybar
 emerge x11-misc/taffybar
 # ELSE IF you use xmobar
 emerge x11-misc/xmobar
 emerge x11-misc/trayer-srg
+
+# alternative c: If using i3
+emerge x11-wm/i3
+emerge x11-wm/i3-status
+sudo fizzy cfg s -C i3 -U ssh:alem0lars/configs-i3
+fizzy qi -C i3 -I i3-alem0lars -V kate
+
+sudo emerge dunst
 
 emerge arc-theme
 emerge arc-icon-theme
