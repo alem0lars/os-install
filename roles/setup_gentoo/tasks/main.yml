@@ -584,3 +584,5 @@ sudo emerge opensc
 sudo emerge dfu-programmer
 
 sudo emerge arandr
+
+sudo emerge net-wireless/iw
