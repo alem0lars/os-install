@@ -59,6 +59,7 @@ emerge x11-misc/trayer-srg
 # alternative c: If using i3
 emerge x11-wm/i3
 emerge x11-wm/i3-status
+emerge x11-misc/py3status
 sudo fizzy cfg s -C i3 -U ssh:alem0lars/configs-i3
 fizzy qi -C i3 -I i3-alem0lars -V kate
 
