@@ -586,3 +586,5 @@ sudo emerge dfu-programmer
 sudo emerge arandr
 
 sudo emerge net-wireless/iw
+
+sudo emerge virtual/wine app-emulation/winetricks
