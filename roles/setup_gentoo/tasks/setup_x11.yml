@@ -84,3 +84,5 @@ export ELM_SCALE=1.5
 
 sudo emerge x11-misc/wmname
 sudo emerge www-client/qutebrowser
+
+sudo emerge x11-apps/mesa-progs
