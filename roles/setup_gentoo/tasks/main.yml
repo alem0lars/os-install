@@ -588,3 +588,13 @@ sudo emerge arandr
 sudo emerge net-wireless/iw
 
 sudo emerge virtual/wine wine-staging
+# Adjust for hidpi
+# Run
+# $ winecfg
+# and change the "dpi" setting found in the "Graphics" tab. This only affects the font size.
+
+# Enterprise Architect
+winetricks msxml3
+winetricks msxml4
+winetricks mdac28
+wine msiexec /i Setup.exe
