@@ -587,4 +587,4 @@ sudo emerge arandr
 
 sudo emerge net-wireless/iw
 
-sudo emerge virtual/wine app-emulation/winetricks
+sudo emerge virtual/wine wine-staging
