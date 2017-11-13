@@ -597,4 +597,5 @@ sudo emerge virtual/wine wine-staging
 winetricks msxml3
 winetricks msxml4
 winetricks mdac28
+winetricks jet40
 wine msiexec /i Setup.exe
