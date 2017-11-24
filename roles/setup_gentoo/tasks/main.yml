@@ -603,16 +603,16 @@ wine msiexec /i Setup.exe
 sudo npm i -g nativefier
 
 # Trello
-nativefier -p linux -n trello --disable-dev-tools --tray --single-instance https://trello.com
+nativefier -p linux -n trello --disable-dev-tools --tray --single-instance --disable-gpu-sandbox --zoom 0.7 https://trello.com
 sudo mv trello-linux-x64 /opt/trello
 sudo ln -s /opt/trello/trello /usr/local/bin
 
 # toggl
-nativefier -p linux -n toggl --disable-dev-tools --tray --single-instance https://toggl.com/app/timer
+nativefier -p linux -n toggl --disable-dev-tools --tray --single-instance --disable-gpu-sandbox --zoom 1.0 https://toggl.com/app/timer
 sudo mv toggl-linux-x64 /opt/toggl
 sudo ln -s /opt/toggl/toggl /usr/local/bin
 
 # whatsapp
-nativefier -p linux -n whatsapp --disable-dev-tools --tray --single-instance https://web.whatsapp.com
+nativefier -p linux -n whatsapp --disable-dev-tools --tray --single-instance --disable-gpu-sandbox --zoom 1.0 https://web.whatsapp.com
 sudo mv whatsapp-linux-x64 /opt/whatsapp
 sudo ln -s /opt/whatsapp/whatsapp /usr/local/bin
