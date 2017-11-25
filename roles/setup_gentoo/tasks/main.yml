@@ -620,3 +620,5 @@ sudo ln -s /opt/whatsapp/whatsapp /usr/local/bin
 sudo emerge pngtools
 
 sudo emerge binwalk foremost
+
+sudo emerge steghide
