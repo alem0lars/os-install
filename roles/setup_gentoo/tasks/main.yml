@@ -616,3 +616,5 @@ sudo ln -s /opt/toggl/toggl /usr/local/bin
 nativefier -p linux -n whatsapp --disable-dev-tools --tray --single-instance --disable-gpu-sandbox --zoom 1.0 https://web.whatsapp.com
 sudo mv whatsapp-linux-x64 /opt/whatsapp
 sudo ln -s /opt/whatsapp/whatsapp /usr/local/bin
+
+sudo emerge pngtools
