@@ -622,3 +622,5 @@ sudo emerge pngtools
 sudo emerge binwalk foremost
 
 sudo emerge steghide
+
+sudo emerge xmind
