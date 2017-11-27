@@ -630,3 +630,5 @@ wget https://dynalist.io/standalone/download?file=dynalist.tar.gz
 tar xf dynalist.tar.gz
 sudo mv dynalist* /opt/dynalist
 sudo ln -s /opt/dynalist/dynalist /usr/local/bin
+
+sudo emerge speedcrunch
