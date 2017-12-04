@@ -194,6 +194,7 @@ emerge app-emulation/virt-manager
 
 # Password manager
 sudo emerge "app-admin/lastpass-cli"
+sudo emerge "app-admin/lastpass-binary-component"
 
 # Docs viewers
 sudo emerge "app-text/zathura-meta"
