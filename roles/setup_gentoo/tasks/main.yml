@@ -633,3 +633,5 @@ sudo mv dynalist* /opt/dynalist
 sudo ln -s /opt/dynalist/dynalist /usr/local/bin
 
 sudo emerge speedcrunch
+
+sudo emerge rofi xkill
