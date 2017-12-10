@@ -618,6 +618,11 @@ nativefier -p linux -n whatsapp --disable-dev-tools --tray --single-instance --d
 sudo mv whatsapp-linux-x64 /opt/whatsapp
 sudo ln -s /opt/whatsapp/whatsapp /usr/local/bin
 
+# facebook
+nativefier -p linux -n facebook --disable-dev-tools --tray --single-instance --disable-gpu-sandbox --zoom 1.0 https://facebook.com
+sudo mv facebook-linux-x64 /opt/facebook
+sudo ln -s /opt/facebook/facebook /usr/local/bin
+
 sudo emerge pngtools
 
 sudo emerge binwalk foremost
