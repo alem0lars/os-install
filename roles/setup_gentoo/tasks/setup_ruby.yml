@@ -6,7 +6,6 @@ sudo emerge "dev-ruby/bundler"
 sudo emerge "dev-ruby/awesome_print"
 sudo emerge "dev-ruby/yard"
 sudo emerge "dev-ruby/pry"
-sudo emerge "dev-ruby/thor"
 
 sudo gem install "irbtools" "irbtools-more"
 
