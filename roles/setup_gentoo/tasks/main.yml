@@ -625,8 +625,8 @@ sudo ln -s /opt/facebook/facebook /usr/local/bin
 
 # inoreader
 nativefier -p linux -n inoreader --disable-dev-tools --tray --single-instance --disable-gpu-sandbox --zoom 1.0 https://www.inoreader.com/dashboard
-sudo mv inoreader-linux-x64 /opt/inoreader
-sudo ln -s /opt/inoreader/inoreader /usr/local/bin
+sudo mv facebook-linux-x64 /opt/facebook
+sudo ln -s /opt/facebook/facebook /usr/local/bin
 
 sudo emerge pngtools
 
@@ -645,3 +645,7 @@ sudo ln -s /opt/dynalist/dynalist /usr/local/bin
 sudo emerge speedcrunch
 
 sudo emerge rofi xkill
+
+# Install NoMachine
+# => Player
+sudo emerge nxplayer
