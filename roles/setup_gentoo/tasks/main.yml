@@ -649,3 +649,8 @@ sudo emerge rofi xkill
 # Install NoMachine
 # => Player
 sudo emerge nxplayer
+
+# Install AnyDesk
+Download and extract archive
+sudo mv anydesk* /opt/anydesk
+sudo ln -s /opt/anydesk/anydesk /usr/local/bin
