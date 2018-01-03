@@ -654,5 +654,3 @@ sudo emerge nxplayer
 Download and extract archive
 sudo mv anydesk* /opt/anydesk
 sudo ln -s /opt/anydesk/anydesk /usr/local/bin
-
-sudo emerge webcamoid
