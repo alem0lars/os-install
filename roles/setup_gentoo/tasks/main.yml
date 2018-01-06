@@ -497,10 +497,7 @@ sudo emerge "sci-electronics/quartus-prime-lite"
 sudo emerge "sci-electronics/eagle"
 
 # Email
-Download deb
-mv <dir>/usr/share/nylas-mail /opt/nylas-mail
-sudo emerge "libgnome-keyring"
-Install plugin https://github.com/nylas/N1-Markdown-Composer
+sudo emerge "mail-client/thunderbird"
 
 # FTP
 sudo emerge "net-ftp/lftp"
