@@ -278,6 +278,7 @@ sudo emerge "dev-util/jad-bin"    # TODO: check
 emerge --config "dev-db/postgresql"
 systemctl enable postgresql-9.5
 systemctl restart postgresql-9.5
+sudo emerge "dev-db/pgadmin4"
 emerge "net-analyzer/metasploit"
 emerge --config "net-analyzer/metasploit"
 
