@@ -663,3 +663,9 @@ sudo emerge python-gnomekeyring # Needed by chips
 Download the latest AppImage (example https://github.com/egoist/devdocs-app/releases/download/v0.6.8/DevDocs-0.6.8-x86_64.AppImage)
 mv DevDocs*.AppImage /usr/local/bin/devdocs
 chmod +x /usr/local/bin/devdocs
+
+# Mancy
+Download mancy (example https://github.com/princejwesley/Mancy/releases/download/v3.2.0/Mancy-linux-x64.zip)
+Extract the archive
+sudo mv Mancy-linux-x64 /opt/mancy
+sudo ln -s /opt/mancy/Mancy /usr/local/bin/mancy
