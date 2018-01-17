@@ -658,3 +658,8 @@ sudo mv anydesk* /opt/anydesk
 sudo ln -s /opt/anydesk/anydesk /usr/local/bin
 
 sudo emerge python-gnomekeyring # Needed by chips
+
+# DevDocs
+Download the latest AppImage (example https://github.com/egoist/devdocs-app/releases/download/v0.6.8/DevDocs-0.6.8-x86_64.AppImage)
+mv DevDocs*.AppImage /usr/local/bin/devdocs
+chmod +x /usr/local/bin/devdocs
