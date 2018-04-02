@@ -669,3 +669,4 @@ chmod +x /usr/local/bin/devdocs
 Download tar.gz
 Extract to /usr/local/opt/master-pdf-editor
 sudo ln -s /usr/local/opt/master-pdf-editor/masterpdfeditor4 /usr/local/bin/master-pdf-editor
+echo "[Desktop Entry]\nEncoding=UTF-8\nName=Master PDF Editor\nComment=PDF viewer and editor\nExec=/usr/local/bin/master-pdf-editor\nTerminal=false\nType=Application\nIcon=/usr/local/opt/master-pdf-editor/masterpdfeditor4.png" | sudo tee /usr/local/share/applications/master-pdf-editor.desktop
