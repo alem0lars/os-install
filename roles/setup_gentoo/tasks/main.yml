@@ -605,14 +605,6 @@ wine msiexec /i Setup.exe
 
 sudo npm i -g nativefier
 
-# Todoist
-wget https://d3ptyyxy2at9ui.cloudfront.net/bab0a0c4b1c3135a24bd0518417b66e3.png
-mv bab0a0c4b1c3135a24bd0518417b66e3.png todoist.png
-nativefier -p linux -n todoist --disable-dev-tools --single-instance --disable-gpu-sandbox --zoom 1.0 --tray --icon todoist.png --disable-context-menu https://todoist.com/app
-rm todoist.png
-sudo mv todoist-linux-x64 /usr/local/opt/todoist
-sudo ln -s /usr/local/opt/todoist/todoist /usr/local/bin
-
 # Notion
 wget https://www.notion.so/images/logo-ios.png
 mv logo-ios.png notion.png
@@ -627,19 +619,23 @@ sudo mv trello-linux-x64 /usr/local/opt/trello
 sudo ln -s /usr/local/opt/trello/trello /usr/local/bin
 
 # WhatsApp
-nativefier -p linux -n whatsapp --disable-dev-tools --tray --single-instance --disable-gpu-sandbox --zoom 1.0 https://web.whatsapp.com
+nativefier -p linux -n whatsapp --disable-dev-tools --tray --single-instance --disable-gpu-sandbox --zoom 1.0 --icon whatsapp.png https://web.whatsapp.com
+rm whatsapp.png
 sudo mv whatsapp-linux-x64 /usr/local/opt/whatsapp
 sudo ln -s /usr/local/opt/whatsapp/whatsapp /usr/local/bin
 
 # Facebook
-nativefier -p linux -n facebook --disable-dev-tools --tray --single-instance --disable-gpu-sandbox --zoom 1.0 https://facebook.com
+wget https://upload.wikimedia.org/wikipedia/commons/c/c2/F_icon.svg -O facebook.svg
+nativefier -p linux -n facebook --disable-dev-tools --tray --single-instance --disable-gpu-sandbox --zoom 1.0 --icon facebook.svg https://facebook.com
+rm facebook.svg
 sudo mv facebook-linux-x64 /usr/local/opt/facebook
 sudo ln -s /usr/local/opt/facebook/facebook /usr/local/bin
 
 # Inoreader
-nativefier -p linux -n inoreader --disable-dev-tools --tray --single-instance --disable-gpu-sandbox --zoom 1.0 https://www.inoreader.com/dashboard
-sudo mv facebook-linux-x64 /usr/local/opt/facebook
-sudo ln -s /usr/local/opt/facebook/facebook /usr/local/bin
+wget https://www.inoreader.com/images/icons/xapple-touch-ipad-retina.png.pagespeed.ic.qD9y5WTgZ1.png -O inoreader.png
+nativefier -p linux -n inoreader --disable-dev-tools --tray --single-instance --disable-gpu-sandbox --zoom 1.0 --icon inoreader.png https://www.inoreader.com/dashboard
+sudo mv inoreader-linux-x64 /usr/local/opt/inoreader
+sudo ln -s /usr/local/opt/inoreader/inoreader /usr/local/bin
 
 sudo emerge pngtools
 
