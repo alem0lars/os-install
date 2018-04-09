@@ -678,3 +678,11 @@ Mettere dentro /usr/local/share/applications/master-pdf-editor.desktop:
   Type=Application
   Categories=Office;Graphics;
   MimeType=application/pdf;application/x-bzpdf;application/x-gzpdf;
+
+# Gron
+Download it from github
+Extract to /usr/local/bin/gron
+chmod +x /usr/local/bin/gron
+
+# fd
+sudo xbps-install fd
