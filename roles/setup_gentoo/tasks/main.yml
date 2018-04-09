@@ -686,3 +686,9 @@ chmod +x /usr/local/bin/gron
 
 # fd
 sudo xbps-install fd
+
+# psysh
+wget https://git.io/psysh
+sudo mv psysh /usr/local/bin
+sudo chown root:root /usr/local/bin/psysh
+sudo chmod +x /usr/local/bin/psysh
