@@ -611,31 +611,28 @@ mv logo-ios.png notion.png
 nativefier -p linux -n notion --disable-dev-tools --single-instance --disable-gpu-sandbox --zoom 1.0 --tray --icon notion.png --disable-context-menu https://www.notion.so/alem0lars
 rm notion.png
 sudo mv notion-linux-x64 /usr/local/opt/notion
-sudo ln -s /usr/local/opt/notion/notion /usr/local/bin
+echo "#\!/usr/bin/env zsh\ncd /usr/local/opt/notion\noptirun ./notion" | sudo tee /usr/local/bin/notion && sudo chmod +x /usr/local/bin/notion
 
 # Trello
 nativefier -p linux -n trello --disable-dev-tools --tray --single-instance --disable-gpu-sandbox --zoom 0.7 https://trello.com
 sudo mv trello-linux-x64 /usr/local/opt/trello
-sudo ln -s /usr/local/opt/trello/trello /usr/local/bin
-
-# WhatsApp
-nativefier -p linux -n whatsapp --disable-dev-tools --tray --single-instance --disable-gpu-sandbox --zoom 1.0 --icon whatsapp.png https://web.whatsapp.com
-rm whatsapp.png
-sudo mv whatsapp-linux-x64 /usr/local/opt/whatsapp
-sudo ln -s /usr/local/opt/whatsapp/whatsapp /usr/local/bin
-
-# Facebook
-wget https://upload.wikimedia.org/wikipedia/commons/c/c2/F_icon.svg -O facebook.svg
-nativefier -p linux -n facebook --disable-dev-tools --tray --single-instance --disable-gpu-sandbox --zoom 1.0 --icon facebook.svg https://facebook.com
-rm facebook.svg
-sudo mv facebook-linux-x64 /usr/local/opt/facebook
-sudo ln -s /usr/local/opt/facebook/facebook /usr/local/bin
+echo "#\!/usr/bin/env zsh\ncd /usr/local/opt/trello\noptirun ./trello" | sudo tee /usr/local/bin/trello && sudo chmod +x /usr/local/bin/trello
 
 # Inoreader
 wget https://www.inoreader.com/images/icons/xapple-touch-ipad-retina.png.pagespeed.ic.qD9y5WTgZ1.png -O inoreader.png
 nativefier -p linux -n inoreader --disable-dev-tools --tray --single-instance --disable-gpu-sandbox --zoom 1.0 --icon inoreader.png https://www.inoreader.com/dashboard
 sudo mv inoreader-linux-x64 /usr/local/opt/inoreader
-sudo ln -s /usr/local/opt/inoreader/inoreader /usr/local/bin
+echo "#\!/usr/bin/env zsh\ncd /usr/local/opt/inoreader\noptirun ./inoreader" | sudo tee /usr/local/bin/inoreader && sudo chmod +x /usr/local/bin/inoreader
+
+# Wavebox
+Install mscorefonts2:
+  Download
+  cd /data/downloads/usr/share/fonts
+  sudo mv msttcore/ /usr/local/share/fonts
+  Add /usr/local/share/fonts/msttcore to /etc/fonts/local.conf
+Download tar.gz
+Extract to /usr/local/opt/wavebox
+echo "#\!/usr/bin/env zsh\ncd /usr/local/opt/wavebox\noptirun ./Wavebox" | sudo tee /usr/local/bin/wavebox && sudo chmod +x /usr/local/bin/wavebox
 
 sudo emerge pngtools
 
@@ -669,4 +666,15 @@ chmod +x /usr/local/bin/devdocs
 Download tar.gz
 Extract to /usr/local/opt/master-pdf-editor
 sudo ln -s /usr/local/opt/master-pdf-editor/masterpdfeditor4 /usr/local/bin/master-pdf-editor
-echo "[Desktop Entry]\nEncoding=UTF-8\nName=Master PDF Editor\nComment=PDF viewer and editor\nExec=/usr/local/bin/master-pdf-editor\nTerminal=false\nType=Application\nIcon=/usr/local/opt/master-pdf-editor/masterpdfeditor4.png" | sudo tee /usr/local/share/applications/master-pdf-editor.desktop
+
+Mettere dentro /usr/local/share/applications/master-pdf-editor.desktop:
+  [Desktop Entry]
+  Name=Master PDF Editor
+  Comment=Edit PDF files
+  Path=/usr/local/opt/master-pdf-editor
+  Exec=/usr/local/opt/master-pdf-editor/masterpdfeditor4 %f
+  Icon=/usr/local/opt/master-pdf-editor/masterpdfeditor4.png
+  Terminal=false
+  Type=Application
+  Categories=Office;Graphics;
+  MimeType=application/pdf;application/x-bzpdf;application/x-gzpdf;
