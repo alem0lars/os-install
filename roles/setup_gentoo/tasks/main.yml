@@ -601,7 +601,7 @@ winetricks msxml3
 winetricks msxml4
 winetricks mdac28
 winetricks jet40
-wine msiexec /i Setup.exe
+wine msiexec /i Setup.msi
 
 sudo npm i -g nativefier
 
@@ -624,15 +624,24 @@ nativefier -p linux -n inoreader --disable-dev-tools --tray --single-instance --
 sudo mv inoreader-linux-x64 /usr/local/opt/inoreader
 echo "#\!/usr/bin/env zsh\ncd /usr/local/opt/inoreader\noptirun ./inoreader" | sudo tee /usr/local/bin/inoreader && sudo chmod +x /usr/local/bin/inoreader
 
-# Wavebox
-Install mscorefonts2:
-  Download
-  cd /data/downloads/usr/share/fonts
-  sudo mv msttcore/ /usr/local/share/fonts
-  Add /usr/local/share/fonts/msttcore to /etc/fonts/local.conf
-Download tar.gz
-Extract to /usr/local/opt/wavebox
-echo "#\!/usr/bin/env zsh\ncd /usr/local/opt/wavebox\noptirun ./Wavebox" | sudo tee /usr/local/bin/wavebox && sudo chmod +x /usr/local/bin/wavebox
+# Slack
+Download it
+Extract to /usr/local/opt
+sudo ln -s /usr/local/opt/slack/slack /usr/local/bin/slack
+
+# WhatsApp
+wget https://web.whatsapp.com/img/94e99ab189284094867d2e1220e42e9f.png -O whatsapp.png
+nativefier -p linux -n whatsapp --disable-dev-tools --tray --single-instance --disable-gpu-sandbox --zoom 1.0 --icon whatsapp.png https://web.whatsapp.com
+rm whatsapp.png
+sudo mv whatsapp-linux-x64 /usr/local/opt/whatsapp
+echo "#\!/usr/bin/env zsh\ncd /usr/local/opt/whatsapp\noptirun ./whatsapp" | sudo tee /usr/local/bin/whatsapp && sudo chmod +x /usr/local/bin/whatsapp
+
+# Caprine
+sudo mkdir /usr/local/opt/caprine
+sudo wget https://github.com/sindresorhus/caprine/releases/download/v2.11.0/caprine-2.11.0-x86_64.AppImage -O /usr/local/opt/caprine/caprine.appimage
+sudo ln -s /usr/local/opt/caprine/caprine.appimage /usr/local/bin/caprine
+
+sudo xbps-install telegram-desktop
 
 sudo emerge pngtools
 
@@ -686,9 +695,3 @@ chmod +x /usr/local/bin/gron
 
 # fd
 sudo xbps-install fd
-
-# psysh
-wget https://git.io/psysh
-sudo mv psysh /usr/local/bin
-sudo chown root:root /usr/local/bin/psysh
-sudo chmod +x /usr/local/bin/psysh
